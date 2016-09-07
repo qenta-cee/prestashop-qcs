@@ -1,0 +1,217 @@
+/**
+ * Shop System Plugins - Terms of Use
+ *
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
+ * products and services.
+ *
+ * They have been tested and approved for full functionality in the standard configuration
+ * (status on delivery) of the corresponding shop system. They are under General Public
+ * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
+ * the same terms.
+ *
+ * However, Wirecard CEE does not provide any guarantee or accept any liability for any errors
+ * occurring when used in an enhanced, customized shop system configuration.
+ *
+ * Operation in an enhanced, customized configuration is at your own risk and requires a
+ * comprehensive test phase by the user of the plugin.
+ *
+ * Customers use the plugins at their own risk. Wirecard CEE does not guarantee their full
+ * functionality neither does Wirecard CEE assume liability for any disadvantages related to
+ * the use of the plugins. Additionally, Wirecard CEE does not guarantee the full functionality
+ * for customized shop systems or installed plugins of other vendors of plugins within the same
+ * shop system.
+ *
+ * Customers are responsible for testing the plugin's functionality before starting productive
+ * operation.
+ *
+ * By installing the plugin into the shop system the customer agrees to these terms of use.
+ * Please do not use the plugin if you do not agree to these terms of use!
+ */
+
+p.payment_module a.pt_wirecardcheckoutseamless {
+    padding: 33px 40px 34px 20px;
+}
+
+p.payment_module a[id$=_dataopen]:after {
+    -webkit-transition: all 250ms ease;
+    -moz-transition: all 250ms ease;
+    -ms-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    transition: all 250ms ease;
+}
+
+p.payment_module a.open:after{
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+p.payment_module a.pt_wirecardcheckoutseamless:after {
+    display: block;
+    content: "\f054";
+    position: absolute;
+    right: 15px;
+    margin-top: -11px;
+    font-family: FontAwesome;
+    top: 50%;
+    font-size: 25px;
+    height: 22px;
+    width: 14px;
+    color: #777;
+}
+
+p.payment_module a span.pt_wirecardcheckoutseamless_logo {
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+p.payment_module a span.pt_logo_container {
+    display: inline-block;
+    margin-right:15px;
+}
+
+p.payment_module a.pt_wirecardcheckoutseamless img {
+    max-height: 49px;
+    max-width: 90px;
+}
+
+p.payment_module a span.pt_wirecardcheckoutseamless_text {
+    display: inline-block;
+    color: #000;
+}
+
+.wcs_payment_container
+{
+    border: 1px solid #d6d4d4;
+    border-radius: 4px;
+    padding: 33px 40px 34px 20px;
+    margin-top: -11px;
+    margin-bottom: 10px;
+}
+
+.pt_wirecardcheckoutseamless_fields
+{
+
+}
+
+.wcs_payment_container .cardholder
+{
+    width: 300px;
+}
+
+.wcs_payment_container .cardnumber
+{
+    width: 200px;
+}
+
+.wcs_payment_container .month
+{
+    width: 80px;
+}
+
+.wcs_payment_container .year
+{
+    width: 120px;
+}
+
+.wcs_payment_container .cvc
+{
+    width: 60px;
+}
+
+.wcs_payment_container .issuenumber
+{
+    width: 200px;
+}
+
+.wcs_payment_container .accountowner
+{
+    width: 300px;
+}
+
+.wcs_payment_container .bankaccount
+{
+    width: 200px;
+}
+
+.wcs_payment_container .banknumber
+{
+    width: 100px;
+}
+
+.wcs_payment_container .bankbic
+{
+    width: 150px;
+}
+
+.wcs_payment_container .bankaccountiban
+{
+    width: 200px;
+}
+
+.wcs_payment_container .bankname
+{
+    width: 300px;
+}
+
+.wcs_payment_container .payerpayboxnumber
+{
+    width: 300px;
+}
+
+.wcs_payment_container .voucherid
+{
+    width: 300px;
+}
+
+.wcs_payment_container label.consent
+{
+    display: inline;
+}
+
+.wcs_payment_container .checker
+{
+    display: inline-block;
+}
+
+.wcs_payment_container .days
+{
+    width: 84px;
+}
+
+.wcs_payment_container .months
+{
+    width: 84px;
+}
+
+.wcs_payment_container .years
+{
+    width: 84px;
+}
+
+.wcs_iframe
+{
+    margin-top: -12px;
+    margin-left: -2px;
+}
+
+.wcs_financialinstitution
+{
+    width: 400px;
+}
+
+
+.form-group.form-error .selector {
+    border: 1px solid #f13340;
+    color: #f13340;
+}
+
+.wcs_payment_form_eu {
+    border: 1px solid #55c65e;
+    border-radius: 4px;
+    padding: 15px;
+}

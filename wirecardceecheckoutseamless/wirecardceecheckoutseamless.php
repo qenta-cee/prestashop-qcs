@@ -161,7 +161,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 'production',
                         'required' => true,
                         'options' => 'getConfigurationModes',
-                        'doc' => $this->l('For integration, select predefined configuration settings or "Production" for live systems'),
+                        'doc' => $this->l('For integration, select predefined configuration settings or \'Production\' for live systems'),
                     ),
                     array(
                         'name' => 'customer_id',
@@ -305,7 +305,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('SAQ A compliance'),
                         'type' => 'onoff',
                         'default' => 0,
-                        'doc' => $this->l('Selecting "NO", the stringent SAQ A-EP is applicable. Selecting "YES", Wirecard Checkout Seamless is integrated with the "PCI DSS SAQ A Compliance" feature and SAQ A is applicable.'),
+                        'doc' => $this->l('Selecting \'NO\', the stringent SAQ A-EP is applicable. Selecting \'YES\', Wirecard Checkout Seamless is integrated with the \'PCI DSS SAQ A Compliance\' feature and SAQ A is applicable.'),
                         'docref' => 'https://guides.wirecard.at/doku.php/wcs:pci3_fallback:start'
                     ),
                     array(
@@ -322,7 +322,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'text',
                         'default' => 'iframe.css',
                         'cssclass' => 'fixed-width-xxl',
-                        'doc' => $this->l('Entry of a name for the CSS file in order to customize the iframe input fields when using the "PCI DSS SAQ A Compliance" feature. File must be placed in the "view/css" directory of the plugin.'),
+                        'doc' => $this->l('Entry of a name for the CSS file in order to customize the iframe input fields when using the \'PCI DSS SAQ A Compliance\' feature. File must be placed in the \'view/css\' directory of the plugin.'),
                         'docref' => 'https://guides.wirecard.at/doku.php/wcs:pci3_fallback:start#customization_via_css'
                     ),
                     array(
@@ -334,9 +334,9 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     array(
                         'name' => 'displayexpirationdate_placeholder',
                         'default' => 0,
-                        'label' => $this->l('Display placeholder text for expiration date'),
+                        'label' => $this->l('Display expiration date field'),
                         'type' => 'onoff',
-                        'doc' => $this->l('Display placeholder text for the expiration date field. Only applicable if the "PCI DSS SAQ A Compliance" feature is enabled.'),
+                        'doc' => $this->l('Display input field to enter the expiration date in your credit card form during the checkout process. Only applicable if the \'PCI DSS SAQ A Compliance\' feature is enabled.'),
                     ),
                     array(
                         'name' => 'displaycardholder',
@@ -349,7 +349,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'name' => 'cardholder_placeholder',
                         'label' => $this->l('Card holder placeholder text'),
                         'type' => 'text',
-                        'doc' => $this->l('Display placeholder text for the card holder field.')
+                        'doc' => $this->l('Placeholder text for the card holder field.')
                     ),
                     array(
                         'name' => 'displaycvc',
@@ -362,7 +362,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'name' => 'cvc_placeholder',
                         'label' => $this->l('CVC placeholder text'),
                         'type' => 'text',
-                        'doc' => $this->l('Display placeholder text for the CVC field.')
+                        'doc' => $this->l('Placeholder text for the CVC field.')
                     ),
                     array(
                         'name' => 'displayissuedate',
@@ -376,7 +376,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('Display issue date placeholder text'),
                         'default' => 0,
                         'type' => 'onoff',
-                        'doc' => $this->l('Display placeholder text for the issue date field. Only applicable if the "PCI DSS SAQ A Compliance" feature is enabled.')
+                        'doc' => $this->l('Display placeholder text for the issue date field. Only applicable if the \'PCI DSS SAQ A Compliance\' feature is enabled.')
                     ),
                     array(
                         'name' => 'displayissuenumber',
@@ -384,13 +384,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 0,
                         'type' => 'onoff',
                         'doc' => $this->l('Display input field to enter the credit card issue number in your credit card form during the checkout process. Some credit cards do not have an issue number.')
-                    ),
-                    array(
-                        'name' => 'displayissuenumber_placeholder',
-                        'label' => $this->l('Display issue number placeholder text'),
-                        'default' => 0,
-                        'type' => 'onoff',
-                        'doc' => $this->l('Display placeholder text for the issue number field. Only applicable if the "PCI DSS SAQ A Compliance" feature is enabled.')
                     ),
                     array(
                         'name' => 'issuenumber_placeholder',
@@ -415,7 +408,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     ),
                     array(
                         'name' => 'invoice_billingshipping_same',
-                        'label' => $this->l('Invoice billing/shipping address must be identical'),
+                        'label' => $this->l('Billing/shipping address must be identical'),
                         'type' => 'onoff',
                         'default' => 1,
                         'group' => 'pt'
@@ -511,7 +504,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     ),
                     array(
                         'name' => 'installment_billingshipping_same',
-                        'label' => $this->l('Installment billing/shipping address must be identical'),
+                        'label' => $this->l('Billing/shipping address must be identical'),
                         'type' => 'onoff',
                         'default' => 1,
                         'group' => 'pt'

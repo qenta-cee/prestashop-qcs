@@ -336,7 +336,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 0,
                         'label' => $this->l('Display expiration date field'),
                         'type' => 'onoff',
-                        'doc' => $this->l('Display input field to enter the expiration date in your credit card form during the checkout process. Only applicable if the \'PCI DSS SAQ A Compliance\' feature is enabled.'),
+                        'doc' => $this->l('Display input field to enter the expiration date in your credit card form during the checkout process.'),
                     ),
                     array(
                         'name' => 'displaycardholder',

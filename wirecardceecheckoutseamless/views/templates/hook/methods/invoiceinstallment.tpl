@@ -74,7 +74,7 @@
 <script type="text/javascript">
     var wcs{$current.name|escape:'htmlall':'UTF-8'}Validate;
     $(function () {
-        wcs{$current.name}Validate = function(messageBox) {
+        wcs{$current.name|escape:'htmlall':'UTF-8'}Validate = function(messageBox) {
             var m = $('#wcs{$current.name|escape:'htmlall':'UTF-8'}month').val();
             if (m < 10) m = "0" + m;
             var d = $('#wcs{$current.name|escape:'htmlall':'UTF-8'}day').val();
@@ -93,7 +93,7 @@
 
             {if $current.payment->hasConsent()}
 
-                if (!$('#wcs{$current.name}consent').attr('checked')) {
+                if (!$('#wcs{$current.name|escape:'htmlall':'UTF-8'}consent').attr('checked')) {
                     msg = {$current.payment->getConsentErrorMessage()|json_encode};
                     messageBox.find('ul').append('<li>' + msg + '</li>');
                 }

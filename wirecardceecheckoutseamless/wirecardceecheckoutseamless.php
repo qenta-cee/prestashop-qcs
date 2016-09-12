@@ -287,7 +287,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'default' => 1,
                         'doc' => $this->l('Consumer must accept payolution terms during the checkout process.'),
-                        'docref' => 'https://guides.wirecard.at/payment_methods:payolution:start'
+                        'docref' => 'https://guides.wirecard.at/payment_methods:invoice:payolution'
                     ),
                     array(
                         'name' => 'payolution_mid',

@@ -67,6 +67,7 @@
 {if $current.payment->hasConsent()}
     <div class="form-group">
         <input type="checkbox" id="wcs{$current.name|escape:'htmlall':'UTF-8'}consent" name="consent" autocomplete="off" class="form-control"/>
+        {* this non-escaped string is a wanted behavior, it one case it can contain an anchor *}
         <label class="consent required"> {$current.payment->getConsentTxt()}</label>
     </div>
 {/if}

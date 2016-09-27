@@ -118,20 +118,18 @@ class WirecardCheckoutSeamlessTransaction extends ObjectModel
     {
         $db = Db::getInstance();
 
-        $values = sprintf(
-            "(0, %s, %d, '%s', '%s', 'CREATED', %s, '%s', NOW())",
-            $id_order === null ? 'NULL' : $id_order,
-            $id_cart,
-            $db->_escape($paymentname),
-            $db->_escape($paymentmethod),
-            (float)$amount,
-            $db->_escape($currency)
-        );
+        $db->insert('wirecard_checkout_seamless_tx',array(
+            'id_order' => $id_order === null ? 'NULL' : (int)$id_order,
+            'id_cart' => (int)$id_cart,
+            'paymentname' => pSQL($paymentname),
+            'paymentmethod' => pSQL($paymentmethod),
+            'paymentstate' => pSQL('CREATED'),
+            'amount' => (float)$amount,
+            'currency' => pSQL($currency),
+            'created' => 'NOW()'
+        ));
 
-        $query = 'INSERT INTO `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` (`id_tx`, `id_order`, `id_cart`,  
-        `paymentname`, `paymentmethod`, `paymentstate`, `amount`, `currency`, `created`) VALUES ' . $values;
-
-        if (!$db->execute($query)) {
+        if ($db->getNumberError() > 0) {
             throw new \PrestaShopDatabaseException($db->getMsgError());
         }
 

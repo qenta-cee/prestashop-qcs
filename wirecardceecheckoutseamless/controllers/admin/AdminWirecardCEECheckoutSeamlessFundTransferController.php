@@ -105,6 +105,10 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
             ),
             'input' => array(
                 array(
+                    'type' => 'hidden',
+                    'name' => 'ajaxUrl'
+                ),
+                array(
                     'type' => 'select',
                     'label' => $this->l('Currency:'),
                     'desc' => sprintf($fieldNoteFmt, '/request_parameters#currency'),
@@ -173,6 +177,13 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
                 'name' => 'transferFund',
                 'title' => $this->l('Transfer'),
             )
+        );
+
+        $this->fields_value = array(
+            'ajaxUrl' => $this->context->link->getAdminLink(
+                    'AdminModules'
+                ) . '&configure=' . $this->module->name . '&tab_module=' . $this->module->tab . '&module_name='
+                . $this->module->name
         );
 
         return parent::renderForm();
@@ -281,9 +292,13 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
                                                                ? pSQL(Tools::getValue('orderNumber'))
                                                                : pSQL($ret->getCreditNumber())),
                                                            'creditnumber' => (int)$ret->getCreditNumber(),
-                                                           'orderreference' => pSQL($existingOrderDetails['orderreference']),
+                                                           'orderreference' => pSQL(
+                                                               $existingOrderDetails['orderreference']
+                                                           ),
                                                            'paymentname' => pSQL($existingOrderDetails['paymentname']),
-                                                           'paymentmethod' => pSQL($existingOrderDetails['paymentmethod']),
+                                                           'paymentmethod' => pSQL(
+                                                               $existingOrderDetails['paymentmethod']
+                                                           ),
                                                            'paymentstate' => 'CREDIT',
                                                            'amount' => -(float)Tools::getValue('amount'),
                                                            'currency' => pSQL(Tools::getValue('currency')),

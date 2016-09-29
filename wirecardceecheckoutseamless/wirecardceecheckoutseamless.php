@@ -908,7 +908,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             $orderState->color = 'lightblue';
             $orderState->hidden = false;
             $orderState->delivery = false;
-            $orderState->logable = true;
+            $orderState->logable = false;
             $orderState->invoice = false;
             if ($orderState->add()) {
                 copy(
@@ -938,7 +938,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             $orderState->color = '#8f0621';
             $orderState->hidden = false;
             $orderState->delivery = false;
-            $orderState->logable = true;
+            $orderState->logable = false;
             $orderState->invoice = false;
             $orderState->module_name = 'wirecardceecheckoutseamless';
             if ($orderState->add()) {
@@ -1155,6 +1155,47 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
             return $this->html;
         }
+    }
+
+    public function ajaxProcessGetOrdersSelect2(){
+        $term = Tools::getValue('q');
+        if (!Tools::strlen($term)) {
+            $term = '';
+        } else {
+            $term = 'AND ordernumber LIKE "' . $term . '%"';
+        }
+
+        $page = Tools::getValue('page');
+        $resultCount = 25;
+
+        $offset = ($page - 1) * $resultCount;
+
+        $limit = " LIMIT " . $offset . ", " . $resultCount;
+
+        $sql = 'SELECT ordernumber,currency FROM ' . _DB_PREFIX_ .
+            'wirecard_checkout_seamless_tx WHERE ordernumber IS NOT NULL AND paymentstate != "CREDIT"';
+        $sql .= $term . $limit;
+
+        $db = Db::getInstance();
+        $data = $db->ExecuteS($sql);
+
+        $result_data = array();
+
+        foreach ($data as $row) {
+            $result_data[] = array(
+                "id" => $row["ordernumber"],
+                "text" => $row["ordernumber"],
+                "currency" => $row["currency"]
+            );
+        }
+
+        $result = array(
+            "results" => $result_data,
+            "pagination" => array(
+                "more" => false
+            )
+        );
+        echo Tools::jsonEncode($result);
     }
 
     /**

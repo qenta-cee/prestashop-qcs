@@ -118,7 +118,7 @@ class WirecardCheckoutSeamlessTransaction extends ObjectModel
     {
         $db = Db::getInstance();
 
-        $db->insert('wirecard_checkout_seamless_tx',array(
+        $db->insert('wirecard_checkout_seamless_tx', array(
             'id_order' => $id_order === null ? 'NULL' : (int)$id_order,
             'id_cart' => (int)$id_cart,
             'paymentname' => pSQL($paymentname),

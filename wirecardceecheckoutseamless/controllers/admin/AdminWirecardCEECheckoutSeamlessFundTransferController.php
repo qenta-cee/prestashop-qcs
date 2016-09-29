@@ -181,9 +181,9 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
 
         $this->fields_value = array(
             'ajaxUrl' => $this->context->link->getAdminLink(
-                    'AdminModules'
-                ) . '&configure=' . $this->module->name . '&tab_module=' . $this->module->tab . '&module_name='
-                . $this->module->name
+                'AdminModules'
+            ) . '&configure=' . $this->module->name . '&tab_module=' . $this->module->tab . '&module_name='
+            . $this->module->name
         );
 
         return parent::renderForm();
@@ -282,35 +282,36 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
                     $existingOrderDetails = $this->getExistingOrderDetails(Tools::getValue('sourceOrderNumber'));
 
                     Db::getInstance()->insert(
-                        'wirecard_checkout_seamless_tx', array(
-                                                           'id_order' => (int)$existingOrderDetails['id_order'],
-                                                           'id_cart' => (int)$existingOrderDetails['id_cart'],
-                                                           'carthash' => pSQL($existingOrderDetails['carthash']),
-                                                           'ordernumber' => (Tools::strlen(
-                                                               Tools::getValue('orderNumber')
-                                                           )
-                                                               ? pSQL(Tools::getValue('orderNumber'))
-                                                               : pSQL($ret->getCreditNumber())),
-                                                           'creditnumber' => (int)$ret->getCreditNumber(),
-                                                           'orderreference' => pSQL(
-                                                               $existingOrderDetails['orderreference']
-                                                           ),
-                                                           'paymentname' => pSQL($existingOrderDetails['paymentname']),
-                                                           'paymentmethod' => pSQL(
-                                                               $existingOrderDetails['paymentmethod']
-                                                           ),
-                                                           'paymentstate' => 'CREDIT',
-                                                           'amount' => -(float)Tools::getValue('amount'),
-                                                           'currency' => pSQL(Tools::getValue('currency')),
-                                                           'request' => pSQL(
-                                                               Tools::jsonEncode($requestData)
-                                                           ),
-                                                           'response' => pSQL(
-                                                               Tools::jsonEncode($ret->getResponse())
-                                                           ),
-                                                           'status' => 'ok',
-                                                           'created' => 'NOW()'
-                                                       )
+                        'wirecard_checkout_seamless_tx',
+                        array(
+                            'id_order' => (int)$existingOrderDetails['id_order'],
+                            'id_cart' => (int)$existingOrderDetails['id_cart'],
+                            'carthash' => pSQL($existingOrderDetails['carthash']),
+                            'ordernumber' => (Tools::strlen(
+                                Tools::getValue('orderNumber')
+                            )
+                                ? pSQL(Tools::getValue('orderNumber'))
+                                : pSQL($ret->getCreditNumber())),
+                            'creditnumber' => (int)$ret->getCreditNumber(),
+                            'orderreference' => pSQL(
+                                $existingOrderDetails['orderreference']
+                            ),
+                            'paymentname' => pSQL($existingOrderDetails['paymentname']),
+                            'paymentmethod' => pSQL(
+                                $existingOrderDetails['paymentmethod']
+                            ),
+                            'paymentstate' => 'CREDIT',
+                            'amount' => -(float)Tools::getValue('amount'),
+                            'currency' => pSQL(Tools::getValue('currency')),
+                            'request' => pSQL(
+                                Tools::jsonEncode($requestData)
+                            ),
+                            'response' => pSQL(
+                                Tools::jsonEncode($ret->getResponse())
+                            ),
+                            'status' => 'ok',
+                            'created' => 'NOW()'
+                        )
                     );
                 }
             }

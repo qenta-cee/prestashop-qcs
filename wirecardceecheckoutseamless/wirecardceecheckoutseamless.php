@@ -1157,7 +1157,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         }
     }
 
-    public function ajaxProcessGetOrdersSelect2(){
+    public function ajaxProcessGetOrdersSelect2()
+    {
         $term = Tools::getValue('q');
         if (!Tools::strlen($term)) {
             $term = '';
@@ -2402,7 +2403,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      */
     public function computeCartHash(Cart $cart)
     {
-        return hash_hmac('sha512',$cart->getOrderTotal() + $cart->id_currency + $cart->id_customer + count($cart->getProducts()),'nR160WQkex');
+        return Tools::hash_hmac(
+            'sha512',
+            $cart->getOrderTotal() + $cart->id_currency + $cart->id_customer + count($cart->getProducts()),
+            'nR160WQkex'
+        );
     }
 
     /**

@@ -2402,7 +2402,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      */
     public function computeCartHash(Cart $cart)
     {
-        return sha1($cart->getOrderTotal() + $cart->id_currency + $cart->id_customer + count($cart->getProducts()));
+        return hash_hmac('sha512',$cart->getOrderTotal() + $cart->id_currency + $cart->id_customer + count($cart->getProducts()),'nR160WQkex');
     }
 
     /**

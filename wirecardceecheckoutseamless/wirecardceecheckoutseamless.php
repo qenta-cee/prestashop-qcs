@@ -121,7 +121,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Wirecard CEE';
         $this->controllers = array(
             'confirm',
@@ -859,31 +859,15 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         }
 
         $this->installTabs();
-        if (!Db::getInstance()->execute(
-            '
-        CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` (
-            `id_tx` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `id_order` INT(10) NULL,
-            `id_cart` INT(10) UNSIGNED NOT NULL,
-            `carthash` VARCHAR(255),
-            `ordernumber` VARCHAR(32) NULL,
-            `orderreference` VARCHAR(128) NULL,
-            `paymentname` VARCHAR(32) NULL,
-            `paymentmethod` VARCHAR(32) NOT NULL,
-            `paymentstate` VARCHAR(32) NOT NULL,
-            `gatewayreference` VARCHAR(32) NULL,
-            `amount` FLOAT NOT NULL,
-            `currency` VARCHAR(3) NOT NULL,
-            `message` VARCHAR(255) NULL,
-            `request` TEXT NULL,
-            `response` TEXT NULL,
-            `status` ENUM (\'ok\', \'error\') NOT NULL DEFAULT \'ok\',
-            `created` DATETIME NOT NULL,
-            `modified` DATETIME NULL,
-            PRIMARY KEY (`id_tx`)
-        ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8'
-        )
-        ) {
+
+
+        if ($this->createTable())
+        {
+            return false;
+        }
+
+        if (!$this->addMissingColumns())
+        {
             return false;
         }
 
@@ -954,6 +938,87 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         }
 
         return true;
+    }
+
+    private function getColumnDefs()
+    {
+        return array(
+            "id_tx" => array("INT(10) UNSIGNED", "NOT NULL", "AUTO_INCREMENT"),
+            "id_order" => array("INT(10)", "NULL"),
+            "id_cart" => array("INT(10) UNSIGNED", "NOT NULL"),
+            "carthash" => array("VARCHAR(255)"),
+            "ordernumber" => array("VARCHAR(32)", "NULL"),
+            "creditnumber" => array("INT(9)", "NULL"),
+            "orderreference" => array("VARCHAR(128)", "NULL"),
+            "paymentname" => array("VARCHAR(32)", "NULL"),
+            "paymentmethod" => array("VARCHAR(32)", "NOT NULL"),
+            "paymentstate" => array("VARCHAR(32)", "NOT NULL"),
+            "gatewayreference" => array("VARCHAR(32)", "NULL"),
+            "amount" => array("FLOAT", "NOT NULL"),
+            "currency" => array("VARCHAR(3)", "NOT NULL"),
+            "message" => array("VARCHAR(255)", "NULL"),
+            "request" => array("TEXT", "NULL"),
+            "response" => array("TEXT", "NULL"),
+            "status" => array("ENUM ('ok', 'error')", "NOT NULL", "DEFAULT 'ok'"),
+            "created" => array("DATETIME", "NOT NULL"),
+            "modified" => array("DATETIME", "NULL"),
+        );
+    }
+
+    private function createTable()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS  `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` (';
+        foreach ($this->getColumnDefs() as $column => $definitions)
+        {
+            $sql .= "\n"."\t" . $column . ' ';
+            foreach ($definitions as $definition)
+            {
+                $sql .= $definition . ' ';
+            }
+            $sql .= ',';
+        }
+        $sql .= "\n".'PRIMARY KEY (`id_tx`)';
+        $sql .= "\n" . ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;';
+
+        return Db::getInstance()->execute($sql);
+    }
+
+    /**
+     * @return bool
+     */
+    private function addMissingColumns()
+    {
+        $columns_db = Db::getInstance()->ExecuteS('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx`');
+        $columns = array();
+
+        $column_definitions = $this->getColumnDefs();
+
+        $sql = null;
+        if($columns_db)
+        {
+            $sql = 'ALTER TABLE `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` ';
+            foreach($columns_db as $column){
+                $columns[] = $column['Field'];
+            }
+
+            foreach($column_definitions as $column=>$definitions)
+            {
+                if(!in_array($column, $columns))
+                {
+                    $sql .= "\n".'ADD COLUMN `'.$column.'` ';
+                    foreach($definitions as $definition)
+                    {
+                        $sql .= $definition.' ';
+                    }
+                    $sql = rtrim($sql, " ");
+                    $sql .= ',';
+                }
+            }
+
+            $sql = rtrim($sql, ",").";";
+
+        }
+        return $sql == null ? true : Db::getInstance()->execute($sql);
     }
 
     /**
@@ -1119,6 +1184,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      */
     public function getContent()
     {
+        $this->createTable();
         if (Tools::isSubmit('ajax')) {
             return $this->postProcess();
         } else {

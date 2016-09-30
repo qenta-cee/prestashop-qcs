@@ -861,7 +861,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->installTabs();
 
 
-        if ($this->createTable())
+        if (!$this->createTable())
         {
             return false;
         }

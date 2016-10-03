@@ -65,13 +65,14 @@ $(function() {
     $(document).ready(function(){
         $('#sourceOrderNumber').select2({
             ajax: {
-                url:'../modules/wirecardceecheckoutseamless/ajax.php',
+                url:$("#ajaxUrl").val(),
                 dataType: 'json',
                 type: 'post',
                 delay:250,
                 data: function (term,page) {
                     return {
-                        method: 'getOrdersSelect2',
+                        ajax: true,
+                        action: 'GetOrdersSelect2',
                         q: term,
                         page: page
                     };

@@ -105,6 +105,10 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
             ),
             'input' => array(
                 array(
+                    'type' => 'hidden',
+                    'name' => 'ajaxUrl'
+                ),
+                array(
                     'type' => 'select',
                     'label' => $this->l('Currency:'),
                     'desc' => sprintf($fieldNoteFmt, '/request_parameters#currency'),
@@ -175,6 +179,13 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
             )
         );
 
+        $this->fields_value = array(
+            'ajaxUrl' => $this->context->link->getAdminLink(
+                'AdminModules'
+            ) . '&configure=' . $this->module->name . '&tab_module=' . $this->module->tab . '&module_name='
+            . $this->module->name
+        );
+
         return parent::renderForm();
     }
 
@@ -193,11 +204,11 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
                 $this->errors[] = Tools::displayError('Please enter a valid amount');
             }
 
-            if (!Tools::substr(Tools::getValue("sourceOrderNumber"))) {
+            if (!Tools::strlen(Tools::getValue("sourceOrderNumber"))) {
                 $this->errors[] = Tools::displayError('Please enter an order number');
             }
 
-            if (!Tools::substr(Tools::getValue("orderDescription"))) {
+            if (!Tools::strlen(Tools::getValue("orderDescription"))) {
                 $this->errors[] = Tools::displayError('Please enter an order description');
             }
 
@@ -270,25 +281,38 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
                     $this->confirmations[] = $this->l('Credit number: ' . $ret->getCreditNumber());
                     $existingOrderDetails = $this->getExistingOrderDetails(Tools::getValue('sourceOrderNumber'));
 
-                    $sql = 'INSERT INTO ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx (
-                        id_order, id_cart, carthash, ordernumber, creditnumber, orderreference,
-                        paymentname, paymentmethod, paymentstate, amount, currency, request, response, status, created
-                        ) VALUES (
-                        ' . $existingOrderDetails['id_order'] . ', ' . $existingOrderDetails['id_cart'] . ',
-                        "' . $existingOrderDetails['carthash'] . '",
-                        "' . (Tools::strlen(Tools::getValue('orderNumber'))
-                                ? Tools::getValue('orderNumber')
-                                : $ret->getCreditNumber()) . '",
-                        ' . $ret->getCreditNumber() . ', 
-                        "' . $existingOrderDetails['orderreference'] . '",
-                        "' . $existingOrderDetails['paymentname'] . '", 
-                        "' . $existingOrderDetails['paymentmethod'] . '", 
-                        "CREDIT",
-                        -' . Tools::getValue('amount') . ', 
-                        "' . Tools::getValue('currency') . '", 
-                        "' . pSQL(Tools::jsonEncode($requestData)) . '",
-                        "' . pSQL(Tools::jsonEncode($ret->getResponse())) . '", "ok",NOW())';
-                    Db::getInstance()->execute($sql);
+                    Db::getInstance()->insert(
+                        'wirecard_checkout_seamless_tx',
+                        array(
+                            'id_order' => (int)$existingOrderDetails['id_order'],
+                            'id_cart' => (int)$existingOrderDetails['id_cart'],
+                            'carthash' => pSQL($existingOrderDetails['carthash']),
+                            'ordernumber' => (Tools::strlen(
+                                Tools::getValue('orderNumber')
+                            )
+                                ? pSQL(Tools::getValue('orderNumber'))
+                                : pSQL($ret->getCreditNumber())),
+                            'creditnumber' => (int)$ret->getCreditNumber(),
+                            'orderreference' => pSQL(
+                                $existingOrderDetails['orderreference']
+                            ),
+                            'paymentname' => pSQL($existingOrderDetails['paymentname']),
+                            'paymentmethod' => pSQL(
+                                $existingOrderDetails['paymentmethod']
+                            ),
+                            'paymentstate' => 'CREDIT',
+                            'amount' => -(float)Tools::getValue('amount'),
+                            'currency' => pSQL(Tools::getValue('currency')),
+                            'request' => pSQL(
+                                Tools::jsonEncode($requestData)
+                            ),
+                            'response' => pSQL(
+                                Tools::jsonEncode($ret->getResponse())
+                            ),
+                            'status' => 'ok',
+                            'created' => 'NOW()'
+                        )
+                    );
                 }
             }
         }

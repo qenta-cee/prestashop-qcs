@@ -323,7 +323,7 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
     private function getExistingOrderDetails($ordernumber)
     {
         return Db::getInstance()->getRow(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx WHERE ordernumber = ' . $ordernumber
+            'SELECT * FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx WHERE ordernumber = ' . pSQL($ordernumber)
         );
     }
 }

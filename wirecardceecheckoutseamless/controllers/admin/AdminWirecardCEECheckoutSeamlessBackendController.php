@@ -291,7 +291,7 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
 
             $id_order = Db::getInstance()->getValue(
                 'SELECT id_order FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx 
-            WHERE ordernumber = ' . $transaction->ordernumber
+            WHERE ordernumber = ' . pSQL($transaction->ordernumber)
             );
 
             switch (Tools::getValue('submitWcsBackendOp')) {

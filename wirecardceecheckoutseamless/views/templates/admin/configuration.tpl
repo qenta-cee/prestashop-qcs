@@ -81,7 +81,8 @@
         $('#doWcsConfigTest').on('click', function() {
             $.ajax({
                 type: 'POST',
-                url: '{$ajax_configtest_url|escape:'url':'UTF-8'}',
+                {** this url doesn't work when escaped *}
+                url: '{$ajax_configtest_url}',
                 dataType: 'json',
                 data: {
                     controller: 'AdminModules',

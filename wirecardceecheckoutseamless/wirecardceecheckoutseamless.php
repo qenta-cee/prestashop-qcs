@@ -861,13 +861,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->installTabs();
 
 
-        if (!$this->createTable())
-        {
+        if (!$this->createTable()) {
             return false;
         }
 
-        if (!$this->addMissingColumns())
-        {
+        if (!$this->addMissingColumns()) {
             return false;
         }
 
@@ -968,11 +966,9 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     private function createTable()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS  `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` (';
-        foreach ($this->getColumnDefs() as $column => $definitions)
-        {
+        foreach ($this->getColumnDefs() as $column => $definitions) {
             $sql .= "\n"."\t" . $column . ' ';
-            foreach ($definitions as $definition)
-            {
+            foreach ($definitions as $definition) {
                 $sql .= $definition . ' ';
             }
             $sql .= ',';
@@ -994,20 +990,16 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $column_definitions = $this->getColumnDefs();
 
         $sql = null;
-        if($columns_db)
-        {
+        if ($columns_db) {
             $sql = 'ALTER TABLE `' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx` ';
-            foreach($columns_db as $column){
+            foreach ($columns_db as $column) {
                 $columns[] = $column['Field'];
             }
 
-            foreach($column_definitions as $column=>$definitions)
-            {
-                if(!in_array($column, $columns))
-                {
+            foreach ($column_definitions as $column => $definitions) {
+                if (!in_array($column, $columns)) {
                     $sql .= "\n".'ADD COLUMN `'.$column.'` ';
-                    foreach($definitions as $definition)
-                    {
+                    foreach ($definitions as $definition) {
                         $sql .= $definition.' ';
                     }
                     $sql = rtrim($sql, " ");

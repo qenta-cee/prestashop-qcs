@@ -196,7 +196,7 @@ class Client implements ClientInterface
             'allow_redirects' => true,
             'exceptions'      => true,
             'decode_content'  => true,
-            'verify'          => false
+            'verify'          => true
         );
 
         // Use the standard Linux HTTP_PROXY and HTTPS_PROXY if set

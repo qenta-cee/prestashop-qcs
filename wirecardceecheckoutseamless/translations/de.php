@@ -129,6 +129,7 @@ $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutsea
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_f0258b6685684c113bad94d91b8fa02a'] = 'Demo';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_d0ccf0a15fee28861a16f70fcf229daf'] = 'Test 3D';
+$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_861fa26bb8df61cbb6aef5b78aa28909'] = 'Ungültige Kundennummer.';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>adminwirecardceecheckoutseamlessbackendcontroller_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>adminwirecardceecheckoutseamlessbackendcontroller_ec53a8c4f07baed5d8825072c89799be'] = 'Status';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>adminwirecardceecheckoutseamlessbackendcontroller_b2f40690858b404ed10e62bdf422c704'] = 'Betrag';

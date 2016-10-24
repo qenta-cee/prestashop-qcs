@@ -107,10 +107,19 @@
     {if $backendEnabled}
     $(document).ready(function(){
         var inp = $("#WCS_BASICDATA_BACKENDPW");
+        var customerIdInp = $("#WCS_BASICDATA_CUSTOMER_ID");
         enableDisableBackendOperations(inp,true);
+        correctCustomerId(customerIdInp);
         inp.on("keyup change paste",function(){
             enableDisableBackendOperations($(this));
         });
+        customerIdInp.on("keyup change paste", function(){
+            $(this).closest(".input-group").toggleClass("has-error", !correctCustomerId($(this)));
+        });
+
+        function correctCustomerId(inp){
+            return /^D2[0-8]\d{ldelim}4{rdelim}|9[5-9]\d{ldelim}3{rdelim}$/.test(inp.val());
+        }
 
         function enableDisableBackendOperations(inp,init=false){
             if(inp.val().length==0){

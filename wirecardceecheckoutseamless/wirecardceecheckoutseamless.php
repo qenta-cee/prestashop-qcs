@@ -1296,7 +1296,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     public function ajaxTestConfig()
     {
         $status = 'ok';
-        $message = '';
+        $message = $this->l('The merchant configuration was successfuly tested.');
         $client = new WirecardCheckoutSeamlessBackend($this);
         if (!$client->isAvailable()) {
             $status = 'failed';
@@ -1517,9 +1517,9 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     }
                 }
 
-                if($parameter['name'] == 'customer_id'){
+                if ($parameter['name'] == 'customer_id' && $configmode == 'production') {
                     preg_match("/^D2[0-8]\d{4}|9[5-9]\d{3}$/", $val, $output);
-                    if(count($output)!==1){
+                    if (count($output) !== 1) {
                         $this->postErrors[] = $this->l('Incorrect customer ID.');
                     }
                 }

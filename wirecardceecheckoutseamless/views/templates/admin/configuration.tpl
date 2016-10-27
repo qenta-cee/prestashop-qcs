@@ -108,14 +108,29 @@
     $(document).ready(function(){
         var inp = $("#WCS_BASICDATA_BACKENDPW");
         var customerIdInp = $("#WCS_BASICDATA_CUSTOMER_ID");
+        var modeSelect = $("#WCS_BASICDATA_CONFIGMODE");
+
         enableDisableBackendOperations(inp,true);
         correctCustomerId(customerIdInp);
+        modeSelectED(modeSelect);
         inp.on("keyup change paste",function(){
             enableDisableBackendOperations($(this));
         });
         customerIdInp.on("keyup change paste", function(){
             $(this).closest(".input-group").toggleClass("has-error", !correctCustomerId($(this)));
         });
+        modeSelect.on('blur change',function(){
+            modeSelectED($(this));
+        });
+
+        $("#configuration_form").submit(function(e){
+            $('#WCS_BASICDATA_CUSTOMER_ID, #WCS_BASICDATA_SHOP_ID, #WCS_BASICDATA_SECRET').prop('disabled',false);
+        });
+
+        function modeSelectED(e){
+            var state = e.val()=='production';
+            $('#WCS_BASICDATA_CUSTOMER_ID, #WCS_BASICDATA_SHOP_ID, #WCS_BASICDATA_SECRET').prop('disabled',!state);
+        }
 
         function correctCustomerId(inp){
             return /^D2[0-8]\d{ldelim}4{rdelim}|9[5-9]\d{ldelim}3{rdelim}$/.test(inp.val());

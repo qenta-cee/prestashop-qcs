@@ -109,6 +109,7 @@ $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutsea
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_10df24aa3fd58dc8e0e553c86bce8f24'] = 'muss eine Zahl sein.';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Aktiviert';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_b9f5c797ebbf55adccdd8539a65a0241'] = 'Deaktiviert';
+$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_d52eb54707178a20a3e3f29ce4c9f9c7'] = 'Die Händlerkonfiguration wurde erfolgreich getestet.';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_ab066b3292d8ab61ef3b5c77169cdd19'] = 'Weitere Information';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_f4f70727dc34561dfde1a3c529b6205c'] = 'Einstellungen';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_c9cc8cce247e49bae79f15173ce97354'] = 'Speichern';

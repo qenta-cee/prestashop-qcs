@@ -186,6 +186,9 @@ class WirecardCheckoutSeamlessPayment
             $this->getMethod()
         );
 
+        /** @var Customer $customer */
+        $customer = new Customer($cart->id_customer);
+
         $init = new \WirecardCEE_QMore_FrontendClient($module->getConfigArray());
         $init->setPluginVersion($module->getPluginVersion());
         $init->setConfirmUrl($module->getConfirmUrl());
@@ -206,6 +209,7 @@ class WirecardCheckoutSeamlessPayment
             ->setWindowName($module->getWindowName())
             ->setConsumerData($this->getConsumerData($cart))
             ->setStorageId($module->getStorageId())
+            ->createConsumerMerchantCrmId($customer->email)
             ->setOrderIdent($id_cart);
 
         // using legacy basket parameters
@@ -217,8 +221,6 @@ class WirecardCheckoutSeamlessPayment
         }
 
         if ($this->module->getConfigValue('options', 'sendconfirmationemail')) {
-            /** @var Customer $customer */
-            $customer = new Customer($cart->id_customer);
             $init->setConfirmMail($customer->email);
         }
 

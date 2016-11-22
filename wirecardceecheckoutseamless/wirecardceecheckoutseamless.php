@@ -122,7 +122,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
         $this->version = '1.0.1';
-        $this->author = 'Wirecard CEE';
+        $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
             'payment',

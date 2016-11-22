@@ -32,8 +32,8 @@
 <br>
 <img src="../modules/wirecardceecheckoutseamless/wirecardceecheckoutseamless.png" style="float:left; margin: 10px 15px 10px 0;" width="90"
      height="20">
-<p><strong>{l s='Module for payment using Wirecard Checkout Page.' mod='wirecardceecheckoutseamless'}</strong></p>
-<p>{l s='Wirecard Checkout Page supports all popular payment methods and fulfills PCI DSS compliance.'
+<p><strong>{l s='Module for payment using Wirecard Checkout Seamless.' mod='wirecardceecheckoutseamless'}</strong></p>
+<p>{l s='Wirecard Checkout Seamless supports all popular payment methods and fulfills PCI DSS compliance.'
     mod='wirecardceecheckoutseamless'}</p>
 <br>
 <br>

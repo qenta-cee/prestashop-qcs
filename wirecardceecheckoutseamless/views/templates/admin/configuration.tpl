@@ -34,7 +34,7 @@
                 class="wirecardcheckoutseamless-logo" src="{$module_dir|escape:'htmlall':'UTF-8'}views/img/wirecard-logo.png" alt="Wirecard CEE"
                 border="0"/>
     </a><br/>
-    <p class="wirecardcheckoutseamless-intro">Wirecard CEE - Your Full Service Payment Provider - Comprehensive
+    <p class="wirecardcheckoutseamless-intro">Wirecard - Your Full Service Payment Provider - Comprehensive
         solutions from one single source</p>
     Wirecard is one of the
     world´s leading providers of outsourcing and white label solutions for electronic payment

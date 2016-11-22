@@ -122,7 +122,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
         $this->version = '1.0.1';
-        $this->author = 'Wirecard CEE';
+        $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
             'payment',
@@ -1221,7 +1221,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         if (!Tools::strlen($term)) {
             $term = '';
         } else {
-            $term = 'AND ordernumber LIKE "' . $term . '%"';
+            $term = 'AND ordernumber LIKE "' . pSQL($term) . '%"';
         }
 
         $page = Tools::getValue('page');
@@ -1517,7 +1517,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     }
                 }
 
-                if ($parameter['name'] == 'customer_id' && $configmode == 'production') {
+                if ($parameter['name'] == 'customer_id') {
                     preg_match("/^D2[0-8]\d{4}|9[5-9]\d{3}$/", $val, $output);
                     if (count($output) !== 1) {
                         $this->postErrors[] = $this->l('Incorrect customer ID.');

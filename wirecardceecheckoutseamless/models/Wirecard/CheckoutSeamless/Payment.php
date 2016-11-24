@@ -304,7 +304,7 @@ class WirecardCheckoutSeamlessPayment
         $consumerData->setIpAddress($this->getConsumerIpAddress());
         $consumerData->setUserAgent($this->getConsumerUserAgent());
 
-        if (Tools::strlen($customer->birthday)) {
+        if (Tools::strlen($customer->birthday) && $customer->birthday !== "0000-00-00") {
             $dob = new DateTime($customer->birthday);
             $consumerData->setBirthDate($dob);
         }

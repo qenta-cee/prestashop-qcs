@@ -50,15 +50,31 @@ class WirecardCEECheckoutSeamlessPaymentExecutionModuleFrontController extends M
 
         $cart = $this->context->cart;
 
+
+
         $this->context->smarty->assign(array(
             'nbProducts'           => $cart->nbProducts(),
-            'total'                => $cart->getOrderTotal(true, Cart::BOTH),
+            'total'                => Tools::displayPrice($cart->getOrderTotal(true, Cart::BOTH)),
             'paymentName'          => Tools::getValue('paymentName'),
             'paymentType'          => Tools::getValue('paymentType'),
             'financialinstitution' => Tools::getValue('financialinstitution', ''),
             'birthdate'            => Tools::getValue('birthdate', '')
         ));
 
-        $this->setTemplate('payment_execution.tpl');
+        $this->setTemplate('module:wirecardceecheckoutseamless/views/templates/front/payment_execution.tpl');
+    }
+
+    public function setMedia()
+    {
+        parent::setMedia();
+
+        $this->registerJavascript(
+            'module-wirecardceecheckoutseamless-scripts',
+            'modules/wirecardceecheckoutseamless/js/scripts.js',
+            [
+                'priority' => 201,
+                'attribute' => 'async',
+            ]
+        );
     }
 }

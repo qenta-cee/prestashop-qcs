@@ -1,8 +1,24 @@
 $(document).ready(function () {
-  $('#pt_wirecardcheckoutseamless_pay_obligation').on('click', function () {
+  $('#pt_wirecardcheckoutseamless_pay_obligation').on('submit', function () {
     $('#pt_wirecardcheckoutseamless_pay_obligation').prop( "disabled", true );
   });
+
+  checkConditions();
 });
+
+function checkConditions() {
+  $("#conditions-to-approve input[type=checkbox]").each(function(){
+    $(this).on("change",function(){
+      if($(this).is(":checked")) {
+        $(".js-payment-option-form:visible button:visible").prop("disabled",false);
+      }
+      else {
+        $(".js-payment-option-form:visible button:visible").prop("disabled",true);
+        return false;
+      }
+    });
+  });
+}
 
 function wirecardceecardsubmit(event, elem) {
   event.stopPropagation();

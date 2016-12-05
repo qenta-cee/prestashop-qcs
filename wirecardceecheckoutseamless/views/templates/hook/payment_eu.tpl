@@ -1,12 +1,12 @@
 {*
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH 
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of 
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public 
+ * (status on delivery) of the corresponding shop system. They are under General Public
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
@@ -30,83 +30,22 @@
  *}
 
 {*{$paymentOption->getMethod()|print_r}*}
+{if $jsUrl != false}
+  <p><script src="{$jsUrl}"></script></p>
+{/if}
 
-<form id="wirecardcheckoutseamless_payment_form_{$current.name|escape:'htmlall':'UTF-8'}" class="payment_option_form wcs_payment_form_eu" action="#" method="post">
-    @hiddenSubmit
+<form onsubmit="return wirecardceecardsubmit(event,this)" id="payment_form" class="payment_form_{$current.name}" action="{$action}" method="post">
+  <input type="hidden" name="isSeamless" value="{$current.payment->isSeamless()}">
+  <input type="hidden" name="currentName" value="{$current.name}">
+  <input type="hidden" name="currentMethod" value="{$current.method}">
     {if $current.template}
     {include $current.template}
     {/if}
+  <div class="form-group" style="display: none">
+    <div class="alert alert-danger" role="alert">
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary center-block" type="submit">{l s='Order with obligation to pay' mod='wirecardceecheckoutseamless'}</button>
+  </div>
 </form>
-
-<script type="text/javascript">
-    $(function () {
-
-        $('#wirecardcheckoutseamless_payment_form_{$current.name}').on('submit', function (e) {
-
-            var href = {$link->getModuleLink('wirecardceecheckoutseamless', 'paymentExecution', ['paymentType' => $current.name, 'paymentName' => $current.label], true)|json_encode};
-            var hasError = false;
-
-            $('#pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox').css('display', 'none');
-            $('#pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msglist').empty();
-
-        {if $current.payment->isSeamless()}
-
-                var paymentData = {
-                    'paymentType': {$current.method|json_encode}
-                };
-
-                $('#pt_wcs_{$current.name}_data [data-wcs-fieldname]').each(function (index, value) {
-
-                    if (!wcsValidateField(this))
-                        hasError = true;
-
-                    paymentData[$(this).data('wcs-fieldname')] = $(this).val()
-                });
-
-                if (hasError)
-                    return false;
-
-                wirecardCheckoutSeamlessStore(paymentData, $('#pt_wirecardcheckoutseamless_{$current.name}_msglist'), function (response) {
-                    document.location.href = href;
-                }, function (response) {
-                    $('#pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox').css('display', 'block');
-                });
-
-            {else}
-
-                if (typeof wcs{$current.name|escape:'htmlall':'UTF-8'}Validate != "undefined" && !wcs{$current.name|escape:'htmlall':'UTF-8'}Validate($('#pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox')))
-                    return false;
-
-                var additionalData = { };
-
-
-                $('#pt_wcs_{$current.name}_data [data-wcs-fieldname]').each(function (index, value) {
-
-                    if (!wcsValidateField(this))
-                        hasError = true;
-
-                    additionalData[$(this).data('wcs-fieldname')] = $(this).val()
-                });
-
-                if (hasError)
-                    return false;
-
-                href += '&' + $.param(additionalData);
-
-                document.location.href = href;
-
-            {/if}
-
-            return false;
-        });
-
-        {if $current.payment->isSeamless()}
-        $('#wirecardcheckoutseamless_payment_form_{$current.name}').parent().parent().children('p').children('a:first').on('click', function (e) {
-            $('#wirecardcheckoutseamless_payment_form_{$current.name|escape:'htmlall':'UTF-8'}').parent().css('display', 'block');
-            $('#wirecardcheckoutseamless_payment_form_{$current.name|escape:'htmlall':'UTF-8'}').css('display', 'block');
-            return true;
-        });
-        {/if}
-    });
-
-</script>

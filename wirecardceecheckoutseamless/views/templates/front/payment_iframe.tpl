@@ -1,12 +1,12 @@
 {*
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH 
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of 
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public 
+ * (status on delivery) of the corresponding shop system. They are under General Public
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
@@ -29,52 +29,65 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  *}
 
-<style type="text/css">
-	#header {
-		z-index: 99 !important;
-	}
-</style>
+{extends file='page.tpl'}
+{block name='content'}
 
-{capture name=path}
-	<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}" title="{l s='Go back to checkout' mod='wirecardceecheckoutseamless'}">{l s='Checkout' mod='wirecardceecheckoutseamless'}</a><span class="navigation-pipe">{$navigationPipe|escape:'htmlall':'UTF-8'}</span>{l s='Wirecard Checkout Seamless' mod='wirecardceecheckoutseamless'}
-{/capture}
+<section id="content">
+  <div class="card card-block">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="page-heading">{l s='Order summary' mod='wirecardceecheckoutseamless'}</h1>
 
-<h1 class="page-heading">{l s='Order summary' mod='wirecardceecheckoutseamless'}</h1>
+        {if isset($nbProducts) && $nbProducts <= 0}
+          <p class="alert alert-warning">{l s='Your shopping cart is empty.' mod='wirecardceecheckoutseamless'}</p>
+        {else}
+          <form id="wirecardceecheckoutseamless_transaction" action="{url}module/wirecardceecheckoutseamless/payment?paymentType={$paymentType}&financialinstitution={$financialinstitution}&birthdate={$birthdate}" method="post">
+            <div class="box">
+              <h3 class="page-subheading">{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}</h3>
+              <p class="">
+                <strong class="dark">
+                  {l s='You have chosen to pay with ' mod='wirecardceecheckoutseamless'}{$paymentName}.
+                </strong>
+              </p>
+              <p>
+                - {l s='Total amount of your order:' mod='wirecardceecheckoutseamless'}
+                <span id="amount" class="price">{$total}</span>
+              </p>
+              <p>- {l s='Please confirm your order by clicking "Order with obligation to pay".' mod='wirecardceecheckoutseamless'}</p>
+            </div>
+            <p class="cart_navigation clearfix" id="cart_navigation">
+              <a href="{url}order" class="button-exclusive btn btn-default">
+                <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
+              </a>
+              <button type="submit" id="pt_wirecardcheckoutseamless_pay_obligation" class="btn btn-primary">
+                <span>{l s='Order with obligation to pay' mod='wirecardceecheckoutseamless'}</span>
+              </button>
+            </p>
+          </form>
 
-{assign var='current_step' value='payment'}
-{include file="$tpl_dir./order-steps.tpl"}
+        {/if}
 
-{if isset($nbProducts) && $nbProducts <= 0}
-	<p class="alert alert-warning">{l s='Your shopping cart is empty.' mod='wirecardceecheckoutseamless'}</p>
-{else}
-	<form action="{$link->getModuleLink('wirecardceecheckoutseamless', 'payment', ['paymentType' => $paymentType], true)|escape:'html':'UTF-8'}" method="post">
-		<div class="box">
-			<h3 class="page-subheading">{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}</h3>
-			<p class="">
-				<strong class="dark">
-					{l s='You have chosen to pay with ' mod='wirecardceecheckoutseamless'}{$paymentName|escape:'htmlall':'UTF-8'}.
-				</strong>
-			</p>
-			<p>
-				- {l s='Total amount of your order:' mod='wirecardceecheckoutseamless'}
-				<span id="amount" class="price">{displayPrice price=$total}</span>
-			</p>
-			<p>- {l s='Please confirm your order by clicking "Order with obligation to pay".' mod='wirecardceecheckoutseamless'}</p>
-		</div>
-		<p class="cart_navigation clearfix" id="cart_navigation">
-			<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}" class="button-exclusive btn btn-default">
-				<i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
-			</a>
-		</p>
-	</form>
-{/if}
+        <a id="wcsIframeBox" href="{$redirectUrl}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
 
-<a id="wcsIframeBox" href="{$redirectUrl|escape:'htmlall':'UTF-8'}&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=600&width=600&modal=true" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-{addJsDef tb_pathToImage=$img_ps_dir|cat:'loadingAnimation.gif'}
+<div class="modal fade" id="paymentWcsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <iframe width="100%" height="600px" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 
-<script type="text/javascript">
-	$(document).ready(function () {
-		tb_show($('#wcsIframeBox').attr('title'), $('#wcsIframeBox').attr('href'), false);
-	});
-</script>
+  <script>
+    window.onload = function() {
+      showPaymentModal('{$redirectUrl}');
+    }
+  </script>
+
+{/block}

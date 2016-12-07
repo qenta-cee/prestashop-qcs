@@ -32,57 +32,35 @@
 {extends file='page.tpl'}
 {block name='content'}
 
-<section id="content">
-  <div class="card card-block">
-    <div class="row">
-      <div class="col-xs-12">
-        <h1 class="page-heading">{l s='Order summary' mod='wirecardceecheckoutseamless'}</h1>
+  <section id="content">
+    <div class="card card-block">
+      <div class="row">
+        <div class="col-xs-12">
 
-        {if isset($nbProducts) && $nbProducts <= 0}
-          <p class="alert alert-warning">{l s='Your shopping cart is empty.' mod='wirecardceecheckoutseamless'}</p>
-        {else}
-          <form id="wirecardceecheckoutseamless_transaction" action="{url}module/wirecardceecheckoutseamless/payment?paymentType={$paymentType}&financialinstitution={$financialinstitution}&birthdate={$birthdate}" method="post">
-            <div class="box">
-              <h3 class="page-subheading">{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}</h3>
-              <p class="">
-                <strong class="dark">
-                  {l s='You have chosen to pay with ' mod='wirecardceecheckoutseamless'}{$paymentName}.
-                </strong>
-              </p>
-              <p>
-                - {l s='Total amount of your order:' mod='wirecardceecheckoutseamless'}
-                <span id="amount" class="price">{$total}</span>
-              </p>
-              <p>- {l s='Please confirm your order by clicking "Order with obligation to pay".' mod='wirecardceecheckoutseamless'}</p>
-            </div>
+          {if isset($nbProducts) && $nbProducts <= 0}
+            <p class="alert alert-warning">{l s='Your shopping cart is empty.' mod='wirecardceecheckoutseamless'}</p>
+          {else}
             <p class="cart_navigation clearfix" id="cart_navigation">
               <a href="{url}order" class="button-exclusive btn btn-default">
                 <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
               </a>
-              <button type="submit" id="pt_wirecardcheckoutseamless_pay_obligation" class="btn btn-primary">
-                <span>{l s='Order with obligation to pay' mod='wirecardceecheckoutseamless'}</span>
-              </button>
+              <a id="wcsIframeBox" class="button-exclusive btn btn-default" href="{$redirectUrl}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
             </p>
-          </form>
+          {/if}
+        </div>
+      </div>
+    </div>
+  </section>
 
-        {/if}
-
-        <a id="wcsIframeBox" href="{$redirectUrl}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
-
+  <div class="modal fade" id="paymentWcsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <iframe width="100%" height="600px" frameborder="0"></iframe>
+        </div>
       </div>
     </div>
   </div>
-</section>
-
-<div class="modal fade" id="paymentWcsModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <iframe width="100%" height="600px" frameborder="0"></iframe>
-      </div>
-    </div>
-  </div>
-</div>
 
   <script>
     window.onload = function() {

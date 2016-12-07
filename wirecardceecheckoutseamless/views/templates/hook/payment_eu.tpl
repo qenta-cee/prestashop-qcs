@@ -46,6 +46,6 @@
     </div>
   </div>
   <div class="form-group">
-    <button class="btn btn-primary center-block" type="submit">{l s='Order with obligation to pay' mod='wirecardceecheckoutseamless'}</button>
+    <button class="btn btn-primary center-block" type="submit" disabled="disabled">{l s='Order with obligation to pay' mod='wirecardceecheckoutseamless'}</button>
   </div>
 </form>

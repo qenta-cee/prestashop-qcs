@@ -44,7 +44,6 @@ $(function () {
                     }
                     messageContainer.append('<li>' + htmlEntityDecode(errors[i].consumerMessage) + '</li>');
                 }
-
                 onError(response);
             }
             else {
@@ -65,10 +64,8 @@ $(function () {
         if ($(field).hasClass('is_required'))
         {
             result = ($(field).val().length > 0);
-            if (result)
-                $(field).closest('.form-group').removeClass('form-error').addClass('form-ok');
-            else
-                $(field).closest('.form-group').addClass('form-error').removeClass('form-ok');
+            if (!result)
+                $(field).closest('.form-group').addClass('has-error');
         }
 
         return result;

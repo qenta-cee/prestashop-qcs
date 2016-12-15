@@ -1,12 +1,12 @@
 {*
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH 
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of 
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public 
+ * (status on delivery) of the corresponding shop system. They are under General Public
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
@@ -32,22 +32,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<link href="{$this_path|escape:'htmlall':'UTF-8'}global.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="{$this_path}global.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 <body>
 <h3>{l s='You will be redirected in a moment.' mod='wirecardceecheckoutseamless'}</h3>
 <p>{l s='If the redirect does not work please click' mod='wirecardceecheckoutseamless'}
-	<a href="#" onclick="iframeBreakout()" > {l s='here' mod='wirecardceecheckoutseamless'}.</a>
+	<a href="{$orderConfirmation}" id="wcsRedirectAnchor" target="_parent" > {l s='here' mod='wirecardceecheckoutseamless'}.</a>
 </p>
 <script type="text/javascript">
-	// <![CDATA[
-	function iframeBreakout()
-	{ldelim}
-		parent.location.href = {$orderConfirmation|json_encode};
-	{rdelim}
-
-	iframeBreakout();
-	//]]>
+  document.getElementById("wcsRedirectAnchor").click();
 </script>
 </body>
 </html>
+

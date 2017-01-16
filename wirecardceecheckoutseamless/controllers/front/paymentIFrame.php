@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shop System Plugins - Terms of Use
  *
@@ -33,7 +34,6 @@
  * @copyright WirecardCEE
  * @license   GPLv2
  */
-
 class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
@@ -44,14 +44,16 @@ class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends Modu
      */
     public function initContent()
     {
-        $this->ssl                 = true;
+        $this->ssl = true;
         $this->display_column_left = false;
         parent::initContent();
 
-        $this->context->smarty->assign(array(
-                                           'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
-                                           'windowName'  => $this->module->getWindowName()
-                                       ));
+        $this->context->smarty->assign(
+            array(
+                'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
+                'windowName' => $this->module->getWindowName()
+            )
+        );
         unset($this->context->cookie->wcsRedirectUrl);
 
         $this->setTemplate('module:wirecardceecheckoutseamless/views/templates/front/payment_iframe.tpl');

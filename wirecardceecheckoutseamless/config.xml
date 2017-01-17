@@ -2,7 +2,7 @@
 <module>
 	<name>wirecardceecheckoutseamless</name>
 	<displayName><![CDATA[Wirecard Checkout Seamless]]></displayName>
-	<version><![CDATA[1.0.2]]></version>
+	<version><![CDATA[1.0.3]]></version>
 	<description><![CDATA[Wirecard Checkout Seamless payment module]]></description>
 	<author><![CDATA[Wirecard]]></author>
 	<tab><![CDATA[payments_gateways]]></tab>

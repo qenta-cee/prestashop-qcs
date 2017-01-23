@@ -123,7 +123,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.0';
+        $this->version = '2.0.1';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -154,7 +154,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     {
         return array(
             'basicdata' => array(
-                'tab' => 'Basicdata',
+                'tab' => $this->l('Access data'),
                 'fields' => array(
                     array(
                         'name' => 'configmode',
@@ -210,7 +210,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'options' => array(
-                'tab' => 'Options',
+                'tab' => $this->l('General settings'),
                 'fields' => array(
                     array(
                         'name' => 'order_creation',
@@ -219,8 +219,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'options' => 'getOrderCreationOptions',
                         'default' => 'before',
                         'doc' => array(
-                            $this->l('Selecting "Always", orders are created even if the payment process leads to failed payment.'),
-                            $this->l('Selecting "Only for successful payments", orders are created if the payment process was successful.')
+                            $this->l('Selecting \'Always\', orders are created even if the payment process leads to failed payment.'),
+                            $this->l('Selecting \'Only for successful payments\', orders are created if the payment process was successful.')
                         )
                     ),
                     array(
@@ -300,7 +300,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'creditcardoptions' => array(
-                'tab' => 'Credit card options',
+                'tab' => $this->l('Credit card'),
                 'fields' => array(
                     array(
                         'name' => 'pci3_dss_saq_a_enable',
@@ -396,7 +396,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'invoiceoptions' => array(
-                'tab' => 'Invoice options',
+                'tab' => $this->l('Invoice'),
                 'fields' => array(
                     array(
                         'name' => 'invoice_provider',
@@ -452,7 +452,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 18,
                         'validator' => 'numeric',
                         'cssclass' => 'fixed-width-md',
-                        'doc' => 'Only applicable for RatePay.'
+                        'doc' => $this->l('Only applicable for RatePay.')
                     ),
                     array(
                         'name' => 'invoice_amount_min',
@@ -493,7 +493,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'installmentoptions' => array(
-                'tab' => 'Installment options',
+                'tab' => $this->l('Installment'),
                 'fields' => array(
                     array(
                         'name' => 'installment_provider',
@@ -589,7 +589,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'standardpayments' => array(
-                'tab' => 'Standard payments',
+                'tab' => $this->l('Standard payments'),
                 'fields' => array(
                     array(
                         'name' => 'creditcard',
@@ -667,7 +667,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'bankingpayments' => array(
-                'tab' => 'Banking payments',
+                'tab' => $this->l('Banking payments'),
                 'fields' => array(
                     array(
                         'name' => 'eps',
@@ -754,7 +754,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'alternativepayments' => array(
-                'tab' => 'Alternative payments',
+                'tab' => $this->l('Alternative payments'),
                 'fields' => array(
                     array(
                         'name' => 'paysafecard',
@@ -803,7 +803,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'mobilepayments' => array(
-                'tab' => 'Mobile payments',
+                'tab' => $this->l('Mobile payments'),
                 'fields' => array(
                     array(
                         'name' => 'paybox',
@@ -824,7 +824,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'voucherpayments' => array(
-                'tab' => 'Voucher payments',
+                'tab' => $this->l('Voucher payments'),
                 'fields' => array(
                     array(
                         'name' => 'voucher',
@@ -1593,7 +1593,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                                 $elem['desc'] .= '<br/>';
                             }
 
-                            $elem['desc'] .= $d;
+                            $elem['desc'] .= $this->l($d);
                         }
                     } else {
                         $elem['desc'] = $this->l($f['doc']);

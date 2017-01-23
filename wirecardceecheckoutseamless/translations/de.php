@@ -15,6 +15,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c19ef62c2ccfd3c36ced2afad9e54341'] = 'Geheime Zeichenfolge, die Sie von Wirecard erhalten haben, zum Signieren und Validieren von Daten zur Prüfung der Authentizität.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_85ed9c2d056565de3fc33a938a6b3d10'] = 'Back-end-Passwort';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_23a0652a75b772865f0e4390e73a1111'] = 'Passwort für Back-end-Operationen (Toolkit).';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_dae8ace18bdcbcc6ae5aece263e14fe8'] = 'Optionen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_61464a16a2f693a427aaf095590dda56'] = 'Bestellung anlegen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_89c769bbfafa5af76db86928358b2871'] = 'Falls \"Immer\" gesetzt ist, werden Bestellungen auch bei fehlgeschlagener Zahlung angelegt.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_fb740749dd3c10a7e70ca64109b26b2e'] = 'Falls \"Nur für erfolgreiche Zahlungen\" gesetzt ist, werden Bestellungen nur für erfolgreiche Zahlungen angelegt.';
@@ -38,6 +39,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0f3ddb869453d1e0e8228618b4dd1b85'] = 'Kunden müssen die Nutzungsbedingungen von payolution während des Bezahlprozesses akzeptieren.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c899624ae3c22e48c907e1f5d439f54d'] = 'payolution mID';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_db157c664c087b88e561886a83c1369c'] = 'payolution-Händler-ID, Nicht base64 kodiert.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0f289bfb16ede2d359fc82c8007d6206'] = 'Kreditkartenoptionen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_29167de5c8579af216d8b434b82b918e'] = 'SAQ A konform';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d87cd8c30de892becae8c6649209d8f8'] = 'Falls \"Nein\" gesetzt ist, gilt der strengere SAQ A-EP. Falls \"Ja\" gesetzt ist, wird in Wirecard Checkout Seamless das \"PCI DSS SAQ A Compliance\"-Feature verwendet und es gilt der SAQ A.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d72c93cbd5dbd28b917a4d1037832958'] = 'Post / Telefonbestellung erlauben für Gruppe';
@@ -145,7 +147,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseaml
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlessfundtransfercontroller_6950810f0d2bba97a6f710c7b965b84e'] = 'Auszahlen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlessfundtransfercontroller_40447289b10a4063020b3ab5066a9b24'] = 'Auszahlung erfolgreich durchgeführt';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_86d46d7af9f146c0ed0619c5e814384b'] = 'Support Anfrage senden';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_33caa076f23f453dd4061726f3706325'] = 'An:';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_9dfba9fd7f1716544a90d146e0bf3457'] = 'An:';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_4098f0d481d8dc8417bd89e17c735e64'] = 'Bitte wählen Sie einen Support';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_cb7a0a41ef8d2fb632ae4a56d04fbc7f'] = 'Ihre E-Mail Adresse:';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>adminwirecardceecheckoutseamlesssupportcontroller_ac5742c34d7b5f61950e48841eaf0937'] = 'Ihre Nachricht:';
@@ -158,7 +160,11 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>ordermanagement_d9f70a4315e84
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>eps_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>ideal_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>trustpay_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_bd68172fc41331e2c468c315e59cd13e'] = 'Wirecard – Ihr Full-Service Payment-Provider – Umfangreiche Lösungen aus einer Hand';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_8e266acb27547949eaca6676d9b931cf'] = 'Wirecard ist einer der weltweit führenden unabhängigen Anbieter von Outsourcing- und White-Label-Lösungen für den elektronischen Zahlungsverkehr.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_121363ae2a762c5798c7c6331cafb6ee'] = 'Als unabhängiger Payment-Anbieter begleiten wir unsere Kunden in allen Phasen der Geschäftsentwicklung. Mit maßgeschneiderten Bezahllösungen setzt unser Unternehmen im E-Payment Akzente und ist Österreichs marktführender Payment Service Provider. Persönlich, kompetent und engagiert.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_00474c3f1879b6a71ce2715673b9a614'] = 'Registrierung für neue Händler';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_a2fc1009566d86c683d01ae015cd034f'] = 'Allgemeine Informationen zu den Wirecard Shop-Plugins';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_32d798df7254f6703ed2262024e0e174'] = 'Konfiguration testen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_ad119d5ea30f6c26b58e0af5bc43c9fe'] = 'Support kontaktieren';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_31112aca11d0e9e6eb7db96f317dda49'] = 'Transaktionen';

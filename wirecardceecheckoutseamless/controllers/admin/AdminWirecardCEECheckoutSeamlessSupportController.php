@@ -83,7 +83,7 @@ class AdminWirecardCEECheckoutSeamlessSupportController extends ModuleAdminContr
             'input' => array(
                 array(
                     'type' => 'select',
-                    'label' => $this->l('To:'),
+                    'label' => $this->l('To: '),
                     'desc' => $this->l('Choose a support channel'),
                     'name' => 'to',
                     'required' => true,

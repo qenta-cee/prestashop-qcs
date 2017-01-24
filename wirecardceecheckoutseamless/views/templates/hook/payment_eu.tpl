@@ -29,15 +29,14 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  *}
 
-{*{$paymentOption->getMethod()|print_r}*}
 {if $jsUrl != false}
   <p><script src="{$jsUrl}"></script></p>
 {/if}
 
-<form onsubmit="return wirecardceecardsubmit(event,this)" id="payment_form" class="payment_form_{$current.name}" action="{$action}" method="post">
-  <input type="hidden" name="isSeamless" value="{$current.payment->isSeamless()}">
-  <input type="hidden" name="currentName" value="{$current.name}">
-  <input type="hidden" name="currentMethod" value="{$current.method}">
+<form onsubmit="return wirecardceecardsubmit(event,this)" id="payment_form" class="payment_form_{$current.name|escape:'htmlall':'UTF-8'}" action="{$action|escape:'htmlall':'UTF-8'}" method="post">
+  <input type="hidden" name="isSeamless" value="{$current.payment->isSeamless()|escape:'htmlall':'UTF-8'}">
+  <input type="hidden" name="currentName" value="{$current.name|escape:'htmlall':'UTF-8'}">
+  <input type="hidden" name="currentMethod" value="{$current.method|escape:'htmlall':'UTF-8'}">
     {if $current.template}
     {include $current.template}
     {/if}

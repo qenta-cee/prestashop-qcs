@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Shop System Plugins - Terms of Use
  *
@@ -34,6 +33,7 @@
  * @copyright WirecardCEE
  * @license   GPLv2
  */
+
 class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
@@ -65,11 +65,11 @@ class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends Modu
 
         $this->registerJavascript(
             'module-wirecardceecheckoutseamless-scripts',
-            'modules/wirecardceecheckoutseamless/js/scripts.js',
-            [
+            'modules/wirecardceecheckoutseamless/views/js/scripts.js',
+            array(
                 'priority' => 201,
                 'attribute' => 'async',
-            ]
+            )
         );
     }
 }

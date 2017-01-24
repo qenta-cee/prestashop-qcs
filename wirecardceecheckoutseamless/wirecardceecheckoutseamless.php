@@ -1010,7 +1010,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
 
             $sql = rtrim($sql, ",").";";
-
         }
         return $sql == null ? true : Db::getInstance()->execute($sql);
     }
@@ -1743,9 +1742,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         if (true) {
             print_r($params);
             die;
-        }
-        else {
-            $this->smarty->assign('status','failed');
+        } else {
+            $this->smarty->assign('status', 'failed');
         }
     }
 
@@ -1854,41 +1852,42 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $log->add();
     }
 
-    public function hookActionFrontControllerSetMedia($params){
-
+    public function hookActionFrontControllerSetMedia($params)
+    {
         $controllerArray = array('order');
         if (in_array($this->context->controller->php_self, $controllerArray)) {
             $this->context->controller->registerStylesheet(
                 'module-' . $this->name . '-style',
-                'modules/' . $this->name . '/css/styles.css',
-                [
+                'modules/' . $this->name . '/views/css/style.css',
+                array(
                     'media' => 'all',
                     'priority' => 200,
-                ]
+                )
             );
 
             $this->context->controller->registerJavascript(
                 'module-wcs-simple-lib',
-                'modules/'.$this->name.'/js/scripts.js',
-                [
+                'modules/'.$this->name.'/views/js/scripts.js',
+                array(
                     'priority' => 202,
                     'attribute' => 'async',
-                ]
+                )
             );
 
             $this->context->controller->registerJavascript(
                 'module-wcs-payment',
                 'modules/'.$this->name.'/js/payment.js',
-                [
+                array(
                     'priority' => 201,
                     'attribute' => 'async',
-                ]
+                )
             );
         }
     }
 
 
-    public function hookPaymentOptions($params){
+    public function hookPaymentOptions($params)
+    {
         if (!$this->active) {
             return false;
         }
@@ -1949,10 +1948,13 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     'years' => Tools::dateYears(),
                     'jsUrl' => $urlIncluded ? false : $jsUrl,
                     'action' => $this->context->link->getModuleLink(
-                        $this->name, 'paymentExecution', array(
-                        'paymentType' => $paymentType['name'],
-                        'paymentName' => $paymentType['label']
-                    ), true
+                        $this->name,
+                        'paymentExecution',
+                        array(
+                            'paymentType' => $paymentType['name'],
+                            'paymentName' => $paymentType['label']
+                        ),
+                        true
                     )
                 )
             );

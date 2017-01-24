@@ -67,7 +67,6 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
         parent::initToolbarTitle();
 
         switch ($this->display) {
-
             case 'add':
                 $this->toolbar_title[] = $this->l('Fund transfer');
                 $this->addMetaTitle($this->l('Fund transfer'));
@@ -198,7 +197,6 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
 
         $this->display = 'add';
         if (Tools::isSubmit('transferFund')) {
-
             $amount = strtr(Tools::getValue('amount'), ',', '.');
             if (!Validate::isFloat($amount)) {
                 $this->errors[] = Tools::displayError('Please enter a valid amount');

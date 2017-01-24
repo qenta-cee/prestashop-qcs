@@ -62,7 +62,6 @@ class WirecardCheckoutSeamlessDataStorage
         $dataStorageInit->setOrderIdent($cart->id);
 
         if ($this->module->getConfigValue('creditcardoptions', 'pci3_dss_saq_a_enable')) {
-
             $dataStorageInit->setJavascriptScriptVersion('pci3');
             if (Tools::strlen(trim($this->module->getConfigValue('creditcardoptions', 'iframe_css_url')))) {
                 $dataStorageInit->setIframeCssUrl(

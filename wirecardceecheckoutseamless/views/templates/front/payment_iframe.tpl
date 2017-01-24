@@ -44,7 +44,7 @@
               <a href="{url}order" class="button-exclusive btn btn-default">
                 <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
               </a>
-              <a id="wcsIframeBox" class="button-exclusive btn btn-default" href="{$redirectUrl}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
+              <a id="wcsIframeBox" class="button-exclusive btn btn-default" href="{$redirectUrl|escape:'htmlall':'UTF-8'}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}">Open iFrame Modal</a>
             </p>
           {/if}
         </div>
@@ -64,7 +64,7 @@
 
   <script>
     window.onload = function() {
-      showPaymentModal('{$redirectUrl}');
+      showPaymentModal('{$redirectUrl|escape:'htmlall':'UTF-8'}');
     }
   </script>
 

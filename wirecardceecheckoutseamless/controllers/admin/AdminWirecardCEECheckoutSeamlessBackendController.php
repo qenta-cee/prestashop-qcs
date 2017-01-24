@@ -324,14 +324,11 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
                     break;
 
                 case 'REFUND':
-
-
                     $op = $this->backendClient->getClient()->refund(
                         $transaction->ordernumber,
                         $amount,
                         $transaction->currency
                     );
-
 
                     break;
 

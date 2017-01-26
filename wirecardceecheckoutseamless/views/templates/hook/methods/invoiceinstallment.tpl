@@ -95,7 +95,8 @@
         var msg = '';
 
         if (!wcsValidateMinAge(dateStr, minAge)) {
-            msg = '{$current.payment->getMinAgeMessage()|escape:'htmlall':'UTF-8'}';
+            {* escape was causing encoding issues *}
+            msg = '{$current.payment->getMinAgeMessage() nofilter}';
             messageBox.append('<li>' + msg + '</li>');
         }
 
@@ -108,8 +109,6 @@
                 messageBox.append('<li>' + msg + '</li>');
             }
         {/if}
-
-      console.log("msg");
 
         if (msg.length){
           messageBox.parent().show();

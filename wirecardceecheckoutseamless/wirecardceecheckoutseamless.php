@@ -1876,7 +1876,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
             $this->context->controller->registerJavascript(
                 'module-wcs-payment',
-                'modules/'.$this->name.'/js/payment.js',
+                'modules/'.$this->name.'/views/js/payment.js',
                 array(
                     'priority' => 201,
                     'attribute' => 'async',

@@ -32,12 +32,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<link href="{$this_path}global.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="{$this_path|escape:'htmlall':'UTF-8'}theme.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 <body>
 <h3>{l s='You will be redirected in a moment.' mod='wirecardceecheckoutseamless'}</h3>
 <p>{l s='If the redirect does not work please click' mod='wirecardceecheckoutseamless'}
-	<a href="{$orderConfirmation}" id="wcsRedirectAnchor" target="_parent" > {l s='here' mod='wirecardceecheckoutseamless'}.</a>
+	<a href="{$orderConfirmation|escape:'htmlall':'UTF-8'}" id="wcsRedirectAnchor" target="_parent" > {l s='here' mod='wirecardceecheckoutseamless'}.</a>
 </p>
 <script type="text/javascript">
   document.getElementById("wcsRedirectAnchor").click();

@@ -70,11 +70,11 @@ class WirecardCEECheckoutSeamlessPaymentExecutionModuleFrontController extends M
 
         $this->registerJavascript(
             'module-wirecardceecheckoutseamless-scripts',
-            'modules/wirecardceecheckoutseamless/js/scripts.js',
-            [
+            'modules/wirecardceecheckoutseamless/views/js/scripts.js',
+            array(
                 'priority' => 201,
                 'attribute' => 'async',
-            ]
+            )
         );
     }
 }

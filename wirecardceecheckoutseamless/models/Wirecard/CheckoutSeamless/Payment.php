@@ -805,7 +805,7 @@ class WirecardCheckoutSeamlessPayment
     {
         $txt = $this->module->getPaymentTranslations()['consentTxt'];
 
-        return sprintf($txt, $this->getPayolutionLink());
+        return utf8_decode(sprintf($txt, $this->getPayolutionLink()));
     }
 
     /**
@@ -827,7 +827,7 @@ class WirecardCheckoutSeamlessPayment
     {
         $txt = $this->module->getPaymentTranslations()['minAgeMessage'];
 
-        return sprintf($txt, $this->getMinAge());
+        return utf8_decode(sprintf($txt, $this->getMinAge()));
     }
 
     /**
@@ -850,7 +850,7 @@ class WirecardCheckoutSeamlessPayment
         $mid = Configuration::get('WCS_OPTIONS_PAYOLUTION_MID');
 
         if (!Tools::strlen($mid)) {
-            return $this->module->getPaymentTranslations()['consentTxt'];
+            return $this->module->getPaymentTranslations()['consent'];
         }
 
         //$Swift_Message_Encoder = new Swift_Message_Encoder()
@@ -864,7 +864,7 @@ class WirecardCheckoutSeamlessPayment
                 $this->module->getPaymentTranslations()['consent']
             );
         } else {
-            return $this->module->getPaymentTranslations()['consentTxt'];
+            return $this->module->getPaymentTranslations()['consent'];
         }
     }
 }

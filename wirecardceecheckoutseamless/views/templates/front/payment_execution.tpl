@@ -44,17 +44,17 @@
             <h3 class="page-subheading">{l s='Wirecard Checkout Seamless payment' mod='wirecardceecheckoutseamless'}</h3>
             <p class="">
               <strong class="dark">
-                {l s='You have chosen to pay with ' mod='wirecardceecheckoutseamless'}{$paymentName}.
+                {l s='You have chosen to pay with ' mod='wirecardceecheckoutseamless'}{$paymentName|escape:'htmlall':'UTF-8'}.
               </strong>
             </p>
             <p>
               - {l s='Total amount of your order:' mod='wirecardceecheckoutseamless'}
-              <span id="amount" class="price">{$total}</span>
+              <span id="amount" class="price">{$total|escape:'htmlall':'UTF-8'}</span>
             </p>
             <p>- {l s='Please confirm your order by clicking "Order with obligation to pay".' mod='wirecardceecheckoutseamless'}</p>
           </div>
           <p class="cart_navigation clearfix" id="cart_navigation">
-            <a href="{url}order" class="button-exclusive btn btn-default">
+            <a href="{url}?controller=order" class="button-exclusive btn btn-default">
               <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
             </a>
             <button type="submit" id="pt_wirecardcheckoutseamless_pay_obligation" class="btn btn-primary">

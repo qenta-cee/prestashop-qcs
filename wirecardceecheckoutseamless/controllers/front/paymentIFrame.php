@@ -44,14 +44,16 @@ class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends Modu
      */
     public function initContent()
     {
-        $this->ssl                 = true;
+        $this->ssl = true;
         $this->display_column_left = false;
         parent::initContent();
 
-        $this->context->smarty->assign(array(
-                                           'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
-                                           'windowName'  => $this->module->getWindowName()
-                                       ));
+        $this->context->smarty->assign(
+            array(
+                'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
+                'windowName' => $this->module->getWindowName()
+            )
+        );
         unset($this->context->cookie->wcsRedirectUrl);
 
         $this->setTemplate('module:wirecardceecheckoutseamless/views/templates/front/payment_iframe.tpl');
@@ -63,11 +65,11 @@ class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends Modu
 
         $this->registerJavascript(
             'module-wirecardceecheckoutseamless-scripts',
-            'modules/wirecardceecheckoutseamless/js/scripts.js',
-            [
+            'modules/wirecardceecheckoutseamless/views/js/scripts.js',
+            array(
                 'priority' => 201,
                 'attribute' => 'async',
-            ]
+            )
         );
     }
 }

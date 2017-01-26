@@ -54,7 +54,7 @@
             <p>- {l s='Please confirm your order by clicking "Order with obligation to pay".' mod='wirecardceecheckoutseamless'}</p>
           </div>
           <p class="cart_navigation clearfix" id="cart_navigation">
-            <a href="{url}order" class="button-exclusive btn btn-default">
+            <a href="{url}?controller=order" class="button-exclusive btn btn-default">
               <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='wirecardceecheckoutseamless'}
             </a>
             <button type="submit" id="pt_wirecardcheckoutseamless_pay_obligation" class="btn btn-primary">

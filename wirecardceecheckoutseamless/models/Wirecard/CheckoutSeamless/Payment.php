@@ -827,7 +827,7 @@ class WirecardCheckoutSeamlessPayment
     {
         $txt = $this->module->getPaymentTranslations()['minAgeMessage'];
 
-        return sprintf($txt, $this->getMinAge());
+        return utf8_decode(sprintf($txt, $this->getMinAge()));
     }
 
     /**

@@ -1203,7 +1203,9 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     'link' => $this->context->link,
                     'backendEnabled' => $backendEnabled != null && Tools::strlen($backendEnabled) > 0,
                     'ajax_configtest_url' => $this->context->link->getAdminLink('AdminModules') . '&configure='
-                        . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name
+                        . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name,
+
+                    'iso_code' => $this->context->language->iso_code
                 )
             );
             $this->html .= $this->context->smarty->fetch(

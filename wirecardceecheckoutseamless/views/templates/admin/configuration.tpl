@@ -44,9 +44,17 @@
     service provider. Customization, competence, and commitment. <br/>
     <br/>
     {if $is_core}
-    <p><a href="https://checkout.wirecard.com/cop/?shopsystem=Prestashop&shopversion={$shopversion|escape:'htmlall':'UTF-8'}&integration=WCS&pluginversion={$pluginversion|escape:'htmlall':'UTF-8'}" target="_blank">
-            {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
-        </a></p>
+    <p>
+        {if $iso_code == 'de'}
+            <a href="https://www.checkoutportal.com/de_DE/transaction-fee-calculator?reseller_id=ZAU3ba7faC" target="_blank">
+                {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
+            </a>
+        {else}
+            <a href="https://www.checkoutportal.com/en_GB/transaction-fee-calculator?reseller_id=ZAU3ba7faC" target="_blank">
+                {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
+            </a>
+        {/if}
+    </p>
     {/if}
     <p><a href="https://guides.wirecard.at/doku.php/plugins_general" target="_blank">General information regarding
             Wirecard Shop Plugins</a></p>

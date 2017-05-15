@@ -2087,10 +2087,10 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     if (Tools::strlen($msg) < 5) {
                         continue;
                     }
-                    $context->controller->errors[] = Tools::displayError(html_entity_decode($msg));
+                    $context->controller->errors[] = html_entity_decode($msg);
                 }
             } else {
-                $context->controller->errors[] = Tools::displayError(html_entity_decode($context->cookie->wcsMessage));
+                $context->controller->errors[] = html_entity_decode($context->cookie->wcsMessage);
             }
             unset($context->cookie->wcsMessage);
         }

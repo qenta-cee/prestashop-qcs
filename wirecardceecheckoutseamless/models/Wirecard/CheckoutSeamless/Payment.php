@@ -212,10 +212,6 @@ class WirecardCheckoutSeamlessPayment
             ->createConsumerMerchantCrmId($customer->email)
             ->setOrderIdent($id_cart);
 
-        // using legacy basket parameters
-        $init->__set('basketAmount', $amount);
-        $init->__set('basketCurrency', $current_currency->iso_code);
-
         if (isset($additionalData['financialinstitution'])) {
             $init->setFinancialInstitution($additionalData['financialinstitution']);
         }
@@ -228,9 +224,7 @@ class WirecardCheckoutSeamlessPayment
 
         if ($this->forceSendingBasket() || $module->getConfigValue('options', 'send_basketinformation')) {
             // new basket parameters currently disabled
-            //$init->setBasket($this->getBasket($cart));
-
-            $this->setLegacyBasket($cart, $init);
+            $init->setBasket($this->getBasket($cart));
         }
 
         $init->psWcsTxId = $id_tx;
@@ -416,41 +410,6 @@ class WirecardCheckoutSeamlessPayment
         }
 
         return $basket;
-    }
-
-    /**
-     * set legacy basket parameters
-     *
-     * @param Cart $cart
-     *
-     * @param \WirecardCEEQMoreFrontendClient $client
-     *
-     * @return $this
-     */
-    public function setLegacyBasket(Cart $cart, \WirecardCEE_QMore_FrontendClient $client)
-    {
-        $productCounter=1;
-        foreach ($cart->getProducts() as $product) {
-            $name = 'basketItem'.$productCounter++;
-
-            $client->__set($name.'UnitPrice', number_format($product['price'], 2, '.', ''));
-            $client->__set($name.'Tax', number_format($product['price_wt'] - $product['price'], 2, '.', ''));
-            $client->__set($name.'Quantity', $product['cart_quantity']);
-            $client->__set($name.'ArticleNumber', $product['reference']);
-        }
-
-        if ($cart->getTotalShippingCost(null, true) > 0) {
-            $name = 'basketItem'.$productCounter;
-            $client->__set($name.'UnitPrice', $cart->getTotalShippingCost(null, false));
-            $client->__set(
-                $name.'Tax',
-                $cart->getTotalShippingCost(null, true)-$cart->getTotalShippingCost(null, false)
-            );
-            $client->__set($name.'Quantity', 1);
-            $client->__set($name.'ArticleNumber', 'shipping');
-        }
-
-        return $this;
     }
 
     /**

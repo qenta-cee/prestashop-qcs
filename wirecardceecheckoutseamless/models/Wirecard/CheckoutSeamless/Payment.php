@@ -473,7 +473,7 @@ class WirecardCheckoutSeamlessPayment
         $diff = $d1->diff(new DateTime);
         $customerAge = $diff->format('%y');
 
-        if ($customerAge < $this->getMinAge()) {
+        if ($customerAge < 18) {
             return false;
         }
 
@@ -547,10 +547,6 @@ class WirecardCheckoutSeamlessPayment
      */
     protected function isAvailableRatePay($cart)
     {
-        if ($this->getMinAge() <= 0) {
-            return false;
-        }
-
         /** @var CustomerCore $customer */
         $customer = new Customer($cart->id_customer);
 
@@ -564,7 +560,7 @@ class WirecardCheckoutSeamlessPayment
         $diff = $d1->diff(new DateTime);
         $customerAge = $diff->format('%y');
 
-        if ($customerAge < $this->getMinAge()) {
+        if ($customerAge < 18) {
             return false;
         }
 
@@ -787,16 +783,6 @@ class WirecardCheckoutSeamlessPayment
     }
 
     /**
-     * min consumer age for this payment method
-     *
-     * @return int
-     */
-    public function getMinAge()
-    {
-        return 0;
-    }
-
-    /**
      * payolution consent text
      *
      * @return string
@@ -827,7 +813,7 @@ class WirecardCheckoutSeamlessPayment
     {
         $txt = $this->module->getPaymentTranslations()['minAgeMessage'];
 
-        return utf8_decode(sprintf($txt, $this->getMinAge()));
+        return utf8_decode(sprintf($txt, 18));
     }
 
     /**

@@ -445,16 +445,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'group' => 'pt',
                     ),
                     array(
-                        'name' => 'invoice_min_age',
-                        'label' => $this->l('Minimum age'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'default' => 18,
-                        'validator' => 'numeric',
-                        'cssclass' => 'fixed-width-md',
-                        'doc' => $this->l('Only applicable for RatePay.')
-                    ),
-                    array(
                         'name' => 'invoice_amount_min',
                         'label' => $this->l('Minimum amount'),
                         'type' => 'text',
@@ -539,16 +529,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => array('EUR'),
                         'options' => 'getCurrencies',
                         'group' => 'pt',
-                    ),
-                    array(
-                        'name' => 'installment_min_age',
-                        'label' => $this->l('Minimum age'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'validator' => 'numeric',
-                        'default' => 18,
-                        'cssclass' => 'fixed-width-md',
-                        'doc' => 'Only applicable for RatePay.'
                     ),
                     array(
                         'name' => 'installment_amount_min',

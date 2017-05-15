@@ -91,7 +91,7 @@
         if (d < 10) d = "0" + d;
 
         var dateStr = $('#wcs{$current.name|escape:'htmlall':'UTF-8'}year').val() + '-' + m + '-' + d;
-        var minAge = {$current.payment->getMinAge()|intval};
+        var minAge = 18;
         var msg = '';
 
         if (!wcsValidateMinAge(dateStr, minAge)) {

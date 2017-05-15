@@ -126,20 +126,6 @@ class WirecardCheckoutSeamlessPaymentInvoice extends WirecardCheckoutSeamlessPay
     }
 
     /**
-     * return min age
-     *
-     * @return int
-     */
-    public function getMinAge()
-    {
-        if ($this->getProvider() == 'payolution') {
-            return 18;
-        }
-
-        return (int)$this->getConfigValue('invoice_min_age');
-    }
-
-    /**
      * autodeposit must not be used for Invoice and Installment to prevent the sending of an invoice or a
      * first installment to the consumer before he got the ordered product.
      * @return bool

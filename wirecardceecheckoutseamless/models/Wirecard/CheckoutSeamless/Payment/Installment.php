@@ -215,20 +215,6 @@ class WirecardCheckoutSeamlessPaymentInstallment extends WirecardCheckoutSeamles
     }
 
     /**
-     * return min age
-     *
-     * @return int
-     */
-    public function getMinAge()
-    {
-        if ($this->getProvider() == 'payolution') {
-            return 18;
-        }
-
-        return (int)$this->getConfigValue('installment_min_age');
-    }
-
-    /**
      * Invoice is B2B
      *
      * @return bool

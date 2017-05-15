@@ -743,14 +743,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'class' => 'Trustly',
                         'logo' => 'trustly.png'
-                    ),
-                    array(
-                        'name' => 'skrilldirect',
-                        'label' => $this->l('Skrill Direct'),
-                        'type' => 'onoff',
-                        'class' => 'Skrilldirect',
-                        'logo' => 'skrilldirect.png'
-                    ),
+                    )
                 )
             ),
             'alternativepayments' => array(

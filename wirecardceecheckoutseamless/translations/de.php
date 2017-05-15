@@ -100,7 +100,6 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_b02f3d1095fbd0490caa31090d2aac19'] = 'Przelewy24';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0ff52aceaf88adbdfb1a1e628a66b6cf'] = 'eKonto';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_31797189117cf605565c9d330601cc7f'] = 'Trustly';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_ffe0b676beb70ae97ad71df7fa9321d1'] = 'Skrill Direct';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c590349d782553f4011343e642d2cd08'] = 'Alternative Zahlungsmittel';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6abcd8eecb4f2abb6ccfe36ef7046ba0'] = 'paysafecard';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_a41cdeba95dd125a6efea489c114a4f9'] = '@Quick';

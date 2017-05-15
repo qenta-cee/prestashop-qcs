@@ -806,14 +806,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'seamless' => true,
                         'template' => 'paybox.tpl',
                         'logo' => 'paybox.png'
-                    ),
-                    array(
-                        'name' => 'mpass',
-                        'label' => $this->l('mpass'),
-                        'type' => 'onoff',
-                        'class' => 'Mpass',
-                        'logo' => 'mpass.png'
-                    ),
+                    )
                 )
             ),
             'voucherpayments' => array(

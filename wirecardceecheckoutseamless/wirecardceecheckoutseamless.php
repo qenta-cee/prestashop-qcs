@@ -129,7 +129,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             'confirm',
             'payment',
             'paymentExecution',
-            'paymentIFrame'
+            'paymentIFrame',
+            'masterpassPayment'
         );
         $this->is_eu_compatible = 1;
 
@@ -821,6 +822,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             || !$this->registerHook('displayHeader')
             || !$this->registerHook('actionFrontControllerSetMedia')
             || !$this->registerHook('paymentOptions')
+            || !$this->registerHook('displayExpressCheckout')
             || !$this->setDefaults()
         ) {
             return false;
@@ -1076,6 +1078,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             Configuration::deleteByName($parameter['param_name']);
         }
 
+        $this->unregisterHook('displayExpressCheckout');
         Configuration::deleteByName(self::WCS_OS_AWAITING);
 
         $this->uninstallTabs();
@@ -2652,5 +2655,32 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
         }
         return false;
+    }
+
+    public function hookdisplayExpressCheckout()
+    {
+        $masterpass = new WirecardCheckoutSeamlessPaymentMasterpass($this, $this->config, null);
+
+        $masterpass->set_merchant_id(sprintf(
+            "%s-%s",
+            $this->getConfigValue('basicdata', 'customer_id'),
+            $this->getConfigValue('basicdata', 'shop_id')
+        ));
+        $masterpass->set_merchant_secret(md5($this->getConfigValue('basicdata', 'secret')));
+
+        $masterpass->set_cart(new Cart($this->context->cookie->id_cart));
+
+        $masterpass->create_wallet();
+
+        // generate return url
+        $return_url = $this->context->link->getModuleLink($this->name, 'masterpassPayment', array(), true);
+
+        $this->context->smarty->assign(
+            array(
+                'walletId' => $masterpass->get_wallet()->id,
+                'currentUrl' => $return_url
+            )
+        );
+        return $this->context->smarty->fetch('module:wirecardceecheckoutseamless/views/templates/front/cart-detailed-actions-extended.tpl');
     }
 }

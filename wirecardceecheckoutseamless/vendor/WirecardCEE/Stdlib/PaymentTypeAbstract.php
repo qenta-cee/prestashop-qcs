@@ -50,6 +50,7 @@ abstract class WirecardCEE_Stdlib_PaymentTypeAbstract
     const INSTALLMENT = 'INSTALLMENT';
     const INVOICE = 'INVOICE';
     const MAESTRO = 'MAESTRO';
+    const MASTERPASS = 'MASTERPASS';
     const MONETA = 'MONETA';
     const MPASS = 'MPASS';
     const P24 = 'PRZELEWY24';

@@ -118,6 +118,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
         if ($cookie->wcs_oauth_token && $cookie->wcs_oauth_expires && $cookie->wcs_oauth_expires > time()) {
             return $cookie->wcs_oauth_token;
         } else if ($this->merchant_id === null) {
+            $this->module->log($this->module->l('WirecardCeeCheckoutSeamless: No masterpasss merchant id provided. Cannot start oauth.'), 3, null);
             return false;
         }
 
@@ -190,7 +191,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
      * @param $wallet_id
      * @return false|object
      */
-    function read_wallet($merchant_id = null, $wallet_id = null, $oauth_token = null)
+    public function read_wallet($merchant_id = null, $wallet_id = null, $oauth_token = null)
     {
         if($merchant_id === null){
             $merchant_id = $this->merchant_id;
@@ -202,6 +203,10 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
             $oauth_token = $this->get_oauth_token();
         }
 
+        if( !$oauth_token ){
+            return false;
+        }
+
         $read_wallet_process = curl_init(sprintf('https://checkout.wirecard.com/masterpass/merchants/%s/wallets/%s', $merchant_id, $wallet_id));
         curl_setopt($read_wallet_process, CURLOPT_HTTPHEADER, array("Authorization: Bearer $oauth_token"));
         curl_setopt($read_wallet_process, CURLOPT_RETURNTRANSFER, 1);
@@ -211,5 +216,13 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
         }
 
         return json_decode($read_wallet_return);
+    }
+
+    /**
+     * destroy oauth session
+     */
+    public function destroy(){
+        $this->wcs_oauth_token = null;
+        $this->wcs_oauth_expires = null;
     }
 }

@@ -50,7 +50,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     public function get_wallet()
     {
         if (!isset($this->wallet->id)) {
-            $this->module->log('Masterpass wallet object is invalid.',2,null);
+            $this->module->log('Masterpass wallet object is invalid.', 2, null);
             $this->wallet->id = null;
         }
         /*
@@ -107,6 +107,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
         }
 
         $this->wallet = json_decode($wallet_return);
+        $cookie = $this->module->getContext()->cookie->__set('wcsWalletId', $this->wallet->id);
 
         return $this->wallet;
     }
@@ -165,7 +166,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
             )
         );
 
-        if ($this->module->getConfigValue('options', 'send_basketinformation')) {
+        if ($this->getConfigValue('options', 'send_basketinformation')) {
             $this->cart['items'] = array();
             foreach ($cart->getProducts() as $product) {
                 $this->cart['items'][] = array(
@@ -229,7 +230,124 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
      */
     public function destroy()
     {
+        unset($this->module->getContext()->cookie->wcsWalletId);
         $this->wcs_oauth_token = null;
         $this->wcs_oauth_expires = null;
     }
+
+    /**
+     * initiate the payment
+     *
+     * @return false|object
+     *
+     */
+    public function pay()
+    {
+        /**
+         * unset the var in cookie sometimes here
+         *
+         * $this->module->getContext()->cookie->__unset('wcsWalletId');
+         */
+        if (!isset($this->module->getContext()->cookie->wcsWalletId)) {
+            $this->module->log('Masterpass wallet id invalid.', 3, null);
+            return false;
+        }
+
+        $cart = new Cart($this->module->getContext()->cart->id);
+        $transaction = new WirecardCheckoutSeamlessTransaction();
+        $order_management = new WirecardCheckoutSeamlessOrderManagement($this->module);
+
+        $amount = round($cart->getOrderTotal(), 2);
+
+        $current_currency = new Currency($cart->id_currency);
+
+        if ($this->module->getConfigValue('options', 'order_creation') == 'before') {
+            $id_order = $order_management->createOder($cart, $this->module->getAwaitingState());
+            $order_management->updatePaymentInformation($id_order, $this);
+
+        } else {
+            $id_order = null;
+        }
+
+        $id_tx = $transaction->create(
+            $id_order,
+            $this->module->getContext()->cart->id,
+            $amount,
+            $current_currency->iso_code,
+            $this->getName(),
+            $this->getMethod()
+        );
+
+        $pay_process = curl_init(sprintf('https://checkout.wirecard.com/masterpass/merchants/%s/wallets/%s/payment', $this->merchant_id, $this->module->getContext()->cookie->wcsWalletId));
+        curl_setopt($pay_process, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer {$this->get_oauth_token()}"));
+        curl_setopt($pay_process, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($pay_process, CURLOPT_POST, 1);
+
+        $payment_data = array(
+            'orderDescription' => 'CID: ' . $cart->id_customer . ' TID: ' . $id_tx,
+            'totalAmount' => array(
+                'amount' => $amount,
+                'currency' => $current_currency->iso_code
+            ),
+            'customerStatement' => $this->module->getConfigValue('options', 'shopname'),
+            'orderReference' => sprintf('%010d', $id_tx),
+            'notificationUrl' => $this->module->getConfirmUrl(),
+            'deposit' => $this->module->getConfigValue('options', 'autodeposit'),
+            'useWalletConsumerData' => true
+        );
+
+        curl_setopt($pay_process, CURLOPT_POSTFIELDS, json_encode($payment_data));
+
+        if (($pay_return = curl_exec($pay_process)) === false) {
+            return false;
+        }
+        $pay_return = json_decode($pay_return);
+
+        if (!isset($pay_return->orderNumber)) {
+            if (!isset($pay_return->message))
+                $pay_return->message = "Unknown error";
+            $this->module->getContext()->cookie->wcsMessage = html_entity_decode($pay_return->message);
+
+            $page = 'order';
+            if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
+                $page = 'order-opc';
+            }
+
+            $params = array();
+
+            if ($id_order !== null) {
+                $params = array(
+                    'submitReorder' => true,
+                    'id_order' => (int)$id_order
+                );
+            }
+
+            $this->module->getContext()->smarty->assign(
+                array(
+                    'orderConfirmation' => $this->module->getContext()->link->getPageLink(
+                        $page,
+                        true,
+                        $cart->id_lang,
+                        $params
+                    ),
+                    'this_path' => _THEME_CSS_DIR_
+                )
+            );
+            echo $this->module->getContext()->smarty->fetch('module:wirecardceecheckoutseamless/views/templates/hook/back.tpl');
+            die();
+        } else {
+            if ($this->module->getConfigValue('options', 'order_creation') == 'after') {
+                $id_order = $order_management->createOder($cart, $this->module->getAwaitingState());
+            }
+            $transaction->updateTransaction($id_tx, array(
+                'paymentstate' => 'PENDING',
+                'id_order' => $id_order
+            ));
+            $this->destroy();
+            Tools::redirect($this->module->getReturnUrl($cart, $id_tx));
+            die();
+        }
+
+    }
+
 }

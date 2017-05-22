@@ -58,9 +58,14 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
         ));
         $this->masterpass->set_merchant_secret(md5($this->module->getConfigValue('basicdata', 'secret')));
 
-        $this->wallet = $this->masterpass->read_wallet(null, $_GET['walletId']);
+        $this->wallet = $this->masterpass->read_wallet(null, Tools::getValue('walletId'));
 
         $this->init_checks($this->wallet);
+
+        if (Tools::getValue('action') === 'pay') {
+            $this->masterpass->pay();
+            die();
+        }
 
         $this->get_customer_and_redirect();
     }
@@ -68,12 +73,12 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
     public function init_checks($wallet)
     {
 
-        if (!isset($wallet->id) || empty($wallet->id)) {
+        if (!isset($wallet->id) || empty($wallet->id) || (Tools::getValue("action") == 'pay' && !Tools::getValue("walletId"))) {
             $this->masterpass->destroy();
             $this->errors[] = $this->module->l('Invalid wallet content. Your session probably expired. Please try again.');
             $this->redirectWithNotifications('index.php?controller=cart&action=show');
             die();
-        } else if ($_GET["status"] == 'FAILURE') {
+        } else if (Tools::getValue("status") == 'FAILURE') {
             $this->masterpass->destroy();
             $this->info[] = $this->module->l('You canceled the checkout process.');
             $this->redirectWithNotifications('index.php?controller=cart&action=show');
@@ -126,11 +131,11 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
         $address->save();
 
         /* update cart shipping and billing address */
-        if($customer->isGuest()){
+        if ($customer->isGuest()) {
             $this->context->cart->id_guest = $this->context->cookie->id_guest;
         }
 
-        foreach($this->context->cart->getProducts() as $product){
+        foreach ($this->context->cart->getProducts() as $product) {
             $this->context->cart->setProductAddressDelivery($product['id_product'], $product['id_product_attribute'], $product['id_address_delivery'], $address->id);
         }
 

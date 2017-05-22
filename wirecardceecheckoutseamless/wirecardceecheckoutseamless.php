@@ -583,6 +583,15 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'logo' => 'cc.png'
                     ),
                     array(
+                        'name' => 'masterpass',
+                        'label' => $this->l('MasterPass'),
+                        'type' => 'onoff',
+                        'default' => 1,
+                        'class' => 'Masterpass',
+                        'seamless' => false,
+                        'logo' => 'cc.png'
+                    ),
+                    array(
                         'name' => 'creditcardmoto',
                         'label' => $this->l('Credit Card - Mail Order and Telephone Order'),
                         'type' => 'onoff',
@@ -823,6 +832,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             || !$this->registerHook('actionFrontControllerSetMedia')
             || !$this->registerHook('paymentOptions')
             || !$this->registerHook('displayExpressCheckout')
+            || !$this->registerHook('displayPaymentTop')
             || !$this->setDefaults()
         ) {
             return false;
@@ -1854,6 +1864,20 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         }
     }
 
+    public function hookdisplayPaymentTop($params)
+    {
+        if ($this->getContext()->cookie->wcsWalletId) {
+            if ($this->getContext()->cookie->wcsWalletId) {
+                $walletId = $this->getContext()->cookie->wcsWalletId;
+                $masterpassPaymentUrl = $this->getContext()->link->getModuleLink($this->name, 'masterpassPayment', array(
+                    'action' => 'pay',
+                    'walletId' => $walletId
+                ), true);
+                Tools::redirect($masterpassPaymentUrl);
+                die();
+            }
+        }
+    }
 
     public function hookPaymentOptions($params)
     {

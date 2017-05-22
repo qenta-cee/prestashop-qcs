@@ -47,7 +47,12 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
      *
      * @return null|object
      */
-    public function get_wallet(){
+    public function get_wallet()
+    {
+        if (!isset($this->wallet->id)) {
+            $this->module->log('Masterpass wallet object is invalid.',2,null);
+            $this->wallet->id = null;
+        }
         /*
          * @property id - wallet id
          * @property created
@@ -148,20 +153,21 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     /**
      * @param Cart $cart
      */
-    public function set_cart( Cart $cart ){
+    public function set_cart(Cart $cart)
+    {
 
         $currency = (new Currency($cart->id_currency))->iso_code;
 
         $this->cart = array(
             "totalAmount" => array(
-                "amount" => round($cart->getOrderTotal(true, Cart::BOTH_WITHOUT_SHIPPING),2),
+                "amount" => round($cart->getOrderTotal(true, Cart::BOTH_WITHOUT_SHIPPING), 2),
                 "currency" => $currency
             )
         );
 
-        if( $this->module->getConfigValue('options', 'send_basketinformation') ){
+        if ($this->module->getConfigValue('options', 'send_basketinformation')) {
             $this->cart['items'] = array();
-            foreach( $cart->getProducts() as $product ){
+            foreach ($cart->getProducts() as $product) {
                 $this->cart['items'][] = array(
                     "articleNumber" => $product['reference'],
                     "name" => Tools::substr($product['name'], 0, 127),
@@ -193,17 +199,17 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
      */
     public function read_wallet($merchant_id = null, $wallet_id = null, $oauth_token = null)
     {
-        if($merchant_id === null){
+        if ($merchant_id === null) {
             $merchant_id = $this->merchant_id;
         }
-        if($wallet_id === null){
+        if ($wallet_id === null) {
             $wallet_id = $this->wallet->id;
         }
-        if($oauth_token === null){
+        if ($oauth_token === null) {
             $oauth_token = $this->get_oauth_token();
         }
 
-        if( !$oauth_token ){
+        if (!$oauth_token) {
             return false;
         }
 
@@ -221,7 +227,8 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     /**
      * destroy oauth session
      */
-    public function destroy(){
+    public function destroy()
+    {
         $this->wcs_oauth_token = null;
         $this->wcs_oauth_expires = null;
     }

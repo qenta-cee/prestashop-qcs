@@ -2775,6 +2775,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         $transaction->updateTransaction($transaction_id, array(
             'paymentstate' => $state,
+            'status' => $state=='SUCCESS'?'ok':'error',
             'ordernumber' => $payment_data->orderNumber,
             'gatewayreference' => $payment_data->gatewayReferenceNumber,
             'response' => print_r($payment_data, true)
@@ -2786,6 +2787,9 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         $orderManagement->processMasterpassOrder($masterpass, $transaction->get($transaction_id), $payment_data);
 
-        return WirecardCEE_QMore_ReturnFactory::generateConfirmResponseString();
+        if( $state == 'SUCCESS' )
+            return WirecardCEE_QMore_ReturnFactory::generateConfirmResponseString();
+        return WirecardCEE_QMore_ReturnFactory::generateConfirmResponseString($payment_data->errorMessage);
+
     }
 }

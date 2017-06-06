@@ -119,6 +119,16 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
             }
         }
 
+        // add address filter here
+        /*
+         * if( condition_not_fulfilled ) {
+         *   $this->masterpass->destroy();
+         *   $this->info[] = $this->module->l('Your message regarding address?');
+         *   $this->redirectWithNotifications('index.php?controller=cart&action=show');
+         *   die();
+         * }
+         */
+
         /* create/update the wcs_masterpass address for the customer */
         $address = new Address(isset($id_address) ? (int)$id_address : 0);
         $address->id_customer = (int)$customer->id;

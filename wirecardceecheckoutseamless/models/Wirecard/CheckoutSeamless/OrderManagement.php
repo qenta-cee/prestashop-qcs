@@ -173,6 +173,74 @@ class WirecardCheckoutSeamlessOrderManagement
     }
 
     /**
+     * invoked during rest-api server2server request (confirm)
+     *
+     * @param WirecardCheckoutSeamlessPayment $paymentType
+     * @param array $transactionData
+     * @param stdClass $paymentData
+     *
+     * @return null
+     * @throws Exception
+     */
+    public function processMasterpassOrder($paymentType, $transactionData, $paymentData)
+    {
+        $transactionIdField = $this->module->getConfigValue('options', 'transaction_id');
+        $returned_payment_state = $transactionData['paymentstate'];
+        $fraudDetected = false;
+
+        // order creation after payment
+        if (!$transactionData['id_order'] && $returned_payment_state == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS) {
+            $cart = new Cart((int)($transactionData['id_cart']));
+
+            $id_order = $this->createOder($cart, $this->module->getAwaitingState());
+            $transactionData['id_order'] = $txData['id_order'] = $id_order;
+
+            $this->updatePaymentInformation($id_order, $paymentType);
+
+            // detect cart modifications during checkout
+            $cartHash = $this->module->computeCartHash($cart);
+            $fraudDetected = $cartHash != $transactionData['carthash'];
+        }
+
+        $order = null;
+        if ($transactionData['id_order']) {
+            $order = new Order($transactionData['id_order']);
+        }
+
+        $this->module->log(
+            __METHOD__ . ':using:' . $transactionIdField . ' as transactionId:' . $paymentData->$transactionIdField
+        );
+
+        switch ($paymentData->processingState) {
+            case WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS:
+                $orderState = _PS_OS_PAYMENT_;
+                break;
+
+            case WirecardCEE_QMore_ReturnFactory::STATE_FAILURE:
+                $orderState = _PS_OS_ERROR_;
+                break;
+            default:
+                throw new Exception('Invalid uncaught paymentState. Should not happen.');
+        }
+
+        if ($order !== null) {
+            $msg = new Message();
+            $msg->message = trim(print_r($paymentData, true), ';');
+            $msg->id_order = $transactionData['id_order'];
+            $msg->private = 1;
+            $msg->add();
+        }
+
+        if ($fraudDetected) {
+            $orderState = $this->module->getFraudState();
+        }
+
+        if ($order !== null) {
+            $this->setOrderState($order->id, $orderState);
+        }
+    }
+
+    /**
      * save some return fields to an order message
      * @param $orderId
      * @param WirecardCEE_Stdlib_Return_ReturnAbstract $return

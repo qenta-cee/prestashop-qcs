@@ -2286,6 +2286,13 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         $this->log(__METHOD__ . ':raw:' . $response);
 
+        $post = array();
+        parse_str($response, $post);
+
+        if($post['walletId'] && $post['state']){
+            return $this->masterpassConfirm($post);
+        }
+
         $return = null;
         try {
             $return = WirecardCEE_QMore_ReturnFactory::getInstance(
@@ -2681,10 +2688,68 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         return false;
     }
 
+    /**
+     * @return string|null
+     */
     public function hookdisplayExpressCheckout()
     {
-        $masterpass = new WirecardCheckoutSeamlessPaymentMasterpass($this, $this->config, null);
+        $config = $this->config['standardpayments']['fields'];
+        foreach ($config as $config_) {
+            if ($config_['name'] == 'masterpass') {
+                $config = $config_;
+                $config['group'] = 'pt';
+                break;
+            }
+        }
+        $masterpass = new WirecardCheckoutSeamlessPaymentMasterpass($this, $config, null);
 
+
+        if ($masterpass->isEnabled()) {
+
+            $masterpass->set_merchant_id(sprintf(
+                "%s-%s",
+                $this->getConfigValue('basicdata', 'customer_id'),
+                $this->getConfigValue('basicdata', 'shop_id')
+            ));
+            $masterpass->set_merchant_secret(md5($this->getConfigValue('basicdata', 'secret')));
+
+            $masterpass->set_cart(new Cart($this->context->cookie->id_cart));
+
+            $masterpass->create_wallet();
+            // generate return url
+            $return_url = $this->context->link->getModuleLink($this->name, 'masterpassPayment', array(), true);
+
+            $this->context->smarty->assign(
+                array(
+                    'walletId' => $masterpass->get_wallet()->id,
+                    'currentUrl' => $return_url
+                )
+            );
+            return $this->context->smarty->fetch('module:wirecardceecheckoutseamless/views/templates/front/cart-detailed-actions-extended.tpl');
+        }
+        return null;
+    }
+
+    private function masterpassConfirm($data){
+
+        $transaction = $this->getTransaction();
+        ini_set("display_errors","on");
+        error_reporting(E_ALL);
+
+        $wallet_id = $data['walletId'];
+        $state = $data['state'];
+
+        $config = $this->config['standardpayments']['fields'];
+        foreach ($config as $config_) {
+            if ($config_['name'] == 'masterpass') {
+                $config = $config_;
+                $config['group'] = 'pt';
+                break;
+            }
+        }
+
+
+        $masterpass = new WirecardCheckoutSeamlessPaymentMasterpass($this, $config, null);
         $masterpass->set_merchant_id(sprintf(
             "%s-%s",
             $this->getConfigValue('basicdata', 'customer_id'),
@@ -2692,19 +2757,35 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         ));
         $masterpass->set_merchant_secret(md5($this->getConfigValue('basicdata', 'secret')));
 
-        $masterpass->set_cart(new Cart($this->context->cookie->id_cart));
+        /**
+         *
+         * $payment_data = stdClass{
+         *  orderNumber => int
+         *  orderDescription => string
+         *  customerStatement => string
+         *  amount => object { currency => char(3), amount => float}
+         *  approvalCode => char(10)
+         *  approveAmount = object { currency => char(3), amount => float }
+         * }
+         */
+        $payment_data = $masterpass->read_payment(null,$wallet_id);
 
-        $masterpass->create_wallet();
 
-        // generate return url
-        $return_url = $this->context->link->getModuleLink($this->name, 'masterpassPayment', array(), true);
+        $transaction_id = intval(explode('TID: ',$payment_data->orderDescription)[1]);
 
-        $this->context->smarty->assign(
-            array(
-                'walletId' => $masterpass->get_wallet()->id,
-                'currentUrl' => $return_url
-            )
-        );
-        return $this->context->smarty->fetch('module:wirecardceecheckoutseamless/views/templates/front/cart-detailed-actions-extended.tpl');
+        $transaction->updateTransaction($transaction_id, array(
+            'paymentstate' => $state,
+            'ordernumber' => $payment_data->orderNumber,
+            'gatewayreference' => $payment_data->gatewayReferenceNumber,
+            'response' => print_r($payment_data, true)
+        ));
+
+        $payment_data->wallet_id = $wallet_id;
+
+        $orderManagement = new WirecardCheckoutSeamlessOrderManagement($this);
+
+        $orderManagement->processMasterpassOrder($masterpass, $transaction->get($transaction_id), $payment_data);
+
+        return WirecardCEE_QMore_ReturnFactory::generateConfirmResponseString();
     }
 }

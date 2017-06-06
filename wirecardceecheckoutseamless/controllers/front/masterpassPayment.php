@@ -46,8 +46,6 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
 
     public function initContent()
     {
-        ini_set("display_errors", "on");
-        error_reporting(E_ALL);
         parent::initContent();
 
         $this->masterpass = new WirecardCheckoutSeamlessPaymentMasterpass($this->module, null, null);
@@ -79,6 +77,11 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
             $this->redirectWithNotifications('index.php?controller=cart&action=show');
             die();
         } else if (Tools::getValue("status") == 'FAILURE') {
+            $this->masterpass->destroy();
+            $this->errors[] = $this->module->l('An error happened during the process.');
+            $this->redirectWithNotifications('index.php?controller=cart&action=show');
+            die();
+        } else if (Tools::getValue("status") == 'CANCEL') {
             $this->masterpass->destroy();
             $this->info[] = $this->module->l('You canceled the checkout process.');
             $this->redirectWithNotifications('index.php?controller=cart&action=show');

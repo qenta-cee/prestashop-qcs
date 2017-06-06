@@ -16,5 +16,7 @@
             };
             WirecardCheckout.MasterPassClient.checkoutButton(data);
         </script>
+    {else}
+        <div style="display:none">Masterpass not loaded</div>
     {/if}
 {/block}

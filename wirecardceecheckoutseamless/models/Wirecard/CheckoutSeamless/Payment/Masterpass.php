@@ -42,6 +42,10 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     protected $wallet = null;
     protected $cart = null;
 
+    public function getLabel(){
+        return $this->paymentMethod;
+    }
+
     /**
      * get wallet
      *
@@ -50,7 +54,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     public function get_wallet()
     {
         if (!isset($this->wallet->id)) {
-            $this->module->log('Masterpass wallet object is invalid.', 2, null);
+            $this->log('Masterpass wallet object is invalid.', 2, null);
             $this->wallet->id = null;
         }
         /*
@@ -121,13 +125,20 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     {
         $cookie = $this->module->getContext()->cookie;
         $merchant_basic_auth = base64_encode($this->merchant_id . ':' . $this->merchant_secret);
-        if ($cookie->wcs_oauth_token && $cookie->wcs_oauth_expires && $cookie->wcs_oauth_expires > time()) {
+
+        if (
+            $cookie->merchant_basic_auth === $merchant_basic_auth
+            && $cookie->wcs_oauth_token
+            && $cookie->wcs_oauth_expires
+            && $cookie->wcs_oauth_expires > time()
+        ) {
             return $cookie->wcs_oauth_token;
         } else if ($this->merchant_id === null) {
-            $this->module->log($this->module->l('WirecardCeeCheckoutSeamless: No masterpasss merchant id provided. Cannot start oauth.'), 3, null);
+            $this->log($this->module->l('WirecardCeeCheckoutSeamless: No masterpasss merchant id provided. Cannot start oauth.'), 3, null);
             return false;
         }
 
+        $cookie->merchant_basic_auth = $merchant_basic_auth;
         $auth_process = curl_init('https://checkout.wirecard.com/oauth/token');
         curl_setopt($auth_process, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded', "Authorization: Basic $merchant_basic_auth"));
         curl_setopt($auth_process, CURLOPT_RETURNTRANSFER, 1);
@@ -226,13 +237,37 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
     }
 
     /**
-     * destroy oauth session
+     * get the payment object
+     *
+     * @param $merchant_id
+     * @param $wallet_id
+     * @return false|object
      */
-    public function destroy()
+    public function read_payment($merchant_id = null, $wallet_id = null, $oauth_token = null)
     {
-        unset($this->module->getContext()->cookie->wcsWalletId);
-        $this->wcs_oauth_token = null;
-        $this->wcs_oauth_expires = null;
+        if ($merchant_id === null) {
+            $merchant_id = $this->merchant_id;
+        }
+        if ($wallet_id === null) {
+            $wallet_id = $this->wallet->id;
+        }
+        if ($oauth_token === null) {
+            $oauth_token = $this->get_oauth_token();
+        }
+
+        if (!$oauth_token) {
+            return false;
+        }
+
+        $read_payment_process = curl_init(sprintf('https://checkout.wirecard.com/masterpass/merchants/%s/wallets/%s/payment', $merchant_id, $wallet_id));
+        curl_setopt($read_payment_process, CURLOPT_HTTPHEADER, array("Authorization: Bearer $oauth_token"));
+        curl_setopt($read_payment_process, CURLOPT_RETURNTRANSFER, 1);
+
+        if (($read_payment_return = curl_exec($read_payment_process)) === false) {
+            return false;
+        }
+
+        return json_decode($read_payment_return);
     }
 
     /**
@@ -249,7 +284,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
          * $this->module->getContext()->cookie->__unset('wcsWalletId');
          */
         if (!isset($this->module->getContext()->cookie->wcsWalletId)) {
-            $this->module->log('Masterpass wallet id invalid.', 3, null);
+            $this->log('Masterpass wallet id invalid.', 3, null);
             return false;
         }
 
@@ -291,11 +326,10 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
             ),
             'customerStatement' => $this->module->getConfigValue('options', 'shopname'),
             'orderReference' => sprintf('%010d', $id_tx),
-            'notificationUrl' => $this->module->getConfirmUrl(),
+            'notificationUrl' => $this->module->getConfirmUrl(),//'https://requestb.in/1btt7bt1'
             'deposit' => $this->module->getConfigValue('options', 'autodeposit'),
             'useWalletConsumerData' => true
         );
-
         curl_setopt($pay_process, CURLOPT_POSTFIELDS, json_encode($payment_data));
 
         if (($pay_return = curl_exec($pay_process)) === false) {
@@ -303,15 +337,22 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
         }
         $pay_return = json_decode($pay_return);
 
-        if (!isset($pay_return->orderNumber)) {
+        $return_code = curl_getinfo($pay_process, CURLINFO_RESPONSE_CODE);
+
+        if (in_array($return_code, array(400, 412, 502))) {
             if (!isset($pay_return->message))
                 $pay_return->message = "Unknown error";
+
+            $transaction->updateTransaction($id_tx,array(
+                'paymentstate' => pSQL($pay_return->processingState)
+            ));
             $this->module->getContext()->cookie->wcsMessage = html_entity_decode($pay_return->message);
 
             $page = 'order';
             if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
                 $page = 'order-opc';
             }
+
 
             $params = array();
 
@@ -348,6 +389,35 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
             die();
         }
 
+    }
+
+    /**
+     * destroy oauth session
+     */
+    public function destroy()
+    {
+        unset($this->module->getContext()->cookie->wcsWalletId);
+        $this->wcs_oauth_token = null;
+        $this->wcs_oauth_expires = null;
+    }
+
+    private function log($text, $severity = 1, $id_employee = null)
+    {
+        $log = new PrestaShopLogger();
+        $log->severity = (int)$severity;
+        $log->error_code = null;
+        $log->message = $text;
+        $log->date_add = date('Y-m-d H:i:s');
+        $log->date_upd = date('Y-m-d H:i:s');
+
+        if (isset(Context::getContext()->employee) && Validate::isLoadedObject(Context::getContext()->employee)) {
+            $id_employee = Context::getContext()->employee->id;
+        }
+        if ($id_employee !== null) {
+            $log->id_employee = (int)$id_employee;
+        }
+
+        $log->add();
     }
 
 }

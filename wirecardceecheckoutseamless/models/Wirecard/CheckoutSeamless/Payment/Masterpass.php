@@ -326,7 +326,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
             ),
             'customerStatement' => $this->module->getConfigValue('options', 'shopname'),
             'orderReference' => sprintf('%010d', $id_tx),
-            'notificationUrl' => $this->module->getConfirmUrl(),//'https://requestb.in/1btt7bt1'
+            'notificationUrl' => $this->module->getConfirmUrl(),
             'deposit' => $this->module->getConfigValue('options', 'autodeposit'),
             'useWalletConsumerData' => true
         );

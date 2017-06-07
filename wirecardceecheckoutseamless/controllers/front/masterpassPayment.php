@@ -123,7 +123,7 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
         /*
          * if( condition_not_fulfilled ) {
          *   $this->masterpass->destroy();
-         *   $this->info[] = $this->module->l('Your message regarding address?');
+         *   $this->info[] = 'Your message regarding address?';
          *   $this->redirectWithNotifications('index.php?controller=cart&action=show');
          *   die();
          * }

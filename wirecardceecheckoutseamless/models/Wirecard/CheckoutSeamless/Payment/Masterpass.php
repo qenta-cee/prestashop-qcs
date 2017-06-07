@@ -134,7 +134,7 @@ class WirecardCheckoutSeamlessPaymentMasterpass extends WirecardCheckoutSeamless
         ) {
             return $cookie->wcs_oauth_token;
         } else if ($this->merchant_id === null) {
-            $this->log($this->module->l('WirecardCeeCheckoutSeamless: No masterpasss merchant id provided. Cannot start oauth.'), 3, null);
+            $this->log(__METHOD__.': No masterpasss merchant id provided. Cannot start oauth.', 3, null);
             return false;
         }
 

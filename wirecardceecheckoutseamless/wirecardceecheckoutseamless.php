@@ -404,8 +404,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('Invoice provider'),
                         'type' => 'select',
                         'group' => 'pt',
-                        //'default'  => 'wirecard', // XXX problem with ee
-                        'default' => 'payolution',
+                        'default' => 'wirecard',
                         'required' => true,
                         'options' => 'getInvoiceProviders'
                     ),
@@ -2619,8 +2618,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         return array(
             array('key' => 'payolution', 'value' => 'payolution'),
             array('key' => 'ratepay', 'value' => 'RatePay'),
-// XXX due to problems in paymentengine, currently disabled
-//            array('key' => 'wirecard', 'value' => 'Wirecard'),
+            array('key' => 'wirecard', 'value' => 'Wirecard'),
         );
     }
 

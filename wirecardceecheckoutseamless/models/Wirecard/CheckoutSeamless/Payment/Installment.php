@@ -167,24 +167,6 @@ class WirecardCheckoutSeamlessPaymentInstallment extends WirecardCheckoutSeamles
     }
 
     /**
-     * min basket size limit for this payment method
-     * @return int
-     */
-    protected function getMinBasketSize()
-    {
-        return (int)$this->getConfigValue('installment_basketsize_min');
-    }
-
-    /**
-     * max basket size limit for this payment method
-     * @return int
-     */
-    protected function getMaxBasketSize()
-    {
-        return (int)$this->getConfigValue('installment_basketsize_max');
-    }
-
-    /**
      * return provider
      *
      * @return string

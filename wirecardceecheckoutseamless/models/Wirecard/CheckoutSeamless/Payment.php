@@ -476,18 +476,6 @@ class WirecardCheckoutSeamlessPayment
             }
         }
 
-        if ($this->getMaxBasketSize()) {
-            if ($cart->nbProducts() > $this->getMaxBasketSize()) {
-                return false;
-            }
-        }
-
-        if ($this->getMinBasketSize()) {
-            if ($cart->nbProducts() < $this->getMinBasketSize()) {
-                return false;
-            }
-        }
-
         if ($this->getMinAmount() && $this->getMinAmount() > $total) {
             return false;
         }
@@ -559,18 +547,6 @@ class WirecardCheckoutSeamlessPayment
         if (count($this->getAllowedBillingCountries())) {
             $c = new Country($billingAddress->id_country);
             if (!in_array($c->iso_code, $this->getAllowedBillingCountries())) {
-                return false;
-            }
-        }
-
-        if ($this->getMaxBasketSize()) {
-            if ($cart->nbProducts() > $this->getMaxBasketSize()) {
-                return false;
-            }
-        }
-
-        if ($this->getMinBasketSize()) {
-            if ($cart->nbProducts() < $this->getMinBasketSize()) {
                 return false;
             }
         }
@@ -677,26 +653,6 @@ class WirecardCheckoutSeamlessPayment
      * @return int
      */
     protected function getMaxAmount()
-    {
-        return 0;
-    }
-
-    /**
-     * min basket size limit for this payment method
-     *
-     * @return int
-     */
-    protected function getMinBasketSize()
-    {
-        return 0;
-    }
-
-    /**
-     * max basket size limit for this payment method
-     *
-     * @return int
-     */
-    protected function getMaxBasketSize()
     {
         return 0;
     }

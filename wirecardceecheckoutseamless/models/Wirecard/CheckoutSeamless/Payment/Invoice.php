@@ -218,22 +218,4 @@ class WirecardCheckoutSeamlessPaymentInvoice extends WirecardCheckoutSeamlessPay
     {
         return (int)$this->getConfigValue('invoice_amount_max');
     }
-
-    /**
-     * min basket size limit for this payment method
-     * @return int
-     */
-    protected function getMinBasketSize()
-    {
-        return (int)$this->getConfigValue('invoice_basketsize_min');
-    }
-
-    /**
-     * max basket size limit for this payment method
-     * @return int
-     */
-    protected function getMaxBasketSize()
-    {
-        return (int)$this->getConfigValue('invoice_basketsize_max');
-    }
 }

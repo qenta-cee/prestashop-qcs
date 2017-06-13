@@ -463,23 +463,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'validator' => 'numeric',
                         'cssclass' => 'fixed-width-md',
                         'suffix' => 'EUR'
-                    ),
-                    array(
-                        'name' => 'invoice_basketsize_min',
-                        'label' => $this->l('Minimum basket size'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'validator' => 'numeric',
-                        'cssclass' => 'fixed-width-md',
-                    ),
-                    array(
-                        'name' => 'invoice_basketsize_max',
-                        'label' => $this->l('Maximum basket size'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'validator' => 'numeric',
-                        'cssclass' => 'fixed-width-md',
-                    ),
+                    )
                 )
             ),
             'installmentoptions' => array(
@@ -549,23 +533,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'validator' => 'numeric',
                         'cssclass' => 'fixed-width-md',
                         'suffix' => 'EUR'
-                    ),
-                    array(
-                        'name' => 'installment_basketsize_min',
-                        'label' => $this->l('Minimum basket size'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'validator' => 'numeric',
-                        'cssclass' => 'fixed-width-md',
-                    ),
-                    array(
-                        'name' => 'installment_basketsize_max',
-                        'label' => $this->l('Maximum basket size'),
-                        'type' => 'text',
-                        'group' => 'pt',
-                        'validator' => 'numeric',
-                        'cssclass' => 'fixed-width-md',
-                    ),
+                    )
                 )
             ),
             'standardpayments' => array(
@@ -1865,16 +1833,14 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
     public function hookdisplayPaymentTop($params)
     {
-        if ($this->getContext()->cookie->wcsWalletId) {
-            if ($this->getContext()->cookie->wcsWalletId) {
-                $walletId = $this->getContext()->cookie->wcsWalletId;
-                $masterpassPaymentUrl = $this->getContext()->link->getModuleLink($this->name, 'masterpassPayment', array(
-                    'action' => 'pay',
-                    'walletId' => $walletId
-                ), true);
-                Tools::redirect($masterpassPaymentUrl);
-                die();
-            }
+        if ($this->getContext()->cookie->wcs_masterpass_interaction_started === true) {
+            $walletId = $this->getContext()->cookie->wcsWalletId;
+            $masterpassPaymentUrl = $this->getContext()->link->getModuleLink($this->name, 'masterpassPayment', array(
+                'action' => 'pay',
+                'walletId' => $walletId
+            ), true);
+            Tools::redirect($masterpassPaymentUrl);
+            die();
         }
     }
 

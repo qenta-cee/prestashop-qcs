@@ -170,6 +170,8 @@ class WirecardCEECheckoutSeamlessMasterpassPaymentModuleFrontController extends 
         $this->context->cookie->id_address_invoice = (int)$address->id;
         $this->context->cookie->id_address_delivery = (int)$address->id;
 
+        $this->context->cookie->wcs_masterpass_interaction_started = true;
+
         if (Configuration::get('PS_ORDER_PROCESS_TYPE'))
             Tools::redirectLink($this->context->link->getPageLink('order-opc.php'));
         else

@@ -1194,9 +1194,25 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 }
             }
 
+            $context = $this->context;
+            $country = strtolower($context->country->iso_code);
+            $language = $context->language->iso_code;
+
+            if ($language != $country && $language = 'en') {
+                $language = 'en';
+            }
+
+            if (!in_array($country, array('gb', 'de', 'it', 'es', 'pl', 'nl', 'fr'))) {
+                $country = 'de';
+                $language = 'en';
+            }
+
+
             $backendEnabled = Configuration::get('WCS_BASICDATA_BACKENDPW');
             $this->context->smarty->assign(
                 array(
+                    'country' => $country,
+                    'language' => $language,
                     'shopversion' => _PS_VERSION_,
                     'pluginversion' => $this->version,
                     'is_core' => $this->isCore,

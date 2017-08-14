@@ -30,41 +30,72 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Response_Toolkit_GetOrderDetails
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ * @subpackage Response_Toolkit
+ */
+class WirecardCEE_QPay_Response_Toolkit_GetOrderDetails extends WirecardCEE_QPay_Response_Toolkit_ResponseAbstract
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
+    /**
+     * Internal order holder
+     *
+     * @var WirecardCEE_QPay_Response_Toolkit_Order
+     */
+    private $_order;
 
-    foreach ($namespaces as $ns) {
+    /**
+     * Order
+     *
+     * @staticvar string
+     */
+    private static $ORDER = 'order';
 
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
+    /**
+     * Payment
+     *
+     * @staticvar string
+     */
+    private static $PAYMENT = 'payment';
+
+    /**
+     * Credit
+     *
+     * @staticvar string
+     */
+    private static $CREDIT = 'credit';
+
+    /**
+     *
+     * @see WirecardCEE_QPay_Response_Toolkit_Abstract
+     *
+     * @param array $result
+     */
+    public function __construct($result)
+    {
+        parent::__construct($result);
+
+        $orders   = $this->_getField(self::$ORDER);
+        $payments = $this->_getField(self::$PAYMENT);
+        $credits  = $this->_getField(self::$CREDIT);
+
+        $order                = $orders[0];
+        $order['paymentData'] = is_array($payments[0]) ? $payments[0] : Array();
+        $order['creditData']  = is_array($credits[0]) ? $credits[0] : Array();
+
+        $this->_order = new WirecardCEE_QPay_Response_Toolkit_Order($order);
+
     }
-    if ($namespace === null) {
-        return;
+
+    /**
+     * getter for the returned order object
+     *
+     * @return WirecardCEE_QPay_Response_Toolkit_Order
+     */
+    public function getOrder()
+    {
+        return $this->_order;
     }
-
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
-    }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

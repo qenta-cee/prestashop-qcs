@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shop System Plugins - Terms of Use
  *
@@ -30,41 +31,23 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
-
-function wirecardcee_autoload($class)
+/**
+ * Class WirecardCEE_QPay_MobileDetect
+ * 
+ * @method bool isTablet() isTablet($userAgent = null, $httpHeaders = null)
+ * @method bool isMobile() isMobile($userAgent = null, $httpHeaders = null)
+ */
+class WirecardCEE_QPay_MobileDetect
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
-
-    foreach ($namespaces as $ns) {
-
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
-    }
-    if ($namespace === null) {
-        return;
+    public function __construct(
+        array $headers = null,
+        $userAgent = null
+    ) {
+        $this->detector = new Mobile_Detect($headers, $userAgent);
     }
 
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
+    public function __call($name, $arguments)
+    {
+        return call_user_func_array(array($this->detector, $name), $arguments);
     }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

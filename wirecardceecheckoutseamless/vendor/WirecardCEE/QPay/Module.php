@@ -30,41 +30,34 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Module
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ */
+class WirecardCEE_QPay_Module extends WirecardCEE_Stdlib_Module_ModuleAbstract implements WirecardCEE_Stdlib_Module_ModuleInterface
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
 
-    foreach ($namespaces as $ns) {
-
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
-    }
-    if ($namespace === null) {
-        return;
+    /**
+     * Returns the user configuration details found in 'Config' directory
+     * (user.config.php)
+     *
+     * @return Array
+     */
+    public static final function getConfig()
+    {
+        return include dirname(__FILE__) . '/Config/user.config.php';
     }
 
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
+    /**
+     * Returns the client configuration details found in 'Config' directory
+     * (client.config.php)
+     *
+     * @return Array
+     */
+    public static final function getClientConfig()
+    {
+        return include dirname(__FILE__) . '/Config/client.config.php';
     }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

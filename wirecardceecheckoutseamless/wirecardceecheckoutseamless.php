@@ -115,9 +115,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'models'
         );
 
-        require_once _PS_MODULE_DIR_ . "wirecardceecheckoutseamless" . DIRECTORY_SEPARATOR . "vendor"
-            . DIRECTORY_SEPARATOR . "React" . DIRECTORY_SEPARATOR . "Promise" . DIRECTORY_SEPARATOR
-            . "functions_include.php";
         require_once 'wirecardcee_autoload.php';
 
         $this->config = $this->config();

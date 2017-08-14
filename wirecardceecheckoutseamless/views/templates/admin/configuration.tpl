@@ -40,7 +40,7 @@
     {l s='As independent provider of payment solutions, we accompany our customers along the entire business development. Our payment solutions are perfectly tailored to suit e-Commerce requirements and have made us Austria´s leading payment service provider. Customization, competence, and commitment.' mod='wirecardceecheckoutseamless'}<br/>
     <br/>
     {if $is_core}
-    <p><a href="https://checkout.wirecard.com/cop/?shopsystem=Prestashop&shopversion={$shopversion|escape:'htmlall':'UTF-8'}&integration=WCS&pluginversion={$pluginversion|escape:'htmlall':'UTF-8'}" target="_blank">
+    <p><a href="https://checkoutportal.com/{$country}/{$language}/prestashop/" target="_blank">
             {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
         </a></p>
     {/if}

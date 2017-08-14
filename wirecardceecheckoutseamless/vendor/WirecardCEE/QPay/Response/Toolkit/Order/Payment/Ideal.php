@@ -30,41 +30,66 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Response_Toolkit_Order_Payment_Ideal
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ * @subpackage Response_Toolkit_Order_Payment
+ */
+class WirecardCEE_QPay_Response_Toolkit_Order_Payment_Ideal extends WirecardCEE_QPay_Response_Toolkit_Order_Payment
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
+    /**
+     * iDEAL consumer name
+     *
+     * @staticvar string
+     * @internal
+     */
+    private static $CONSUMER_NAME = 'idealConsumerName';
 
-    foreach ($namespaces as $ns) {
+    /**
+     * iDEAL consumer city
+     *
+     * @staticvar string
+     * @internal
+     */
+    private static $CONSUMER_CITY = 'idealConsumerCity';
 
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
+    /**
+     *  iDEAL consumer city
+     *
+     * @staticvar string
+     * @internal
+     */
+    private static $CONSUMER_ACCOUNT_NUMBER = 'idealConsumerAccountNumber';
+
+    /**
+     * getter for iDEAL consumer Name
+     *
+     * @return string
+     */
+    public function getConsumerName()
+    {
+        return $this->_getField(self::$CONSUMER_NAME);
     }
-    if ($namespace === null) {
-        return;
+
+    /**
+     * getter for iDEAL consumer City
+     *
+     * @return string
+     */
+    public function getConsumerCity()
+    {
+        return $this->_getField(self::$CONSUMER_CITY);
     }
 
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
+    /**
+     * getter for iDEAL consumer account-number
+     *
+     * @return string
+     */
+    public function getConsumerAccountNumber()
+    {
+        return $this->_getField(self::$CONSUMER_ACCOUNT_NUMBER);
     }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

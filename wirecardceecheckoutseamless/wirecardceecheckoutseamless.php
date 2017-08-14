@@ -115,9 +115,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'models'
         );
 
-        require_once _PS_MODULE_DIR_ . "wirecardceecheckoutseamless" . DIRECTORY_SEPARATOR . "vendor"
-            . DIRECTORY_SEPARATOR . "React" . DIRECTORY_SEPARATOR . "Promise" . DIRECTORY_SEPARATOR
-            . "functions_include.php";
         require_once 'wirecardcee_autoload.php';
 
         $this->config = $this->config();
@@ -1194,9 +1191,25 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 }
             }
 
+            $context = $this->context;
+            $country = strtolower($context->country->iso_code);
+            $language = $context->language->iso_code;
+
+            if ($language != $country && $language = 'en') {
+                $language = 'en';
+            }
+
+            if (!in_array($country, array('gb', 'de', 'it', 'es', 'pl', 'nl', 'fr'))) {
+                $country = 'de';
+                $language = 'en';
+            }
+
+
             $backendEnabled = Configuration::get('WCS_BASICDATA_BACKENDPW');
             $this->context->smarty->assign(
                 array(
+                    'country' => $country,
+                    'language' => $language,
                     'shopversion' => _PS_VERSION_,
                     'pluginversion' => $this->version,
                     'is_core' => $this->isCore,
@@ -1897,6 +1910,26 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         unset($this->context->cookie->wcsRedirectUrl);
 
+        $timestamp = microtime();
+        $customerId = $this->getConfigValue('basicdata', 'customer_id');
+        $consumerDeviceId = md5($customerId . "_" . $timestamp);
+
+        if (!isset($this->context->cookie->wcsConsumerDeviceId)) {
+            $this->context->cookie->wcsConsumerDeviceId = $consumerDeviceId;
+        }
+        echo "<script language='JavaScript'>
+                var di = {t:'" . $this->context->cookie->wcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
+              </script>
+              <script type='text/javascript' src='//d.ratepay.com/" . $this->context->cookie->wcsConsumerDeviceId . "/di.js'></script>
+              <noscript>
+              <link rel='stylesheet' type='text/css' href='//d.ratepay.com/di.css?t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL&l=Checkout'>
+            </noscript>
+            <object type='application/x-shockwave-flash' data='//d.ratepay.com/WDWL/c.swf' width='0' height='0'>
+                <param name='movie' value='//d.ratepay.com/WDWL/c.swf' />
+                <param name='flashvars' value='t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL'/>
+                <param name='AllowScriptAccess' value='always'/>
+            </object>";
+
         $paymentTypes = $this->getEnabledPaymentTypes($params['cart']);
 
         $result = array();
@@ -2178,6 +2211,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 } else {
                     $initResponse = $paymentType->initiate($id_cart, null, $additionalData);
                 }
+
+                unset($this->context->cookie->wcsConsumerDeviceId);
 
                 if ($initResponse->getStatus() == \WirecardCEE_QMore_Response_Initiation::STATE_FAILURE) {
                     $message = $this->l('An error occurred during the payment process');

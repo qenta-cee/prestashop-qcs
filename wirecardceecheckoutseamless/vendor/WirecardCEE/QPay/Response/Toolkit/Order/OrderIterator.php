@@ -30,41 +30,85 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Response_Toolkit_Order_OrderIterator
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ * @subpackage Response_Toolkit_Order
+ * @abstract
+ * @see Iterator
+ */
+abstract class WirecardCEE_QPay_Response_Toolkit_Order_OrderIterator implements Iterator
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
 
-    foreach ($namespaces as $ns) {
+    /**
+     * Current position
+     *
+     * @var int
+     */
+    protected $_position;
 
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
-    }
-    if ($namespace === null) {
-        return;
-    }
+    /**
+     * Objects to iterate through
+     *
+     * @var Array
+     */
+    protected $_objectArray;
 
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
+    /**
+     *
+     * @param array $objectArray objects to iterate through
+     */
+    public function __construct(array $objectArray)
+    {
+        $this->_position    = 0;
+        $this->_objectArray = $objectArray;
     }
 
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
+    /**
+     * resets the current position to 0(first entry)
+     */
+    public function rewind()
+    {
+        $this->_position = 0;
+    }
 
-    require_once $file;
+    /**
+     * the current Object
+     *
+     * @return Object
+     */
+    public function current()
+    {
+        return $this->_objectArray[$this->_position];
+    }
+
+    /**
+     * the current position
+     *
+     * @return int
+     */
+    public function key()
+    {
+        return $this->_position;
+    }
+
+    /**
+     * go to the next position
+     */
+    public function next()
+    {
+        ++ $this->_position;
+    }
+
+    /**
+     * checks if position is valid
+     *
+     * @see Iterator::valid()
+     */
+    public function valid()
+    {
+        return (bool) isset( $this->_objectArray[$this->_position] );
+    }
 }

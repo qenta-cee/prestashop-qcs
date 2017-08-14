@@ -30,41 +30,22 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Response_Initiation
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ * @subpackage Response
+ */
+class WirecardCEE_QPay_Response_Initiation extends WirecardCEE_QPay_Response_ResponseAbstract
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
-
-    foreach ($namespaces as $ns) {
-
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
-        }
+    /**
+     * @see WirecardCEE_QPay_Response_ResponseAbstract::getStatus()
+     * if we have got a redirectUrl the initiation has been successful
+     * @return int
+     */
+    public function getStatus()
+    {
+        return ( $this->_getField(self::REDIRECT_URL) ) ? self::STATE_SUCCESS : self::STATE_FAILURE;
     }
-    if ($namespace === null) {
-        return;
-    }
-
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
-    }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

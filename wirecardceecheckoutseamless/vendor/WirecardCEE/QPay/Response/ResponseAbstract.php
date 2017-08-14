@@ -30,41 +30,43 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-spl_autoload_register('wirecardcee_autoload');
 
-function wirecardcee_autoload($class)
+/**
+ * @name WirecardCEE_QPay_Response_ResponseAbstract
+ * @category WirecardCEE
+ * @package WirecardCEE_QPay
+ * @subpackage Response
+ * @abstract
+ */
+abstract class WirecardCEE_QPay_Response_ResponseAbstract extends WirecardCEE_Stdlib_Response_ResponseAbstract
 {
-    $namespaces = array('WirecardCEE', 'Wirecard', 'React');
-    $namespace = null;
-    $modelNamespace = 'WirecardCheckoutSeamless';
-    $paymentNamespace = 'WirecardCheckoutSeamlessPayment';
+    /**
+     * getter for the Response status
+     * values:
+     * 0 ... success
+     * 1 ... failure
+     *
+     * @return int
+     */
+    abstract public function getStatus();
 
-    foreach ($namespaces as $ns) {
+    /**
+     * getter for list of errors that occured
+     *
+     * @return WirecardCEE_QPay_Error
+     */
+    public function getError()
+    {
+        $oError = false;
 
-        if (strncmp($ns, $class, Tools::strlen($ns)) !== 0) {
-            continue;
-        } else {
-            $namespace = $ns;
-            break;
+        if (isset( $this->_response[self::$ERROR_MESSAGE] )) {
+            $oError = new WirecardCEE_QPay_Error($this->_response[self::$ERROR_MESSAGE]);
+
+            if (isset( $this->_response[self::$ERROR_CONSUMER_MESSAGE] )) {
+                $oError->setConsumerMessage($this->_response[self::$ERROR_CONSUMER_MESSAGE]);
+            }
         }
-    }
-    if ($namespace === null) {
-        return;
-    }
 
-    if (strcmp($class, $modelNamespace) > 0) {
-        $classWithUnderscore = 'Wirecard_CheckoutSeamless_';
-        if ((strcmp($paymentNamespace, Tools::substr($class, Tools::strlen($paymentNamespace))) >= 0)
-            && ((Tools::substr($class, Tools::strlen($paymentNamespace))) != '')
-        ) {
-            $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
-        } else {
-            $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-        }
-        $class = $classWithUnderscore;
+        return $oError;
     }
-
-    $file = str_replace(array('\\', '_'), '/', $class) . '.php';
-
-    require_once $file;
 }

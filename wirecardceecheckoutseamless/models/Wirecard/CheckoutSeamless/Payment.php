@@ -212,6 +212,10 @@ class WirecardCheckoutSeamlessPayment
             ->createConsumerMerchantCrmId($customer->email)
             ->setOrderIdent($id_cart);
 
+        if (isset($this->module->getContext()->cookie->wcsConsumerDeviceId)) {
+            $init->consumerDeviceId = $this->module->getContext()->cookie->wcsConsumerDeviceId;
+        }
+
         // using legacy basket parameters
         $init->__set('basketAmount', $amount);
         $init->__set('basketCurrency', $current_currency->iso_code);

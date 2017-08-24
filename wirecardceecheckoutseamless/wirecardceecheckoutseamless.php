@@ -53,7 +53,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      *
      * @var bool
      */
-    protected $isCore = true;
+    protected $isCore = false;
     /**
      * predefined test/demo accounts
      *

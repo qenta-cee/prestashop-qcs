@@ -53,7 +53,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      *
      * @var bool
      */
-    protected $isCore = false;
+    protected $isCore = true;
     /**
      * predefined test/demo accounts
      *
@@ -120,7 +120,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.1';
+        $this->version = '2.0.2';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -1192,7 +1192,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
 
             $context = $this->context;
-            $country = strtolower($context->country->iso_code);
+            $country = Tools::strtolower($context->country->iso_code);
             $language = $context->language->iso_code;
 
             if ($language != $country && $language = 'en') {

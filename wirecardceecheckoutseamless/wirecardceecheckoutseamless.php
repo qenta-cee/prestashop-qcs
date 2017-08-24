@@ -1192,7 +1192,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
 
             $context = $this->context;
-            $country = strtolower($context->country->iso_code);
+            $country = Tools::strtolower($context->country->iso_code);
             $language = $context->language->iso_code;
 
             if ($language != $country && $language = 'en') {

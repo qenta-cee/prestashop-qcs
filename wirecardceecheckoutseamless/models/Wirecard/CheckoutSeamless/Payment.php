@@ -61,11 +61,9 @@ class WirecardCheckoutSeamlessPayment
     /**
      * whether payment method is available on checkoutpage
      *
-     * @param Cart $cart
-     *
      * @return bool
      */
-    public function isAvailable($cart)
+    public function isAvailable()
     {
         return $this->isEnabled();
     }
@@ -125,11 +123,9 @@ class WirecardCheckoutSeamlessPayment
     /**
      * return the logofilename
      *
-     * @param $lang
-     *
      * @return mixed
      */
-    public function getLogo($lang)
+    public function getLogo()
     {
         return $this->config['logo'];
     }

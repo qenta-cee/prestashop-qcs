@@ -85,7 +85,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_f
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_73a61696f100b3858511e212a3feea6b'] = 'Kreditkarte';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_677c0ab38809416b6b9cf96f0d563c77'] = 'Kreditkarte - Post / Telefonbestellung';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_af69181965f356ce4002b07cc0dba424'] = 'Maestro SecureCode';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_8ad65eb3da9995173280649f090218c3'] = 'Sofort.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_842619a36f50f72dd86d00ba73a379c4'] = 'Sofort.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_ad69e733ebae8d264bccaa38d68830e8'] = 'PayPal';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c0db4214f9d7e1b846f4496e03e667d0'] = 'SEPA Direct Debit';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6396ec71d75416c2373228c3b20cc304'] = 'Kauf auf Rechnung B2B';

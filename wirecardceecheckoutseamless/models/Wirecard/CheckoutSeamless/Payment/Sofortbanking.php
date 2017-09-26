@@ -37,9 +37,4 @@
 class WirecardCheckoutSeamlessPaymentSofortbanking extends WirecardCheckoutSeamlessPayment
 {
     protected $paymentMethod = \WirecardCEE_Stdlib_PaymentTypeAbstract::SOFORTUEBERWEISUNG;
-
-    public function getLogo($lang)
-    {
-        return sprintf($this->config['logo'], $lang);
-    }
 }

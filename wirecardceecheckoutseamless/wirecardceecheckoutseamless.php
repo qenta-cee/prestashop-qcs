@@ -120,7 +120,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.2';
+        $this->version = '2.0.3';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -620,11 +620,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     ),
                     array(
                         'name' => 'sofortbanking',
-                        'label' => $this->l('SOFORT Banking'),
+                        'label' => $this->l('Online bank transfer.'),
                         'type' => 'onoff',
                         'default' => 1,
                         'class' => 'Sofortbanking',
-                        'logo' => 'sofortbanking-%s.png'
+                        'logo' => 'sofortbanking.png'
                     ),
                     array(
                         'name' => 'paypal',

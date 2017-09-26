@@ -621,11 +621,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                     ),
                     array(
                         'name' => 'sofortbanking',
-                        'label' => $this->l('SOFORT Banking'),
+                        'label' => $this->l('Online bank transfer.'),
                         'type' => 'onoff',
                         'default' => 1,
                         'class' => 'Sofortbanking',
-                        'logo' => 'sofortbanking-%s.png'
+                        'logo' => 'sofortbanking.png'
                     ),
                     array(
                         'name' => 'paypal',

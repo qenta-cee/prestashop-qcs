@@ -79,7 +79,7 @@ $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutsea
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_73a61696f100b3858511e212a3feea6b'] = 'Kreditkarte';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_677c0ab38809416b6b9cf96f0d563c77'] = 'Credit Card - Mail Order and Telephone Order';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_af69181965f356ce4002b07cc0dba424'] = 'Maestro SecureCode';
-$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_8ad65eb3da9995173280649f090218c3'] = 'SOFORT Banking';
+$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_842619a36f50f72dd86d00ba73a379c4'] = 'Sofort.';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_ad69e733ebae8d264bccaa38d68830e8'] = 'PayPal';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_c0db4214f9d7e1b846f4496e03e667d0'] = 'SEPA Direct Debit';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_466eadd40b3c10580e3ab4e8061161ce'] = 'Invoice';

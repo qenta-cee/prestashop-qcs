@@ -103,7 +103,6 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_3
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_ffe0b676beb70ae97ad71df7fa9321d1'] = 'Skrill Direct';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c590349d782553f4011343e642d2cd08'] = 'Alternative Zahlungsmittel';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6abcd8eecb4f2abb6ccfe36ef7046ba0'] = 'paysafecard';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_a41cdeba95dd125a6efea489c114a4f9'] = '@Quick';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_9248c264c15a45f741eeba6b28a17fc5'] = 'ePay.bg';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1badcb6bf3c9f9a61b9221344ccdc53c'] = 'moneta.ru';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1525848c624bf1a02dfce01c9e8145cf'] = 'Skrill Digital Wallet';

@@ -867,4 +867,14 @@ class WirecardCheckoutSeamlessPayment
             return $this->module->getPaymentTranslations()['consent'];
         }
     }
+
+    /**
+     * return payment method
+     *
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
 }

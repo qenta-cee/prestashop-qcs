@@ -762,13 +762,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'logo' => 'paysafecard.png'
                     ),
                     array(
-                        'name' => 'quick',
-                        'label' => $this->l('@Quick'),
-                        'type' => 'onoff',
-                        'class' => 'Quick',
-                        'logo' => 'quick.png'
-                    ),
-                    array(
                         'name' => 'epaybg',
                         'label' => $this->l('ePay.bg'),
                         'type' => 'onoff',

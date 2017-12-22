@@ -2250,7 +2250,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
         }
 
-        Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
+        if ($this->getPaymentType($paymentTypeName)->getPaymentMethod() == WirecardCEE_Stdlib_PaymentTypeAbstract::SOFORTUEBERWEISUNG) {
+            Tools::redirect($this->context->cookie->wcsRedirectUrl);
+        } else {
+            Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
+        }
     }
 
     /**

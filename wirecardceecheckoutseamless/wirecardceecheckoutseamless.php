@@ -120,7 +120,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.3';
+        $this->version = '2.0.4';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -759,13 +759,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'class' => 'Paysafecard',
                         'logo' => 'paysafecard.png'
-                    ),
-                    array(
-                        'name' => 'quick',
-                        'label' => $this->l('@Quick'),
-                        'type' => 'onoff',
-                        'class' => 'Quick',
-                        'logo' => 'quick.png'
                     ),
                     array(
                         'name' => 'epaybg',
@@ -2270,7 +2263,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
         }
 
-        Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
+        if ($this->getPaymentType($paymentTypeName)->getPaymentMethod() == WirecardCEE_Stdlib_PaymentTypeAbstract::SOFORTUEBERWEISUNG) {
+            Tools::redirect($this->context->cookie->wcsRedirectUrl);
+        } else {
+            Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
+        }
     }
 
     /**

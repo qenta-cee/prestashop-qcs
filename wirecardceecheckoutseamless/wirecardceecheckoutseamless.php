@@ -120,7 +120,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.4';
+        $this->version = '2.0.5';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -1910,7 +1910,10 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         if (!isset($this->context->cookie->wcsConsumerDeviceId)) {
             $this->context->cookie->wcsConsumerDeviceId = $consumerDeviceId;
         }
-        echo "<script language='JavaScript'>
+
+        if ((Configuration::get('WCS_PT_INVOICE_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INVOICE')) ||
+            (Configuration::get('WCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INSTALLMENT'))) {
+            echo "<script language='JavaScript'>
                 var di = {t:'" . $this->context->cookie->wcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
               </script>
               <script type='text/javascript' src='//d.ratepay.com/" . $this->context->cookie->wcsConsumerDeviceId . "/di.js'></script>
@@ -1922,6 +1925,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 <param name='flashvars' value='t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL'/>
                 <param name='AllowScriptAccess' value='always'/>
             </object>";
+        }
 
         $paymentTypes = $this->getEnabledPaymentTypes($params['cart']);
 

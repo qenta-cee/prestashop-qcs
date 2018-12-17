@@ -75,7 +75,7 @@
     </div>
     <div class="condition-label">
       <label class="js-terms" for="consent">
-        {$current.payment->getConsentTxt() nofilter}
+          {(utf8_encode($current.payment->getConsentTxt())) nofilter}
       </label>
     </div>
   </li>

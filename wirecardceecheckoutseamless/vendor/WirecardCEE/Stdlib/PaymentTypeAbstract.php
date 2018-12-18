@@ -51,7 +51,6 @@ abstract class WirecardCEE_Stdlib_PaymentTypeAbstract
     const INVOICE = 'INVOICE';
     const MAESTRO = 'MAESTRO';
     const MONETA = 'MONETA';
-    const MPASS = 'MPASS';
     const P24 = 'PRZELEWY24';
     const PAYPAL = 'PAYPAL';
     const PBX = 'PBX';

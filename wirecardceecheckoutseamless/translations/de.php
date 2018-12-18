@@ -100,7 +100,6 @@ $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutsea
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_1badcb6bf3c9f9a61b9221344ccdc53c'] = 'moneta.ru';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_1525848c624bf1a02dfce01c9e8145cf'] = 'Skrill Digital Wallet';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_b642d33b12d1cb0f1b8667a9bcca9951'] = 'paybox';
-$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_fc695527ce186f3a87ac588d9cc8339d'] = 'mpass';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_a38734e15f454bd7fb7546a29f19a3cc'] = 'My Voucher';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_c888438d14855d7d96a2724ee9c306bd'] = 'Einstellungen gespeichert';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_dc2be3773354e5c1e6f5a3ba75340919'] = 'Das Back-end-Passwort ist nicht gesetzt.';

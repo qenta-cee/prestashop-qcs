@@ -59,7 +59,6 @@ abstract class WirecardCEE_Stdlib_PaymentTypeAbstract
     const QUICK = 'QUICK';
     const SEPADD = 'SEPA-DD';
     const ELV = 'ELV';
-    const SKRILLDIRECT = 'SKRILLDIRECT';
     const SKRILLWALLET = 'SKRILLWALLET';
     const SOFORTUEBERWEISUNG = 'SOFORTUEBERWEISUNG';
     const TATRAPAY = 'TATRAPAY';

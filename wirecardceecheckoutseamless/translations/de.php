@@ -100,7 +100,6 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_b02f3d1095fbd0490caa31090d2aac19'] = 'Przelewy24';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0ff52aceaf88adbdfb1a1e628a66b6cf'] = 'eKonto';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_31797189117cf605565c9d330601cc7f'] = 'Trustly';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_ffe0b676beb70ae97ad71df7fa9321d1'] = 'Skrill Direct';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c590349d782553f4011343e642d2cd08'] = 'Alternative Zahlungsmittel';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6abcd8eecb4f2abb6ccfe36ef7046ba0'] = 'paysafecard';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_9248c264c15a45f741eeba6b28a17fc5'] = 'ePay.bg';
@@ -108,7 +107,6 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1525848c624bf1a02dfce01c9e8145cf'] = 'Skrill Digital Wallet';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_14e5e1a8de0618abd97d3a8a81a84f5d'] = 'Handy Zahlungsmittel';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_b642d33b12d1cb0f1b8667a9bcca9951'] = 'paybox';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_fc695527ce186f3a87ac588d9cc8339d'] = 'mpass';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_8af5ea9c72d6d1092b353d353efb07a3'] = 'Gutscheine';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_a38734e15f454bd7fb7546a29f19a3cc'] = 'My Voucher';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c888438d14855d7d96a2724ee9c306bd'] = 'Einstellungen gespeichert';

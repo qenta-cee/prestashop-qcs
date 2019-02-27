@@ -93,14 +93,12 @@ $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutsea
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_b02f3d1095fbd0490caa31090d2aac19'] = 'Przelewy24';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_0ff52aceaf88adbdfb1a1e628a66b6cf'] = 'eKonto';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_31797189117cf605565c9d330601cc7f'] = 'Trustly';
-$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_ffe0b676beb70ae97ad71df7fa9321d1'] = 'Skrill Direct';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_6abcd8eecb4f2abb6ccfe36ef7046ba0'] = 'paysafecard';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_9248c264c15a45f741eeba6b28a17fc5'] = 'ePay.bg';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_459f93c30d7bc374abe95e0d8a1c66b0'] = 'Installment';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_1badcb6bf3c9f9a61b9221344ccdc53c'] = 'moneta.ru';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_1525848c624bf1a02dfce01c9e8145cf'] = 'Skrill Digital Wallet';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_b642d33b12d1cb0f1b8667a9bcca9951'] = 'paybox';
-$_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_fc695527ce186f3a87ac588d9cc8339d'] = 'mpass';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_a38734e15f454bd7fb7546a29f19a3cc'] = 'My Voucher';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_c888438d14855d7d96a2724ee9c306bd'] = 'Einstellungen gespeichert';
 $_MODULE['<{wirecardceecheckoutseamless}default-bootstrap>wirecardceecheckoutseamless_dc2be3773354e5c1e6f5a3ba75340919'] = 'Das Back-end-Passwort ist nicht gesetzt.';

@@ -740,14 +740,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'class' => 'Trustly',
                         'logo' => 'trustly.png'
-                    ),
-                    array(
-                        'name' => 'skrilldirect',
-                        'label' => $this->l('Skrill Direct'),
-                        'type' => 'onoff',
-                        'class' => 'Skrilldirect',
-                        'logo' => 'skrilldirect.png'
-                    ),
+                    )
                 )
             ),
             'alternativepayments' => array(
@@ -803,14 +796,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'seamless' => true,
                         'template' => 'paybox.tpl',
                         'logo' => 'paybox.png'
-                    ),
-                    array(
-                        'name' => 'mpass',
-                        'label' => $this->l('mpass'),
-                        'type' => 'onoff',
-                        'class' => 'Mpass',
-                        'logo' => 'mpass.png'
-                    ),
+                    )
                 )
             ),
             'voucherpayments' => array(

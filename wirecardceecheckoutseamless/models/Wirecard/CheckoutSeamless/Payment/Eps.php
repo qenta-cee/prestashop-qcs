@@ -47,7 +47,7 @@ class WirecardCheckoutSeamlessPaymentEps extends WirecardCheckoutSeamlessPayment
         $fis = array();
         $fis[] = array('value' => '', 'label' => $this->module->l('Choose your bank...'));
         foreach (WirecardCEE_QMore_PaymentType::getFinancialInstitutions($this->paymentMethod) as $k => $v) {
-            $fis[] = array('value' => $k, 'label' => $v);
+            $fis[] = array('value' => $k, 'label' => html_entity_decode($v));
         }
 
         return $fis;

@@ -1,7 +1,7 @@
 # Wirecard Checkout Seamless plugin for PrestaShop
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/wirecard/prestashop-wcs/master/LICENSE)
-[![PrestaShop](https://img.shields.io/badge/PrestaShop-v1.7.4.3-green.svg)](https://www.prestashop.com/)
+[![PrestaShop](https://img.shields.io/badge/PrestaShop-v1.7.5.1-green.svg)](https://www.prestashop.com/)
 [![PHP v5.6](https://img.shields.io/badge/php-v5.6-yellow.svg)](http://www.php.net)
 [![PHP v7](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
 [![PHP v7.1](https://img.shields.io/badge/php-v7.1-yellow.svg)](http://www.php.net)

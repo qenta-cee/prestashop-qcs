@@ -44,24 +44,32 @@ class WirecardCEECheckoutSeamlessPaymentIFrameModuleFrontController extends Modu
      */
     public function initContent()
     {
-        $this->ssl                 = true;
+        $this->ssl = true;
         $this->display_column_left = false;
         parent::initContent();
 
-        $cart = $this->context->cart;
-
-        $this->context->smarty->assign(array(
-            'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
-            'windowName'  => $this->module->getWindowName(),
-            'total'       => $cart->getOrderTotal(true, Cart::BOTH),
-            'paymentName' => Tools::getValue('paymentName'),
-            'paymentType' => Tools::getValue('paymentType')
-        ));
-
-        $this->addJS(_PS_JS_DIR_ . 'jquery/plugins/thickbox/jquery.thickbox.js');
-        $this->addCSS(_PS_JS_DIR_ . 'jquery/plugins/thickbox/jquery.thickbox.css');
+        $this->context->smarty->assign(
+            array(
+                'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
+                'windowName' => $this->module->getWindowName()
+            )
+        );
         unset($this->context->cookie->wcsRedirectUrl);
 
-        $this->setTemplate('payment_iframe.tpl');
+        $this->setTemplate('module:wirecardceecheckoutseamless/views/templates/front/payment_iframe.tpl');
+    }
+
+    public function setMedia()
+    {
+        parent::setMedia();
+
+        $this->registerJavascript(
+            'module-wirecardceecheckoutseamless-scripts',
+            'modules/wirecardceecheckoutseamless/views/js/scripts.js',
+            array(
+                'priority' => 201,
+                'attribute' => 'async',
+            )
+        );
     }
 }

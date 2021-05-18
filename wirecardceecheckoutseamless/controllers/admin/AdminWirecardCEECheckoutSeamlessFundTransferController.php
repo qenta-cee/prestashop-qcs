@@ -67,7 +67,6 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
         parent::initToolbarTitle();
 
         switch ($this->display) {
-
             case 'add':
                 $this->toolbar_title[] = $this->l('Fund transfer');
                 $this->addMetaTitle($this->l('Fund transfer'));
@@ -198,7 +197,6 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
 
         $this->display = 'add';
         if (Tools::isSubmit('transferFund')) {
-
             $amount = strtr(Tools::getValue('amount'), ',', '.');
             if (!Validate::isFloat($amount)) {
                 $this->errors[] = Tools::displayError('Please enter a valid amount');
@@ -323,7 +321,9 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
     private function getExistingOrderDetails($ordernumber)
     {
         return Db::getInstance()->getRow(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx WHERE ordernumber = "' . pSQL($ordernumber) . '"'
+            'SELECT * FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx WHERE ordernumber = "' . pSQL(
+                $ordernumber
+            ) . '"'
         );
     }
 }

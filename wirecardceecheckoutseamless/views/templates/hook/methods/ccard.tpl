@@ -29,23 +29,22 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  *}
 
+
 {if $current.payment->getPci3DssSaqAEnable()}
 
     <div id="pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_iframe" class="wcs_iframe"></div>
 
     <script type="text/javascript">
-        $(function () {
-            var wirecardCee = new WirecardCEE_DataStorage;
-            {if $current.name=='creditcard'}
-            wirecardCee.buildIframeCreditCard('pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_iframe', '100%', '450px');
-            {/if}
-            {if $current.name=='maestro'}
-            wirecardCee.buildIframeMaestro('pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_iframe', '100%', '450px');
-            {/if}
-            {if $current.name=='creditcardmoto'}
-            wirecardCee.buildIframeCreditCardMoto('pt_wirecardcheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_iframe', '100%', '450px');
-            {/if}
-        });
+        var wirecardCee = new WirecardCEE_DataStorage;
+        {if $current.name=='creditcard'}
+        wirecardCee.buildIframeCreditCard('pt_wirecardcheckoutseamless_creditcard_iframe', '100%', '450px');
+        {/if}
+        {if $current.name=='maestro'}
+        wirecardCee.buildIframeMaestro('pt_wirecardcheckoutseamless_maestro_iframe', '100%', '450px');
+        {/if}
+        {if $current.name=='creditcardmoto'}
+        wirecardCee.buildIframeCreditCardMoto('pt_wirecardcheckoutseamless_creditcardmoto_iframe', '100%', '450px');
+        {/if}
     </script>
 
 {else}
@@ -58,28 +57,28 @@
                    data-wcs-fieldname="cardholdername"/>
         </div>
     {/if}
-    <div class="required form-group">
-        <label class="required"> {l s='Credit card number' mod='wirecardceecheckoutseamless'}</label>
+    <div class="form-group">
+        <label> {l s='Credit card number' mod='wirecardceecheckoutseamless'}</label>
         <input type="tel" name="cardnumber" autocomplete="off" class="form-control cardnumber is_required wcs-validate"
                placeholder="{l s={$current.payment->getPanPlaceholderText()|escape:'htmlall':'UTF-8'} mod='wirecardceecheckoutseamless'}"
                data-wcs-fieldname="pan"/>
     </div>
-    <div class="required form-group">
-        <label class="required"> {l s='Expiration date' mod='wirecardceecheckoutseamless'}</label>
+    <div class="form-group">
+        <label> {l s='Expiration date' mod='wirecardceecheckoutseamless'}</label>
         <div class="row">
-            <div class="col-sm-1">
+            <div class="col-xs-2">
                 <select name="pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_expirationMonth" class="form-control month is_required wcs-validate"
                         data-wcs-fieldname="expirationMonth">
                     {foreach $current.payment->getMonths() as $k => $v }
-                        <option value="{$k|escape:'htmlall':'UTF-8'}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
+                        <option value="{$k|intval}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
                     {/foreach}
                 </select>
             </div>
-            <div class="col-sm-2">
+            <div class="col-xs-3">
                 <select name="pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_expirationYear" class="form-control year is_required wcs-validate"
                         data-wcs-fieldname="expirationYear">
                     {foreach $current.payment->getYears() as $k => $v }
-                        <option value="{$k|escape:'htmlall':'UTF-8'}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
+                        <option value="{$k|intval}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
                     {/foreach}
                 </select>
             </div>
@@ -107,7 +106,7 @@
                     <select name="pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_issueMonth" class="form-control month"
                             data-wcs-fieldname="issueMonth">
                         {foreach $current.payment->getMonths() as $k => $v }
-                            <option value="{$k|escape:'htmlall':'UTF-8'}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
+                            <option value="{$k|intval}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
                         {/foreach}
                     </select>
                 </div>
@@ -115,7 +114,7 @@
                     <select name="pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_issueYear" class="form-control year"
                             data-wcs-fieldname="issueYear">
                         {foreach $current.payment->getIssueYears() as $k => $v }
-                            <option value="{$k|escape:'htmlall':'UTF-8'}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
+                            <option value="{$k|intval}"{if 0} selected="selected"{/if}>{$v|escape:'htmlall':'UTF-8'}</option>
                         {/foreach}
                     </select>
                 </div>

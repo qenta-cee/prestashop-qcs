@@ -1,12 +1,12 @@
 {*
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH 
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of 
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public 
+ * (status on delivery) of the corresponding shop system. They are under General Public
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
@@ -35,14 +35,11 @@
         <strong>{l s='Your order will soon be shipped.' mod='wirecardceecheckoutseamless'}</strong>
         <br/><br/>
         {l s='For any questions or further information contact our' mod='wirecardceecheckoutseamless'} <a
-                href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support'
-            mod='wirecardceecheckoutseamless'}</a>.
+                href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support' mod='wirecardceecheckoutseamless'}</a>.
     </p>
 {else}
     <p class="warning">
-        {l s='We have noticed that there is a problem with your order. If you think this is an error, you can contact
-         our'  mod='wirecardceecheckoutseamless'}
-        <a href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support'
-            mod='wirecardceecheckoutseamless'}</a>.
+        {l s='We have noticed that there is a problem with your order. If you think this is an error, you can contact our'  mod='wirecardceecheckoutseamless'}
+        <a href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support' mod='wirecardceecheckoutseamless'}</a>.
     </p>
 {/if}

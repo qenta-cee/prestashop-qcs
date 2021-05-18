@@ -43,6 +43,11 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
     /** @var WirecardCheckoutSeamlessBackend */
     protected $backendClient = null;
 
+    /**
+     * @var null
+     */
+    protected $translator = null;
+
     public function __construct()
     {
         $this->bootstrap = true;
@@ -69,43 +74,45 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
             $this->statuses_array[$status['id_order_state']] = $status['name'];
         }
 
+        $this->translator = $this->module->getTranslator();
+
         $this->fields_list = array(
             'id_tx' => array(
-                'title' => $this->l('ID'),
+                'title' => $this->translator->trans('ID'),
                 'align' => 'text-center',
                 'class' => 'fixed-width-xs'
             ),
             'status' => array(
-                'title' => $this->l('Status'),
+                'title' => $this->translator->trans('Status'),
                 'align' => 'text-center',
                 'class' => 'fixed-width-xs'
             ),
             'amount' => array(
-                'title' => $this->l('Amount'),
+                'title' => $this->translator->trans('Amount'),
                 'align' => 'text-right',
                 'class' => 'fixed-width-xs',
                 'type' => 'price',
             ),
             'currency' => array(
-                'title' => $this->l('Currency'),
+                'title' => $this->translator->trans('Currency'),
                 'class' => 'fixed-width-xs',
                 'align' => 'text-right',
             ),
 
             'ordernumber' => array(
-                'title' => $this->l('Order number'),
+                'title' => $this->translator->trans('Order number'),
                 'class' => 'fixed-width-lg',
             ),
             'gatewayreference' => array(
-                'title' => $this->l('Gateway reference number'),
+                'title' => $this->translator->trans('Gateway reference number'),
                 'class' => 'fixed-width-xxl',
             ),
             'paymentmethod' => array(
-                'title' => $this->l('Payment method'),
+                'title' => $this->translator->trans('Payment method'),
                 'class' => 'fixed-width-lg',
             ),
             'paymentstate' => array(
-                'title' => $this->l('State'),
+                'title' => $this->translator->trans('State'),
                 'class' => 'fixed-width-xs',
             ),
 
@@ -317,14 +324,11 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
                     break;
 
                 case 'REFUND':
-
-
                     $op = $this->backendClient->getClient()->refund(
                         $transaction->ordernumber,
                         $amount,
                         $transaction->currency
                     );
-
 
                     break;
 

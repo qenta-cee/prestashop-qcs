@@ -32,17 +32,14 @@
 {if $status == 'ok'}
     <p>{l s='Thank you for your order.' mod='wirecardceecheckoutseamless'}
         <br/><br/>
-        <strong>{l s='Your order is shipped as soon as we receive the confirmation from your bank.'
-            mod='wirecardceecheckoutseamless'}</strong>
+        <strong>{l s='Your order is shipped as soon as we receive the confirmation from your bank.' mod='wirecardceecheckoutseamless'}</strong>
         <br/><br/>
         {l s='For any questions or further information contact our' mod='wirecardceecheckoutseamless'} <a
-                href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support'
-            mod='wirecardceecheckoutseamless'}</a>.
+                href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support' mod='wirecardceecheckoutseamless'}</a>.
     </p>
 {else}
     <p class="warning">
-        {l s='We have noticed that there is a problem with your order. If you think this is an error, contact our'
-        mod='wirecardceecheckoutseamless'}
+        {l s='We have noticed that there is a problem with your order. If you think this is an error, contact our' mod='wirecardceecheckoutseamless'}
         <a href="{$link->getPageLink('contact', true)|escape:'htmlall':'UTF-8'}">{l s='customer support'
             mod='wirecardceecheckoutseamless'}</a>.
     </p>

@@ -62,7 +62,6 @@ class AdminWirecardCEECheckoutSeamlessSupportController extends ModuleAdminContr
         parent::initToolbarTitle();
 
         switch ($this->display) {
-
             case 'add':
                 $this->toolbar_title[] = $this->l('Send support request');
                 $this->addMetaTitle($this->l('Send support request'));
@@ -83,7 +82,7 @@ class AdminWirecardCEECheckoutSeamlessSupportController extends ModuleAdminContr
             'input' => array(
                 array(
                     'type' => 'select',
-                    'label' => $this->l('To:'),
+                    'label' => $this->l('To: '),
                     'desc' => $this->l('Choose a support channel'),
                     'name' => 'to',
                     'required' => true,

@@ -38,6 +38,8 @@
  * @license   GPLv2
  */
 
+use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
+
 /**
  * Class WirecardCEECheckoutSeamless
  */
@@ -113,15 +115,12 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'models'
         );
 
-        require_once _PS_MODULE_DIR_ . "wirecardceecheckoutseamless" . DIRECTORY_SEPARATOR . "vendor"
-            . DIRECTORY_SEPARATOR . "React" . DIRECTORY_SEPARATOR . "Promise" . DIRECTORY_SEPARATOR
-            . "functions_include.php";
         require_once 'wirecardcee_autoload.php';
 
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '1.0.5';
+        $this->version = '2.0.5';
         $this->author = 'Wirecard';
         $this->controllers = array(
             'confirm',
@@ -152,7 +151,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     {
         return array(
             'basicdata' => array(
-                'tab' => 'Basicdata',
+                'tab' => $this->l('Access data'),
                 'fields' => array(
                     array(
                         'name' => 'configmode',
@@ -208,7 +207,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'options' => array(
-                'tab' => 'Options',
+                'tab' => $this->l('General settings'),
                 'fields' => array(
                     array(
                         'name' => 'order_creation',
@@ -217,8 +216,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'options' => 'getOrderCreationOptions',
                         'default' => 'before',
                         'doc' => array(
-                            $this->l('Selecting "Always", orders are created even if the payment process leads to failed payment.'),
-                            $this->l('Selecting "Only for successful payments", orders are created if the payment process was successful.')
+                            $this->l('Selecting \'Always\', orders are created even if the payment process leads to failed payment.'),
+                            $this->l('Selecting \'Only for successful payments\', orders are created if the payment process was successful.')
                         )
                     ),
                     array(
@@ -298,7 +297,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'creditcardoptions' => array(
-                'tab' => 'Credit card options',
+                'tab' => $this->l('Credit card'),
                 'fields' => array(
                     array(
                         'name' => 'pci3_dss_saq_a_enable',
@@ -394,7 +393,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'invoiceoptions' => array(
-                'tab' => 'Invoice options',
+                'tab' => $this->l('Invoice'),
                 'fields' => array(
                     array(
                         'name' => 'invoice_provider',
@@ -450,7 +449,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 18,
                         'validator' => 'numeric',
                         'cssclass' => 'fixed-width-md',
-                        'doc' => 'Only applicable for RatePay.'
+                        'doc' => $this->l('Only applicable for RatePay.')
                     ),
                     array(
                         'name' => 'invoice_amount_min',
@@ -491,7 +490,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'installmentoptions' => array(
-                'tab' => 'Installment options',
+                'tab' => $this->l('Installment'),
                 'fields' => array(
                     array(
                         'name' => 'installment_provider',
@@ -587,7 +586,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'standardpayments' => array(
-                'tab' => 'Standard payments',
+                'tab' => $this->l('Standard payments'),
                 'fields' => array(
                     array(
                         'name' => 'creditcard',
@@ -665,7 +664,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'bankingpayments' => array(
-                'tab' => 'Banking payments',
+                'tab' => $this->l('Banking payments'),
                 'fields' => array(
                     array(
                         'name' => 'eps',
@@ -745,7 +744,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'alternativepayments' => array(
-                'tab' => 'Alternative payments',
+                'tab' => $this->l('Alternative payments'),
                 'fields' => array(
                     array(
                         'name' => 'paysafecard',
@@ -787,7 +786,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'mobilepayments' => array(
-                'tab' => 'Mobile payments',
+                'tab' => $this->l('Mobile payments'),
                 'fields' => array(
                     array(
                         'name' => 'paybox',
@@ -801,7 +800,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 )
             ),
             'voucherpayments' => array(
-                'tab' => 'Voucher payments',
+                'tab' => $this->l('Voucher payments'),
                 'fields' => array(
                     array(
                         'name' => 'voucher',
@@ -827,11 +826,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     public function install()
     {
         if (!parent::install()
-            || !$this->registerHook('payment')
-            || !$this->registerHook('displayPaymentEU')
             || !$this->registerHook('paymentReturn')
             || !$this->registerHook('backOfficeHeader')
             || !$this->registerHook('displayHeader')
+            || !$this->registerHook('actionFrontControllerSetMedia')
+            || !$this->registerHook('paymentOptions')
             || !$this->setDefaults()
         ) {
             return false;
@@ -987,7 +986,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             }
 
             $sql = rtrim($sql, ",").";";
-
         }
         return $sql == null ? true : Db::getInstance()->execute($sql);
     }
@@ -1172,9 +1170,25 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 }
             }
 
+            $context = $this->context;
+            $country = Tools::strtolower($context->country->iso_code);
+            $language = $context->language->iso_code;
+
+            if ($language != $country && $language = 'en') {
+                $language = 'en';
+            }
+
+            if (!in_array($country, array('gb', 'de', 'it', 'es', 'pl', 'nl', 'fr'))) {
+                $country = 'de';
+                $language = 'en';
+            }
+
+
             $backendEnabled = Configuration::get('WCS_BASICDATA_BACKENDPW');
             $this->context->smarty->assign(
                 array(
+                    'country' => $country,
+                    'language' => $language,
                     'shopversion' => _PS_VERSION_,
                     'pluginversion' => $this->version,
                     'is_core' => $this->isCore,
@@ -1570,7 +1584,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                                 $elem['desc'] .= '<br/>';
                             }
 
-                            $elem['desc'] .= $d;
+                            $elem['desc'] .= $this->l($d);
                         }
                     } else {
                         $elem['desc'] = $this->l($f['doc']);
@@ -1712,74 +1726,17 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         return $values;
     }
 
-    /**
-     * payment hook, prepare data for payment selection page
-     * init data storage
-     *
-     * @param $params
-     *
-     * @return string
-     */
-    public function hookPayment($params)
+    public function hookPaymentReturn($params)
     {
-        unset($this->context->cookie->wcsRedirectUrl);
-        $paymentTypes = $this->getEnabledPaymentTypes($params['cart']);
-
-        if ($this->context->customer->birthday) {
-            $birthday = explode('-', $this->context->customer->birthday);
+        if (!$this->active) {
+            return;
+        }
+        if (true) {
+            print_r($params);
+            die;
         } else {
-            $birthday = array('-', '-', '-');
+            $this->smarty->assign('status', 'failed');
         }
-
-        $this->smarty->assign(
-            array(
-                'paymentTypes' => $paymentTypes,
-                'this_path' => $this->_path,
-                'years' => Tools::dateYears(),
-                'sl_year' => $birthday[0],
-                'months' => Tools::dateMonths(),
-                'sl_month' => $birthday[1],
-                'days' => Tools::dateDays(),
-                'sl_day' => $birthday[2],
-            )
-        );
-
-        $cart = new Cart($this->context->cookie->id_cart);
-
-        $dsModel = new WirecardCheckoutSeamlessDataStorage($this);
-
-        $this->context->controller->addJS($this->_path . 'views/js/payment.js');
-
-        try {
-            $response = $dsModel->init($cart);
-
-            if (!$response->hasFailed()) {
-                $this->log(__METHOD__ . ':storageid:' . $response->getStorageId());
-                $this->log(__METHOD__ . ':jsurl:' . $response->getJavascriptUrl());
-
-                $this->context->controller->addJS($response->getJavascriptUrl());
-                $this->context->cookie->wcsStorageId = $response->getStorageId();
-                $this->context->cookie->write();
-            } else {
-                $dsErrors = $response->getErrors();
-                $this->log(
-                    __METHOD__ . ':storage init failed:' . print_r(
-                        $dsErrors,
-                        true
-                    )
-                );
-
-                return false;
-            }
-        } catch (Exception $e) {
-            $this->log(__METHOD__ . ':' . $e->getMessage());
-
-            return false;
-        }
-
-        $this->context->controller->addCSS($this->_path . 'views/css/style.css');
-
-        return $this->display(__FILE__, 'payment.tpl');
     }
 
     /**
@@ -1809,8 +1766,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 'name' => $paymentType->getName(),
                 'method' => $paymentType->getMethod(),
                 'label' => $this->l($paymentType->getLabel()),
-                'template' => $paymentType->getTemplate() !== null ? realpath(dirname(__FILE__))
-                    . '/views/templates/hook/methods/' . $paymentType->getTemplate() : null,
+                'template' => $paymentType->getTemplate(),
                 'img' => Media::getMediaPath(
                     dirname(__FILE__) . '/views/img/paymenttypes/' . $paymentType->getLogo($lang)
                 )
@@ -1888,24 +1844,82 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $log->add();
     }
 
-    /**
-     * display payment selection (EU legal compat)
-     *
-     * @param $params
-     *
-     * @return array|bool
-     */
-    public function hookDisplayPaymentEU($params)
+    public function hookActionFrontControllerSetMedia($params)
+    {
+        $controllerArray = array('order');
+        if (in_array($this->context->controller->php_self, $controllerArray)) {
+            $this->context->controller->registerStylesheet(
+                'module-' . $this->name . '-style',
+                'modules/' . $this->name . '/views/css/style.css',
+                array(
+                    'media' => 'all',
+                    'priority' => 200,
+                )
+            );
+
+            $this->context->controller->registerJavascript(
+                'module-wcs-simple-lib',
+                'modules/'.$this->name.'/views/js/scripts.js',
+                array(
+                    'priority' => 202,
+                    'attribute' => 'async',
+                )
+            );
+
+            $this->context->controller->registerJavascript(
+                'module-wcs-payment',
+                'modules/'.$this->name.'/views/js/payment.js',
+                array(
+                    'priority' => 201,
+                    'attribute' => 'async',
+                )
+            );
+        }
+    }
+
+
+    public function hookPaymentOptions($params)
     {
         if (!$this->active) {
             return false;
         }
+        if (!$this->checkCurrency($params['cart'])) {
+            return false;
+        }
+
         unset($this->context->cookie->wcsRedirectUrl);
+
+        $timestamp = microtime();
+        $customerId = $this->getConfigValue('basicdata', 'customer_id');
+        $consumerDeviceId = md5($customerId . "_" . $timestamp);
+
+        if (!isset($this->context->cookie->wcsConsumerDeviceId)) {
+            $this->context->cookie->wcsConsumerDeviceId = $consumerDeviceId;
+        }
+
+        if ((Configuration::get('WCS_PT_INVOICE_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INVOICE')) ||
+            (Configuration::get('WCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INSTALLMENT'))) {
+            echo "<script language='JavaScript'>
+                var di = {t:'" . $this->context->cookie->wcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
+              </script>
+              <script type='text/javascript' src='//d.ratepay.com/" . $this->context->cookie->wcsConsumerDeviceId . "/di.js'></script>
+              <noscript>
+              <link rel='stylesheet' type='text/css' href='//d.ratepay.com/di.css?t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL&l=Checkout'>
+            </noscript>
+            <object type='application/x-shockwave-flash' data='//d.ratepay.com/WDWL/c.swf' width='0' height='0'>
+                <param name='movie' value='//d.ratepay.com/WDWL/c.swf' />
+                <param name='flashvars' value='t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL'/>
+                <param name='AllowScriptAccess' value='always'/>
+            </object>";
+        }
+
+        $paymentTypes = $this->getEnabledPaymentTypes($params['cart']);
+
+        $result = array();
 
         $dsModel = new WirecardCheckoutSeamlessDataStorage($this);
         $cart = new Cart($this->context->cookie->id_cart);
-
-        $this->context->controller->addJS($this->_path . 'views/js/payment.js');
+        $jsUrl = "";
 
         try {
             $response = $dsModel->init($cart);
@@ -1914,11 +1928,10 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 $this->log(__METHOD__ . ':storageid:' . $response->getStorageId());
                 $this->log(__METHOD__ . ':jsurl:' . $response->getJavascriptUrl());
 
-                $this->context->controller->addJS($response->getJavascriptUrl());
+                $jsUrl =  $response->getJavascriptUrl();
+
                 $this->context->cookie->wcsStorageId = $response->getStorageId();
                 $this->context->cookie->write();
-
-                $this->context->controller->addJS($response->getJavascriptUrl());
             } else {
                 $dsErrors = $response->getErrors();
                 $this->log(
@@ -1936,31 +1949,39 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             return false;
         }
 
-        $this->context->controller->addCSS($this->_path . 'views/css/style.css');
-
-        $paymentTypes = $this->getEnabledPaymentTypes($params['cart']);
-        $result = array();
+        $urlIncluded = false;
         foreach ($paymentTypes as $paymentType) {
-            $this->smarty->assign(
+            $payment = new PaymentOption();
+            $payment->setLogo($paymentType['img'])
+                ->setCallToActionText($this->l('Pay using') . ' ' . $this->l($paymentType['label']));
+
+            $paymentType['template'] = 'module:wirecardceecheckoutseamless/views/templates/hook/methods/'.$paymentType['template'];
+            $this->context->smarty->assign(
                 array(
-                    'current' => $paymentType
+                    'current' => $paymentType,
+                    'days' => Tools::dateDays(),
+                    'months' => Tools::dateMonths(),
+                    'years' => Tools::dateYears(),
+                    'jsUrl' => $urlIncluded ? false : $jsUrl,
+                    'action' => $this->context->link->getModuleLink(
+                        $this->name,
+                        'paymentExecution',
+                        array(
+                            'paymentType' => $paymentType['name'],
+                            'paymentName' => $paymentType['label']
+                        ),
+                        true
+                    )
                 )
             );
 
-            $result[] = array(
-                'cta_text' => $this->l('Pay using') . ' ' . $this->l($paymentType['label']),
-                'logo' => $paymentType['img'],
-                'form' => $this->display(__FILE__, 'payment_eu.tpl'),
-                'action' => $this->context->link->getModuleLink(
-                    $this->name,
-                    'paymentExecution',
-                    array(
-                        'paymentType' => $paymentType['name'],
-                        'paymentName' => $paymentType['label']
-                    ),
-                    true
-                )
-            );
+            if ($paymentType['template'] !== null) {
+                $urlIncluded = true;
+                $payment->setBinary(true);
+                $payment->setForm($this->context->smarty->fetch('module:wirecardceecheckoutseamless/views/templates/hook/payment_eu.tpl'));//methods/'.$paymentType['template']));
+            }
+
+            $result[] = $payment;
         }
 
         return count($result) ? $result : false;
@@ -2103,10 +2124,11 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      */
     public function hookDisplayHeader()
     {
+        $controllerArray = array('order');
+
         $context = Context::getContext();
-        $controller = $context->controller;
-        if (is_object($controller)
-            && (get_class($controller) == 'OrderController' || get_class($controller) == 'OrderOpcController')
+
+        if (in_array($context->controller->php_self, $controllerArray)
             && $context->cookie->wcsMessage
         ) {
             if (strpos($context->cookie->wcsMessage, "<br />")) {
@@ -2172,6 +2194,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                 } else {
                     $initResponse = $paymentType->initiate($id_cart, null, $additionalData);
                 }
+
+                unset($this->context->cookie->wcsConsumerDeviceId);
 
                 if ($initResponse->getStatus() == \WirecardCEE_QMore_Response_Initiation::STATE_FAILURE) {
                     $message = $this->l('An error occurred during the payment process');
@@ -2361,6 +2385,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         if ($transactionData === false) {
             throw new \Exception('Transaction data not found: ' . Tools::getValue('id_tx'));
         }
+
+        unset($this->context->cookie->wcsRedirectUrl);
 
         $cart = new Cart($transactionData['id_cart']);
 
@@ -2668,5 +2694,19 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             array('key' => 'test', 'value' => $this->l('Test')),
             array('key' => 'test3d', 'value' => $this->l('Test 3D'))
         );
+    }
+
+    public function checkCurrency($cart)
+    {
+        $currency_order = new Currency($cart->id_currency);
+        $currencies_module = $this->getCurrency($cart->id_currency);
+        if (is_array($currencies_module)) {
+            foreach ($currencies_module as $currency_module) {
+                if ($currency_order->id == $currency_module['id_currency']) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

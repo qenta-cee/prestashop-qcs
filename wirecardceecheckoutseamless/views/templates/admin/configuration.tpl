@@ -34,22 +34,17 @@
                 class="wirecardcheckoutseamless-logo" src="{$module_dir|escape:'htmlall':'UTF-8'}views/img/wirecard-logo.png" alt="Wirecard CEE"
                 border="0"/>
     </a><br/>
-    <p class="wirecardcheckoutseamless-intro">Wirecard - Your Full Service Payment Provider - Comprehensive
-        solutions from one single source</p>
-    Wirecard is one of the
-    world´s leading providers of outsourcing and white label solutions for electronic payment
-    transactions.<br/><br/> As independent provider of payment solutions, we accompany our customers along the
-    entire business development. Our payment
-    solutions are perfectly tailored to suit e-Commerce requirements and have made us Austria´s leading payment
-    service provider. Customization, competence, and commitment. <br/>
+    <p class="wirecardcheckoutseamless-intro">{l s='Wirecard - Your Full Service Payment Provider - Comprehensive solutions from one single source' mod='wirecardceecheckoutseamless'}</p>
+    {l s='Wirecard is one of the world´s leading providers of outsourcing and white label solutions for electronic payment transactions.' mod='wirecardceecheckoutseamless'}
+    <br/><br/>
+    {l s='As independent provider of payment solutions, we accompany our customers along the entire business development. Our payment solutions are perfectly tailored to suit e-Commerce requirements and have made us Austria´s leading payment service provider. Customization, competence, and commitment.' mod='wirecardceecheckoutseamless'}<br/>
     <br/>
     {if $is_core}
-    <p><a href="https://checkout.wirecard.com/cop/?shopsystem=Prestashop&shopversion={$shopversion|escape:'htmlall':'UTF-8'}&integration=WCS&pluginversion={$pluginversion|escape:'htmlall':'UTF-8'}" target="_blank">
+    <p><a href="https://checkoutportal.com/{$country|escape:'htmlall'}/{$language|escape:'htmlall'}/prestashop/" target="_blank">
             {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
         </a></p>
     {/if}
-    <p><a href="https://guides.wirecard.at/doku.php/plugins_general" target="_blank">General information regarding
-            Wirecard Shop Plugins</a></p>
+    <p><a href="https://guides.wirecard.at/doku.php/plugins_general" target="_blank">{l s='General information regarding Wirecard Shop Plugins' mod='wirecardceecheckoutseamless'}</a></p>
     <div style="clear:both;"></div>
     <div class="btn-group">
         <a class="btn btn-default" id="doWcsConfigTest" href="#">

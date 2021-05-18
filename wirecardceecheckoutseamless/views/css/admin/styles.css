@@ -35,10 +35,14 @@
     max-width: 1024px;
     min-width: 930px;
     overflow: hidden;
+    inline-size: min-content;
+    width: 100%;
 }
 
 .qentacheckoutseamless-logo {
     display: block;
+    width: 10rem;
+    margin: 1rem 0;
 }
 
 .qentacheckoutseamless-intro {

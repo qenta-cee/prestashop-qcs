@@ -1,8 +1,9 @@
 {*
+/**
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
+ * The plugins offered are provided free of charge by Qenta Payment CEE GmbH
+ * (abbreviated to Qenta CEE) and are explicitly not part of the Qenta CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
@@ -10,15 +11,15 @@
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
- * However, Wirecard CEE does not provide any guarantee or accept any liability for any errors
+ * However, Qenta CEE does not provide any guarantee or accept any liability for any errors
  * occurring when used in an enhanced, customized shop system configuration.
  *
  * Operation in an enhanced, customized configuration is at your own risk and requires a
  * comprehensive test phase by the user of the plugin.
  *
- * Customers use the plugins at their own risk. Wirecard CEE does not guarantee their full
- * functionality neither does Wirecard CEE assume liability for any disadvantages related to
- * the use of the plugins. Additionally, Wirecard CEE does not guarantee the full functionality
+ * Customers use the plugins at their own risk. Qenta CEE does not guarantee their full
+ * functionality neither does Qenta CEE assume liability for any disadvantages related to
+ * the use of the plugins. Additionally, Qenta CEE does not guarantee the full functionality
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
@@ -27,15 +28,16 @@
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
+ */
  *}
 
-<div class="wirecardcheckoutseamless-wrapper">
-    <a href="https://www.wirecard.at/" target="_blank" title="www.wirecard.at"><img
-                class="wirecardcheckoutseamless-logo" src="{$module_dir|escape:'htmlall':'UTF-8'}views/img/wirecard-logo.png" alt="Wirecard CEE"
+<div class="qentacheckoutseamless-wrapper">
+    <a href="https://qenta-cee.at/" target="_blank" title="www.qenta-cee.at"><img
+                class="qentacheckoutseamless-logo" src="{$module_dir|escape:'htmlall':'UTF-8'}views/img/qenta-logo.svg" alt="Qenta CEE"
                 border="0"/>
     </a><br/>
-    <p class="wirecardcheckoutseamless-intro">{l s='Wirecard - Your Full Service Payment Provider - Comprehensive solutions from one single source' mod='wirecardceecheckoutseamless'}</p>
-    {l s='Wirecard is one of the world´s leading providers of outsourcing and white label solutions for electronic payment transactions.' mod='wirecardceecheckoutseamless'}
+    <p class="qentacheckoutseamless-intro">{l s='Qenta - Your Full Service Payment Provider - Comprehensive solutions from one single source' mod='wirecardceecheckoutseamless'}</p>
+    {l s='Qenta is one of the world´s leading providers of outsourcing and white label solutions for electronic payment transactions.' mod='wirecardceecheckoutseamless'}
     <br/><br/>
     {l s='As independent provider of payment solutions, we accompany our customers along the entire business development. Our payment solutions are perfectly tailored to suit e-Commerce requirements and have made us Austria´s leading payment service provider. Customization, competence, and commitment.' mod='wirecardceecheckoutseamless'}<br/>
     <br/>
@@ -44,7 +46,7 @@
             {l s='Registration for new clients' mod='wirecardceecheckoutseamless'}
         </a></p>
     {/if}
-    <p><a href="https://guides.wirecard.at/doku.php/plugins_general" target="_blank">{l s='General information regarding Wirecard Shop Plugins' mod='wirecardceecheckoutseamless'}</a></p>
+    <p><a href="https://guides.qenta.com/doku.php/plugins_general" target="_blank">{l s='General information regarding Qenta Shop Plugins' mod='wirecardceecheckoutseamless'}</a></p>
     <div style="clear:both;"></div>
     <div class="btn-group">
         <a class="btn btn-default" id="doWcsConfigTest" href="#">

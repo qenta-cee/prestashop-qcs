@@ -1316,7 +1316,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
             $consumerData = new WirecardCEE_Stdlib_ConsumerData();
             $consumerData->setIpAddress('127.0.0.1');
             $consumerData->setUserAgent(
-                'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) 
+                'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko)
                 Mobile/7B405'
             );
 
@@ -1731,12 +1731,29 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         if (!$this->active) {
             return;
         }
-        if (true) {
-            print_r($params);
-            die;
-        } else {
-            $this->smarty->assign('status', 'failed');
+
+        if (!isset($params['order']) || ($params['order']->module != $this->name)) {
+            return false;
         }
+        if (isset($params['order']) && Validate::isLoadedObject($params['order']) && isset($params['order']->valid)) {
+            $this->smarty->assign(array(
+                'id_order' => $params['order']->id,
+                'valid' => $params['order']->valid,
+                'status' => 'ok'
+                ));
+        }
+
+        if (isset($params['order']->reference) && !empty($params['order']->reference)) {
+            $this->smarty->assign('reference', $params['order']->reference);
+        }
+        $this->smarty->assign(array(
+            'shop_name' => $this->context->shop->name,
+            'reference' => $params['order']->reference,
+            'contact_url' => $this->context->link->getPageLink('contact', true),
+            'status' => 'ok'
+            ));
+
+        return $this->fetch('module:wirecardceecheckoutseamless/views/templates/hook/payment_return.tpl');
     }
 
     /**

@@ -1,12 +1,12 @@
 {*
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH 
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of 
+ * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
+ * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
  * products and services.
  *
  * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public 
+ * (status on delivery) of the corresponding shop system. They are under General Public
  * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
  * the same terms.
  *
@@ -33,7 +33,7 @@
 <img src="../modules/wirecardceecheckoutseamless/wirecardceecheckoutseamless.png" style="float:left; margin: 10px 15px 10px 0;" width="90"
      height="20">
 <p><strong>{l s='Module for payment using Wirecard Checkout Seamless.' mod='wirecardceecheckoutseamless'}</strong></p>
-<p>{l s='Wirecard Checkout Seamless supports all popular payment methods and fulfills PCI DSS compliance.'
+<p>{l s='Qenta Checkout Seamless supports all popular payment methods and fulfills PCI DSS compliance.'
     mod='wirecardceecheckoutseamless'}</p>
 <br>
 <br>

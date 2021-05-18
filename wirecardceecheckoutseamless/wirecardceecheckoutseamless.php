@@ -1059,7 +1059,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $tab->class_name = 'AdminWirecardCEECheckoutSeamlessSupport';
         $tab->name = array();
         foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = 'Wirecard Checkout Seamless Support';
+            $tab->name[$lang['id_lang']] = 'Qenta Checkout Seamless Support';
         }
         $tab->module = $this->name;
         $tab->add();

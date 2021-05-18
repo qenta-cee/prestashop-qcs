@@ -1,47 +1,41 @@
 <?php
 /**
+/**
  * Shop System Plugins - Terms of Use
  *
- * The plugins offered are provided free of charge by Wirecard Central Eastern
- * Europe GmbH
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard
- * CEE range of products and services.
+ * The plugins offered are provided free of charge by Qenta Payment CEE GmbH
+ * (abbreviated to Qenta CEE) and are explicitly not part of the Qenta CEE range of
+ * products and services.
  *
- * They have been tested and approved for full functionality in the standard
- * configuration
- * (status on delivery) of the corresponding shop system. They are under
- * General Public License Version 2 (GPLv2) and can be used, developed and
- * passed on to third parties under the same terms.
+ * They have been tested and approved for full functionality in the standard configuration
+ * (status on delivery) of the corresponding shop system. They are under General Public
+ * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
+ * the same terms.
  *
- * However, Wirecard CEE does not provide any guarantee or accept any liability
- * for any errors occurring when used in an enhanced, customized shop system
- * configuration.
+ * However, Qenta CEE does not provide any guarantee or accept any liability for any errors
+ * occurring when used in an enhanced, customized shop system configuration.
  *
- * Operation in an enhanced, customized configuration is at your own risk and
- * requires a comprehensive test phase by the user of the plugin.
+ * Operation in an enhanced, customized configuration is at your own risk and requires a
+ * comprehensive test phase by the user of the plugin.
  *
- * Customers use the plugins at their own risk. Wirecard CEE does not guarantee
- * their full functionality neither does Wirecard CEE assume liability for any
- * disadvantages related to the use of the plugins. Additionally, Wirecard CEE
- * does not guarantee the full functionality for customized shop systems or
- * installed plugins of other vendors of plugins within the same shop system.
+ * Customers use the plugins at their own risk. Qenta CEE does not guarantee their full
+ * functionality neither does Qenta CEE assume liability for any disadvantages related to
+ * the use of the plugins. Additionally, Qenta CEE does not guarantee the full functionality
+ * for customized shop systems or installed plugins of other vendors of plugins within the same
+ * shop system.
  *
- * Customers are responsible for testing the plugin's functionality before
- * starting productive operation.
+ * Customers are responsible for testing the plugin's functionality before starting productive
+ * operation.
  *
- * By installing the plugin into the shop system the customer agrees to these
- * terms of use. Please do not use the plugin if you do not agree to these
- * terms of use!
- *
- * @author    WirecardCEE
- * @copyright WirecardCEE
- * @license   GPLv2
+ * By installing the plugin into the shop system the customer agrees to these terms of use.
+ * Please do not use the plugin if you do not agree to these terms of use!
+ */
  */
 
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 /**
- * Class WirecardCEECheckoutSeamless
+ * Class QentaCEECheckoutSeamless
  */
 class WirecardCEECheckoutSeamless extends PaymentModule
 {
@@ -170,7 +164,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'maxchar' => 7,
                         'required' => true,
                         'sanitize' => 'trim',
-                        'doc' => $this->l('Customer number you received from Wirecard (customerId, i.e. D2#####).'),
+                        'doc' => $this->l('Customer number you received from Qenta (customerId, i.e. D2#####).'),
                         'docref' => 'https://guides.qenta.com/request_parameters#customerid',
                     ),
                     array(
@@ -191,7 +185,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'required' => true,
                         'sanitize' => 'trim',
                         'cssclass' => 'fixed-width-xxxl',
-                        'doc' => $this->l('String which you received from Wirecard for signing and validating data to prove their authenticity.'),
+                        'doc' => $this->l('String which you received from Qenta for signing and validating data to prove their authenticity.'),
                         'docref' => 'https://guides.qenta.com/security:start#secret_and_fingerprint',
                     ),
                     array(
@@ -227,7 +221,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'options' => 'getTransactionIdOptions',
                         'default' => 'gatewayReferenceNumber',
                         'doc' => array(
-                            $this->l('Wirecard order number: Unique number defined by Wirecard identifying the payment.'),
+                            $this->l('Qenta order number: Unique number defined by Qenta identifying the payment.'),
                             $this->l('Gateway reference number: Reference number defined by the processor or acquirer.')
                         )
                     ),
@@ -263,7 +257,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('Notification e-mail'),
                         'type' => 'onoff',
                         'doc' => array(
-                            $this->l('Receiving notification by e-mail regarding the orders of your consumers if an error occurred in the communication between Wirecard and your online shop.'),
+                            $this->l('Receiving notification by e-mail regarding the orders of your consumers if an error occurred in the communication between Qenta and your online shop.'),
                             $this->l('Please contact our sales teams to activate this feature.')
                         ),
                         'docref' => 'https://guides.qenta.com/sales'
@@ -304,7 +298,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('SAQ A compliance'),
                         'type' => 'onoff',
                         'default' => 0,
-                        'doc' => $this->l('Selecting \'NO\', the stringent SAQ A-EP is applicable. Selecting \'YES\', Wirecard Checkout Seamless is integrated with the \'PCI DSS SAQ A Compliance\' feature and SAQ A is applicable.'),
+                        'doc' => $this->l('Selecting \'NO\', the stringent SAQ A-EP is applicable. Selecting \'YES\', Qenta Checkout Seamless is integrated with the \'PCI DSS SAQ A Compliance\' feature and SAQ A is applicable.'),
                         'docref' => 'https://guides.qenta.com/doku.php/wcs:pci3_fallback:start'
                     ),
                     array(
@@ -400,7 +394,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'label' => $this->l('Invoice provider'),
                         'type' => 'select',
                         'group' => 'pt',
-                        //'default'  => 'wirecard', // XXX problem with ee
+                        //'default'  => 'qenta', // XXX problem with ee
                         'default' => 'payolution',
                         'required' => true,
                         'options' => 'getInvoiceProviders'
@@ -1048,7 +1042,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $tab->class_name = 'AdminWirecardCEECheckoutSeamlessBackend';
         $tab->name = array();
         foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = 'Wirecard Transactions';
+            $tab->name[$lang['id_lang']] = 'Qenta Transactions';
         }
         $tab->id_parent = (int)Tab::getIdFromClassName('AdminParentOrders');
         $tab->module = $this->name;
@@ -2133,7 +2127,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->context->controller->addJquery();
         $this->context->controller->addJqueryPlugin('fancybox');
 
-        $this->context->controller->addCSS($this->_path . 'views/css/admin/styles.css?v=1');
+        $this->context->controller->addCSS($this->_path . 'views/css/admin/styles.css');
     }
 
     /**
@@ -2658,8 +2652,6 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         return array(
             array('key' => 'payolution', 'value' => 'payolution'),
             array('key' => 'ratepay', 'value' => 'RatePay'),
-// XXX due to problems in paymentengine, currently disabled
-//            array('key' => 'wirecard', 'value' => 'Wirecard'),
         );
     }
 
@@ -2673,7 +2665,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         return array(
             array(
                 'key' => 'orderNumber',
-                'value' => $this->l('Wirecard order number')
+                'value' => $this->l('Qenta order number')
             ),
             array(
                 'key' => 'gatewayReferenceNumber',

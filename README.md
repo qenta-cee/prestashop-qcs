@@ -6,13 +6,6 @@
 [![PHP v7](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
 [![PHP v7.1](https://img.shields.io/badge/php-v7.1-yellow.svg)](http://www.php.net)
 
-----
-**IMPORTANT INFORMATION**  
-You are visiting a shop extension which will become obsolete in the near future. It has been replaced by a new one with new features and enhanced functionality.   
-Please use our new shop extension available on [prestashop.wirecard.com](https://prestashop.wirecard.com), which will be maintained, updated and supported on a regular basis.  
-If you have any questions, please contact shop-systems-support@wirecard.com
-
-----
 
 Wirecard Checkout Seamless plugin for PrestaShop. 
 

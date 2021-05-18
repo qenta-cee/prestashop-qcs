@@ -120,8 +120,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'wirecardceecheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.5';
-        $this->author = 'Wirecard';
+        $this->version = '3.0.0';
+        $this->author = 'Qenta';
         $this->controllers = array(
             'confirm',
             'payment',
@@ -137,8 +137,8 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         parent::__construct();
 
-        $this->displayName = $this->l('Wirecard Checkout Seamless');
-        $this->description = $this->l('Wirecard Checkout Seamless payment module');
+        $this->displayName = $this->l('Qenta Checkout Seamless');
+        $this->description = $this->l('Qenta Checkout Seamless payment module');
         $this->confirmUninstall = $this->l('Are you sure you want to delete these details?');
     }
 

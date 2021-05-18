@@ -53,17 +53,17 @@
             <i class="icon-check"></i>
             {l s='Test configuration' mod='wirecardceecheckoutseamless'}
         </a>
-        <a class="btn btn-default" id="doWcsContactSupport" href="{$link->getAdminLink('AdminWirecardCEECheckoutSeamlessSupport')|escape:'html':'UTF-8'}">
+        <a class="btn btn-default" id="doWcsContactSupport" href="{$link->getAdminLink('AdminQentaCEECheckoutSeamlessSupport')|escape:'html':'UTF-8'}">
             <i class="icon-question"></i>
             {l s='Contact support' mod='wirecardceecheckoutseamless'}
         </a>
         {if $backendEnabled}
-        <a class="btn btn-default" id="doWcsBackendTransactions" href="{$link->getAdminLink('AdminWirecardCEECheckoutSeamlessBackend')|escape:'html':'UTF-8'}">
+        <a class="btn btn-default" id="doWcsBackendTransactions" href="{$link->getAdminLink('AdminQentaCEECheckoutSeamlessBackend')|escape:'html':'UTF-8'}">
             <i class=e"icon-mony"></i>
             {l s='Transactions' mod='wirecardceecheckoutseamless'}
         </a>
         <a class="btn btn-default" id="doWcsBackendFundTransfer"
-           href="{$link->getAdminLink('AdminWirecardCEECheckoutSeamlessFundTransfer')|escape:'html':'UTF-8'}">
+           href="{$link->getAdminLink('AdminQentaCEECheckoutSeamlessFundTransfer')|escape:'html':'UTF-8'}">
             <i class="icon-exchange"></i>
             {l s='Fund transfer' mod='wirecardceecheckoutseamless'}
         </a>

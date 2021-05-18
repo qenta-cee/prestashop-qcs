@@ -1,6 +1,5 @@
 <?php
 /**
-/**
  * Shop System Plugins - Terms of Use
  *
  * The plugins offered are provided free of charge by Qenta Payment CEE GmbH
@@ -29,7 +28,6 @@
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
- */
  */
 
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
@@ -1039,7 +1037,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
     {
         $tab = new Tab();
         $tab->active = 1;
-        $tab->class_name = 'AdminWirecardCEECheckoutSeamlessBackend';
+        $tab->class_name = 'AdminQentaCEECheckoutSeamlessBackend';
         $tab->name = array();
         foreach (Language::getLanguages(true) as $lang) {
             $tab->name[$lang['id_lang']] = 'Qenta Transactions';
@@ -1050,7 +1048,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         $tab = new Tab();
         $tab->active = 0;
-        $tab->class_name = 'AdminWirecardCEECheckoutSeamlessSupport';
+        $tab->class_name = 'AdminQentaCEECheckoutSeamlessSupport';
         $tab->name = array();
         foreach (Language::getLanguages(true) as $lang) {
             $tab->name[$lang['id_lang']] = 'Qenta Checkout Seamless Support';
@@ -1060,10 +1058,10 @@ class WirecardCEECheckoutSeamless extends PaymentModule
 
         $tab = new Tab();
         $tab->active = 0;
-        $tab->class_name = 'AdminWirecardCEECheckoutSeamlessFundTransfer';
+        $tab->class_name = 'AdminQentaCEECheckoutSeamlessFundTransfer';
         $tab->name = array();
         foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = 'Wirecard Checkout Seamless Fund Transfer';
+            $tab->name[$lang['id_lang']] = 'Qenta Checkout Seamless Fund Transfer';
         }
         $tab->module = $this->name;
         $tab->add();
@@ -1119,19 +1117,19 @@ class WirecardCEECheckoutSeamless extends PaymentModule
      */
     public function uninstallTabs()
     {
-        $id_tab = (int)Tab::getIdFromClassName('AdminWirecardCEECheckoutSeamlessBackend');
+        $id_tab = (int)Tab::getIdFromClassName('AdminQentaCEECheckoutSeamlessBackend');
         if ($id_tab) {
             $tab = new Tab($id_tab);
             $tab->delete();
         }
 
-        $id_tab = (int)Tab::getIdFromClassName('AdminWirecardCEECheckoutSeamlessSupport');
+        $id_tab = (int)Tab::getIdFromClassName('AdminQentaCEECheckoutSeamlessSupport');
         if ($id_tab) {
             $tab = new Tab($id_tab);
             $tab->delete();
         }
 
-        $id_tab = (int)Tab::getIdFromClassName('AdminWirecardCEECheckoutSeamlessFundTransfer');
+        $id_tab = (int)Tab::getIdFromClassName('AdminQentaCEECheckoutSeamlessFundTransfer');
         if ($id_tab) {
             $tab = new Tab($id_tab);
             $tab->delete();

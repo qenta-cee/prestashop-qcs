@@ -77,9 +77,9 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
     /**
      * add css/js files
      */
-    public function setMedia()
+    public function setMedia($isNewTheme = false)
     {
-        parent::setMedia();
+        parent::setMedia($isNewTheme);
 
         $this->addJQueryPlugin('select2');
         $this->addJS($this->module->getPathUri() . 'views/js/admin/fundtransfer.js');

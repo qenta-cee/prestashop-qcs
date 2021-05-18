@@ -125,9 +125,9 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
     /**
      * add js plugins
      */
-    public function setMedia()
+    public function setMedia($isNewTheme = false)
     {
-        parent::setMedia();
+        parent::setMedia($isNewTheme);
 
         if ($this->display == 'view') {
             $this->addJS(_PS_JS_DIR_ . 'tools.js');
@@ -297,7 +297,7 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
             $op = null;
 
             $id_order = Db::getInstance()->getValue(
-                'SELECT id_order FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx 
+                'SELECT id_order FROM ' . _DB_PREFIX_ . 'wirecard_checkout_seamless_tx
             WHERE ordernumber = "' . pSQL($transaction->ordernumber) . '"'
             );
 
@@ -350,7 +350,7 @@ class AdminWirecardCEECheckoutSeamlessBackendController extends ModuleAdminContr
 
             if ($op !== null) {
                 $this->module->log(
-                    __METHOD__ . ':backend-op:' . Tools::getValue('submitWcsBackendOp') . ' 
+                    __METHOD__ . ':backend-op:' . Tools::getValue('submitWcsBackendOp') . '
                 ordernumber:' . $transaction->ordernumber . ' amount:' . $amount
                 );
 

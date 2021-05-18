@@ -89,11 +89,9 @@ class AdminWirecardCEECheckoutSeamlessSupportController extends ModuleAdminContr
                     'options' => array(
                         'query' => array(
                             array(
-                                'id_option' => 'support.at@wirecard.com',
-                                'name' => 'Support Team Wirecard CEE, Austria'
-                            ),
-                            array('id_option' => 'support@wirecard.com', 'name' => 'Support Team Wirecard AG, Germany'),
-                            array('id_option' => 'support.sg@wirecard.com', 'name' => 'Support Team Wirecard Singapore')
+                                'id_option' => 'support@qenta.com',
+                                'name' => 'Support Team Qenta CEE'
+                            )
                         ),
                         'id' => 'id_option',
                         'name' => 'name'

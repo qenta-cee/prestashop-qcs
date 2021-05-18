@@ -171,7 +171,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'required' => true,
                         'sanitize' => 'trim',
                         'doc' => $this->l('Customer number you received from Wirecard (customerId, i.e. D2#####).'),
-                        'docref' => 'https://guides.wirecard.at/request_parameters#customerid',
+                        'docref' => 'https://guides.qenta.com/request_parameters#customerid',
                     ),
                     array(
                         'name' => 'shop_id',
@@ -181,7 +181,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'maxchar' => 16,
                         'sanitize' => 'trim',
                         'doc' => $this->l('Shop identifier in case of more than one shop.'),
-                        'docref' => 'https://guides.wirecard.at/request_parameters#shopid',
+                        'docref' => 'https://guides.qenta.com/request_parameters#shopid',
                     ),
                     array(
                         'name' => 'secret',
@@ -192,7 +192,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'sanitize' => 'trim',
                         'cssclass' => 'fixed-width-xxxl',
                         'doc' => $this->l('String which you received from Wirecard for signing and validating data to prove their authenticity.'),
-                        'docref' => 'https://guides.wirecard.at/security:start#secret_and_fingerprint',
+                        'docref' => 'https://guides.qenta.com/security:start#secret_and_fingerprint',
                     ),
                     array(
                         'name' => 'backendpw',
@@ -201,7 +201,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 'jcv45z',
                         'sanitize' => 'trim',
                         'doc' => $this->l('Password for back-end operations (Toolkit).'),
-                        'docref' => 'https://guides.wirecard.at/doku.php/back-end_operations:technical_wcs:start
+                        'docref' => 'https://guides.qenta.com/doku.php/back-end_operations:technical_wcs:start
                         #password',
                     )
                 )
@@ -266,7 +266,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                             $this->l('Receiving notification by e-mail regarding the orders of your consumers if an error occurred in the communication between Wirecard and your online shop.'),
                             $this->l('Please contact our sales teams to activate this feature.')
                         ),
-                        'docref' => 'https://guides.wirecard.at/sales'
+                        'docref' => 'https://guides.qenta.com/sales'
                     ),
                     array(
                         'name' => 'autodeposit',
@@ -278,7 +278,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                             $this->l('Enabling an automated deposit of payments.'),
                             $this->l('Please contact our sales teams to activate this feature.')
                         ),
-                        'docref' => 'https://guides.wirecard.at/sales'
+                        'docref' => 'https://guides.qenta.com/sales'
                     ),
                     array(
                         'name' => 'payolution_terms',
@@ -286,7 +286,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'default' => 1,
                         'doc' => $this->l('Consumer must accept payolution terms during the checkout process.'),
-                        'docref' => 'https://guides.wirecard.at/payment_methods:invoice:payolution'
+                        'docref' => 'https://guides.qenta.com/payment_methods:invoice:payolution'
                     ),
                     array(
                         'name' => 'payolution_mid',
@@ -305,7 +305,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'default' => 0,
                         'doc' => $this->l('Selecting \'NO\', the stringent SAQ A-EP is applicable. Selecting \'YES\', Wirecard Checkout Seamless is integrated with the \'PCI DSS SAQ A Compliance\' feature and SAQ A is applicable.'),
-                        'docref' => 'https://guides.wirecard.at/doku.php/wcs:pci3_fallback:start'
+                        'docref' => 'https://guides.qenta.com/doku.php/wcs:pci3_fallback:start'
                     ),
                     array(
                         'name' => 'ccardmoto_usergroup',
@@ -313,7 +313,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'type' => 'select',
                         'options' => 'getUserGroups',
                         'doc' => $this->l('Credit Card - Mail Order and Telephone Order (MoTo) must never be offered to any consumer in your online shop.'),
-                        'docref' => 'https://guides.wirecard.at/payment_methods:ccard_moto:start'
+                        'docref' => 'https://guides.qenta.com/payment_methods:ccard_moto:start'
                     ),
                     array(
                         'name' => 'iframe_css_url',
@@ -322,7 +322,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
                         'default' => 'iframe.css',
                         'cssclass' => 'fixed-width-xxl',
                         'doc' => $this->l('Entry of a name for the CSS file in order to customize the iframe input fields when using the \'PCI DSS SAQ A Compliance\' feature. File must be placed in the \'view/css\' directory of the plugin.'),
-                        'docref' => 'https://guides.wirecard.at/doku.php/wcs:pci3_fallback:start#customization_via_css'
+                        'docref' => 'https://guides.qenta.com/doku.php/wcs:pci3_fallback:start#customization_via_css'
                     ),
                     array(
                         'name' => 'pan_placeholder',
@@ -2133,7 +2133,7 @@ class WirecardCEECheckoutSeamless extends PaymentModule
         $this->context->controller->addJquery();
         $this->context->controller->addJqueryPlugin('fancybox');
 
-        $this->context->controller->addCSS($this->_path . 'views/css/admin/styles.css');
+        $this->context->controller->addCSS($this->_path . 'views/css/admin/styles.css?v=1');
     }
 
     /**

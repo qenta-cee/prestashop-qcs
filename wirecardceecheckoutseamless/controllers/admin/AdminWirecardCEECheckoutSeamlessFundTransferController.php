@@ -94,7 +94,7 @@ class AdminWirecardCEECheckoutSeamlessFundTransferController extends ModuleAdmin
     public function renderForm()
     {
         $fieldNoteFmt = sprintf(
-            '<a href="https://guides.wirecard.at/doku.php%%s" target="_blank" class="docref">%s</a>',
+            '<a href="https://guides.qenta.com/doku.php%%s" target="_blank" class="docref">%s</a>',
             $this->l('See documentation')
         );
 

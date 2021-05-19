@@ -2,18 +2,18 @@
 
 global $_MODULE;
 $_MODULE = array();
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1a50555955d4273ce0ee68ed051b83ab'] = 'Wirecard Checkout Seamless';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_5d349a5a7b0e8e6c873fbae7e7d2eeed'] = 'Wirecard Checkout Seamless Bezahlmodul';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1a50555955d4273ce0ee68ed051b83ab'] = 'Qenta Checkout Seamless';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_5d349a5a7b0e8e6c873fbae7e7d2eeed'] = 'Qenta Checkout Seamless Bezahlmodul';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e09484ba6c16bc20236b63cc0d87ee95'] = 'Sind Sie sicher, dass Sie die Daten löschen wollen?';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_2c9d9f79a23bdf2337f52e780f107542'] = 'Zugangsdaten';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_254f642527b45bc260048e30704edb39'] = 'Konfiguration';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_b75811fc3b1db601d525bc4cb95d40d9'] = 'Zum Testen der Integration eine vordefinierte Konfiguration auswählen. Für Produktivsysteme \"Production\" auswählen.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d37c2bf1bd3143847fca087b354f920e'] = 'Customer ID';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_bc7f42625a2f2c6195ec73111138acba'] = 'Ihre Wirecard-Kundennummer (customerId, im Format D2#####).';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_bc7f42625a2f2c6195ec73111138acba'] = 'Ihre Qenta-Kundennummer (customerId, im Format D2#####).';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_ccf107a5d46c6501c9f2f4345400dc2e'] = 'Shop ID';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_819f895a60ebdf804502a620e02e57e2'] = 'Shop-Kennung bei mehreren Onlineshops.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1e6947ac7fb3a9529a9726eb692c8cc5'] = 'Secret';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c19ef62c2ccfd3c36ced2afad9e54341'] = 'Geheime Zeichenfolge, die Sie von Wirecard erhalten haben, zum Signieren und Validieren von Daten zur Prüfung der Authentizität.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c19ef62c2ccfd3c36ced2afad9e54341'] = 'Geheime Zeichenfolge, die Sie von Qenta erhalten haben, zum Signieren und Validieren von Daten zur Prüfung der Authentizität.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_85ed9c2d056565de3fc33a938a6b3d10'] = 'Back-end-Passwort';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_23a0652a75b772865f0e4390e73a1111'] = 'Passwort für Back-end-Operationen (Toolkit).';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_de62775a71fc2bf7a13d7530ae24a7ed'] = 'Allgemeine Einstellungen';
@@ -21,7 +21,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_845627899d448b79edb82167a6fe7e8d'] = 'Falls \'Immer\' gesetzt ist, werden Bestellungen auch bei fehlgeschlagener Zahlung angelegt.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_32df7ade9d79612f95b19e389709f0c7'] = 'Falls \'Nur für erfolgreiche Zahlungen\' gesetzt ist, werden Bestellungen nur für erfolgreiche Zahlungen angelegt.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_88427ec035734b45aae9f7d8859a5008'] = 'Transaction ID';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_70959c1c5bb9558fc8c168646662a5ec'] = 'Wirecard Auftragsnummer: Eindeutige, von Wirecard definierte Nummer zur Identifikation der Zahlung.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_70959c1c5bb9558fc8c168646662a5ec'] = 'Qenta Auftragsnummer: Eindeutige, von Qenta definierte Nummer zur Identifikation der Zahlung.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_5458c6e191d80c8536927827718855d9'] = 'Gateway Referenznummer: Vom Prozessor oder Acquirer definierte Referenznummer.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_96baafa6cc5a973fce29cf89625d0ff3'] = 'Shop-Referenz im Buchungstext';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_13f416be42755522715e289bb970d1ff'] = 'Referenz zu Ihrem Onlineshop im Bankauszug für Ihren Kunden, max. 9 Zeichen.';
@@ -32,7 +32,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_8
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_6ce2f5a9b255639b662c728cad7d56ae'] = 'Warenkorbdaten des Konsumenten mitsenden';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_995f673de3c9a915204c416148fe041c'] = 'Weiterleitung des Warenkorbs des Kunden an den Finanzdienstleister.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e480686f42911546de1f314c272014e8'] = 'Benachrichtigungsemail';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e33c53125df5e94f968eb835b43c1de4'] = 'Benachrichtigung per E-Mail über Zahlungen Ihrer Kunden, falls ein Kommunikationsproblem zwischen Wirecard und Ihrem Onlineshop aufgetreten ist.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e33c53125df5e94f968eb835b43c1de4'] = 'Benachrichtigung per E-Mail über Zahlungen Ihrer Kunden, falls ein Kommunikationsproblem zwischen Qenta und Ihrem Onlineshop aufgetreten ist.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_2d31ba76ce9b75d166bb734c76ce43b2'] = 'Bitte kontaktieren Sie unsere Sales-Teams um dieses Feature freizuschalten.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_88b46aa41db9e0ae9df965492495390a'] = 'Automatisches Abbuchen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d92a837c8146a1a10ed6482f220c14fb'] = 'Automatisches Abbuchen der Zahlungen.';
@@ -42,7 +42,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_c
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_db157c664c087b88e561886a83c1369c'] = 'payolution-Händler-ID, Nicht base64 kodiert.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e7f9e382dc50889098cbe56f2554c77b'] = 'Kreditkarten';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_29167de5c8579af216d8b434b82b918e'] = 'SAQ A konform';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d87cd8c30de892becae8c6649209d8f8'] = 'Falls \"Nein\" gesetzt ist, gilt der strengere SAQ A-EP. Falls \"Ja\" gesetzt ist, wird in Wirecard Checkout Seamless das \"PCI DSS SAQ A Compliance\"-Feature verwendet und es gilt der SAQ A.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d87cd8c30de892becae8c6649209d8f8'] = 'Falls \"Nein\" gesetzt ist, gilt der strengere SAQ A-EP. Falls \"Ja\" gesetzt ist, wird in Qenta Checkout Seamless das \"PCI DSS SAQ A Compliance\"-Feature verwendet und es gilt der SAQ A.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_d72c93cbd5dbd28b917a4d1037832958'] = 'Post / Telefonbestellung erlauben für Gruppe';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_1bebaa39c8aca5289de8985bab5f438b'] = 'Kreditkarte - Post / Telefonbestellung darf niemals den Kunden in Ihrem Onlineshop angeboten werden.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_e4b623a27d595cf9c74c9d12d6978a04'] = 'Iframe CSS-URL';
@@ -129,7 +129,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_f
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_768308d9f852af8230629796a7fb0274'] = 'Bitte akzeptieren Sie die Einwilligung.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_57bd626d31bb39f41138748f9fc37bfd'] = 'Mit der Übermittlung jener Daten an payolution, die für die Abwicklung von Zahlungen mit Kauf auf Rechnung und die Identitäts- und Bonitätsprüfung erforderlich sind, bin ich einverstanden. Meine %s kann ich jederzeit mit Wirkung für die Zukunft widerrufen.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_9d721d9a89406a2a6861efaae44a785f'] = 'Einwilligung';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0633292a73e35eca6fa9ee74739057e7'] = 'Wirecard Auftragsnummer';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_0633292a73e35eca6fa9ee74739057e7'] = 'Qenta Auftragsnummer';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_64b64e3cefb868bfff001d7873b68696'] = 'Gateway Referenznummer';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_68eec46437c384d8dad18d5464ebc35c'] = 'Immer';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>wirecardceecheckoutseamless_33382e0aee35270b4df2f950e61fca3b'] = 'Nur für erfolgreiche Zahlungen';
@@ -164,11 +164,11 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>ordermanagement_d9f70a4315e84
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>eps_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>ideal_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>trustpay_41981a88357bf8207e3ed755cf970c8e'] = 'Bitte wählen Sie ihr Finanzinstitut aus ...';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_bd68172fc41331e2c468c315e59cd13e'] = 'Wirecard – Ihr Full-Service Payment-Provider – Umfangreiche Lösungen aus einer Hand';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_8e266acb27547949eaca6676d9b931cf'] = 'Wirecard ist einer der weltweit führenden unabhängigen Anbieter von Outsourcing- und White-Label-Lösungen für den elektronischen Zahlungsverkehr.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_bd68172fc41331e2c468c315e59cd13e'] = 'Qenta – Ihr Full-Service Payment-Provider – Umfangreiche Lösungen aus einer Hand';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_8e266acb27547949eaca6676d9b931cf'] = 'Qenta ist einer der weltweit führenden unabhängigen Anbieter von Outsourcing- und White-Label-Lösungen für den elektronischen Zahlungsverkehr.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_121363ae2a762c5798c7c6331cafb6ee'] = 'Als unabhängiger Payment-Anbieter begleiten wir unsere Kunden in allen Phasen der Geschäftsentwicklung. Mit maßgeschneiderten Bezahllösungen setzt unser Unternehmen im E-Payment Akzente und ist Österreichs marktführender Payment Service Provider. Persönlich, kompetent und engagiert.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_00474c3f1879b6a71ce2715673b9a614'] = 'Registrierung für neue Händler';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_a2fc1009566d86c683d01ae015cd034f'] = 'Allgemeine Informationen zu den Wirecard Shop-Plugins';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_a2fc1009566d86c683d01ae015cd034f'] = 'Allgemeine Informationen zu den Qenta Shop-Plugins';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_32d798df7254f6703ed2262024e0e174'] = 'Konfiguration testen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_ad119d5ea30f6c26b58e0af5bc43c9fe'] = 'Support kontaktieren';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>configuration_31112aca11d0e9e6eb7db96f317dda49'] = 'Transaktionen';
@@ -201,7 +201,7 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>view_b2f40690858b404ed10e62bd
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>view_46f86821e09f9743ead149fa23ba1228'] = 'Keine Gutschriften verfügbar';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_f1d3b424cd68795ecaa552883759aceb'] = 'Bestellung Zusammenfassung';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_879f6b8877752685a966564d072f498f'] = 'Ihr Warenkorb ist leer.';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_f50480fd4de9d9c1fcfeed8fbc50d98b'] = 'Wirecard Checkout Seamless';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_f50480fd4de9d9c1fcfeed8fbc50d98b'] = 'Qenta Checkout Seamless';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_266baa27591b0e57809026a93dc0ebd0'] = 'Sie bezahlen mit';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_a662fbc4ee311e23d36e9278d16a22c6'] = 'Gesamtbetrag der Bestellung:';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_498209222643884ba0aff410af69210c'] = 'Bitte bestätigen Sie ihre Bestellung durch clicken auf \"Zahlungspflichtig bestellen\"';
@@ -209,12 +209,12 @@ $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_569fd05bdaf
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_execution_e3cdb32289c70ed39d7fbd539598ca62'] = 'Zahlungspflichtig bestellen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_iframe_879f6b8877752685a966564d072f498f'] = 'Ihr Warenkorb ist leer.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_iframe_569fd05bdafa1712c4f6be5b153b8418'] = 'Andere Zahlungsarten';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_iframe_f50480fd4de9d9c1fcfeed8fbc50d98b'] = 'Wirecard Checkout Seamless';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_iframe_f50480fd4de9d9c1fcfeed8fbc50d98b'] = 'Qenta Checkout Seamless';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>back_393f60c85e815981e9767f1f58858a61'] = 'Sie werden in Kürze weitergeleitet';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>back_59ddc262c11d341a02748b057be51d74'] = 'Falls die Weiterleitung nicht funktioniert, clicken Sie bitte';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>back_6c92285fa6d3e827b198d120ea3ac674'] = 'hier';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>infos_3921810cdef82d740b360386570ca870'] = 'Wirecard Checkout Page Bezahlmodul';
-$_MODULE['<{wirecardceecheckoutseamless}prestashop>infos_46e7ad1f6a02f72c23a07661f843b61e'] = 'Wirecard Checkout Page ermöglicht Ihnen alle gängigen Zahlungsmittel PCI-DSS-konform zu akzeptieren.';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>infos_3921810cdef82d740b360386570ca870'] = 'Qenta Checkout Page Bezahlmodul';
+$_MODULE['<{wirecardceecheckoutseamless}prestashop>infos_46e7ad1f6a02f72c23a07661f843b61e'] = 'Qenta Checkout Page ermöglicht Ihnen alle gängigen Zahlungsmittel PCI-DSS-konform zu akzeptieren.';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_1691bd9101cc8895aa1aaa7e6833ea91'] = 'Bezahlen mit ';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_eu_e3cdb32289c70ed39d7fbd539598ca62'] = 'Zahlungspflichtig bestellen';
 $_MODULE['<{wirecardceecheckoutseamless}prestashop>payment_return_a053fc9952a7dfc79282eba56ab8ad3a'] = 'Vielen Dank für Ihre Bestellung.';

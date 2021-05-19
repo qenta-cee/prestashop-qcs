@@ -34,7 +34,7 @@
  * @license   GPLv2
  */
 
-class WirecardCEECheckoutSeamlessPaymentExecutionModuleFrontController extends ModuleFrontController
+class QentaCEECheckoutSeamlessPaymentExecutionModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
     public $display_column_left = false;

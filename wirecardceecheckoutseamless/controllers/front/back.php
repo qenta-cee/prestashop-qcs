@@ -37,7 +37,7 @@
 /**
  * @property WirecardCEECheckoutSeamless module
  */
-class WirecardCEECheckoutSeamlessBackModuleFrontController extends ModuleFrontController
+class QentaCEECheckoutSeamlessBackModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
 

@@ -37,7 +37,7 @@
 /**
  * @property WirecardCEECheckoutSeamless module
  */
-class WirecardCEECheckoutSeamlessPaymentModuleFrontController extends ModuleFrontController
+class QentaCEECheckoutSeamlessPaymentModuleFrontController extends ModuleFrontController
 {
     /**
      * initiate payment

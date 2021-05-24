@@ -7,7 +7,7 @@
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
 */
 
-class QentaCEECheckoutSeamlessPaymentModuleFrontController extends ModuleFrontController
+class QentaCheckoutSeamlessPaymentModuleFrontController extends ModuleFrontController
 {
     /**
      * initiate payment

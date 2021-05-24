@@ -12,6 +12,17 @@ class QentaCheckoutSeamlessPaymentCcard extends QentaCheckoutSeamlessPayment
     protected $paymentMethod = \WirecardCEE_Stdlib_PaymentTypeAbstract::CCARD;
 
     /**
+     * whether payment method is available on checkoutpage
+     * @param Cart $cart
+     *
+     * @return bool
+     */
+    public function isAvailable($cart)
+    {
+        return $this->isEnabled();
+    }
+
+    /**
      * return display cardholder option value
      * @return string
      */

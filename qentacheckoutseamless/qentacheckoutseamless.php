@@ -1783,6 +1783,7 @@ class QentaCheckoutSeamless extends PaymentModule
                     }
                     $className = 'QentaCheckoutSeamlessPayment' . $f['class'];
                     $f['group'] = 'pt';
+
                     $pt = new $className($this, $f, $this->getTransaction());
                     $types[] = $pt;
                 }

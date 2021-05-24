@@ -7,7 +7,7 @@
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
 */
 
-class QentaCEECheckoutSeamlessBackModuleFrontController extends ModuleFrontController
+class QentaCheckoutSeamlessBackModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
 

@@ -12,7 +12,7 @@ class QentaCheckoutSeamlessPayment
     /** @var  array */
     protected $config;
 
-    /** @var  WirecardCEECheckoutSeamless */
+    /** @var  QentaCheckoutSeamless */
     protected $module;
 
     protected $forceSendAdditionalData = false;
@@ -33,10 +33,10 @@ class QentaCheckoutSeamlessPayment
 
     /**
      * whether payment method is available on checkoutpage
-     *
+     * @param Cart $cart
      * @return bool
      */
-    public function isAvailable()
+    public function isAvailable($cart)
     {
         return $this->isEnabled();
     }

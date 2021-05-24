@@ -7,7 +7,7 @@
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
 */
 
-class QentaCEECheckoutSeamlessPaymentExecutionModuleFrontController extends ModuleFrontController
+class QentaCheckoutSeamlessPaymentExecutionModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
     public $display_column_left = false;
@@ -37,9 +37,9 @@ class QentaCEECheckoutSeamlessPaymentExecutionModuleFrontController extends Modu
         $this->setTemplate('module:qentacheckoutseamless/views/templates/front/payment_execution.tpl');
     }
 
-    public function setMedia()
+    public function setMedia($isNewTheme = false)
     {
-        parent::setMedia();
+        parent::setMedia($isNewTheme);
 
         $this->registerJavascript(
             'module-qentacheckoutseamless-scripts',

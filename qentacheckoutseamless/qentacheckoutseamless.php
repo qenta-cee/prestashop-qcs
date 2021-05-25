@@ -15,8 +15,8 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 class QentaCheckoutSeamless extends PaymentModule
 {
     const WINDOW_NAME = 'CheckoutSeamlessFrame';
-    const WCS_OS_AWAITING = 'WCS_OS_AWAITING';
-    const WCS_OS_FRAUD = 'WCS_OS_FRAUD';
+    const QCS_OS_AWAITING = 'QCS_OS_AWAITING';
+    const QCS_OS_FRAUD = 'QCS_OS_FRAUD';
     /**
      * set this to true, if this plugin is bundled with prestashop
      *
@@ -170,7 +170,7 @@ class QentaCheckoutSeamless extends PaymentModule
                         'default' => 'jcv45z',
                         'sanitize' => 'trim',
                         'doc' => $this->l('Password for back-end operations (Toolkit).'),
-                        'docref' => 'https://guides.qenta.com/doku.php/back-end_operations:technical_wcs:start
+                        'docref' => 'https://guides.qenta.com/doku.php/back-end_operations:technical_qcs:start
                         #password',
                     )
                 )
@@ -274,7 +274,7 @@ class QentaCheckoutSeamless extends PaymentModule
                         'type' => 'onoff',
                         'default' => 0,
                         'doc' => $this->l('Selecting \'NO\', the stringent SAQ A-EP is applicable. Selecting \'YES\', Qenta Checkout Seamless is integrated with the \'PCI DSS SAQ A Compliance\' feature and SAQ A is applicable.'),
-                        'docref' => 'https://guides.qenta.com/doku.php/wcs:pci3_fallback:start'
+                        'docref' => 'https://guides.qenta.com/doku.php/qcs:pci3_fallback:start'
                     ),
                     array(
                         'name' => 'ccardmoto_usergroup',
@@ -291,7 +291,7 @@ class QentaCheckoutSeamless extends PaymentModule
                         'default' => 'iframe.css',
                         'cssclass' => 'fixed-width-xxl',
                         'doc' => $this->l('Entry of a name for the CSS file in order to customize the iframe input fields when using the \'PCI DSS SAQ A Compliance\' feature. File must be placed in the \'view/css\' directory of the plugin.'),
-                        'docref' => 'https://guides.qenta.com/doku.php/wcs:pci3_fallback:start#customization_via_css'
+                        'docref' => 'https://guides.qenta.com/doku.php/qcs:pci3_fallback:start#customization_via_css'
                     ),
                     array(
                         'name' => 'pan_placeholder',
@@ -821,7 +821,7 @@ class QentaCheckoutSeamless extends PaymentModule
             return false;
         }
 
-        if (!Configuration::get(self::WCS_OS_AWAITING)) {
+        if (!Configuration::get(self::QCS_OS_AWAITING)) {
 
             /** @var OrderStateCore $orderState */
             $orderState = new OrderState();
@@ -846,12 +846,12 @@ class QentaCheckoutSeamless extends PaymentModule
                 );
             }
             Configuration::updateValue(
-                self::WCS_OS_AWAITING,
+                self::QCS_OS_AWAITING,
                 (int)($orderState->id)
             );
         }
 
-        if (!Configuration::get(self::WCS_OS_FRAUD)) {
+        if (!Configuration::get(self::QCS_OS_FRAUD)) {
 
             /** @var OrderStateCore $orderState */
             $orderState = new OrderState();
@@ -877,7 +877,7 @@ class QentaCheckoutSeamless extends PaymentModule
                 );
             }
             Configuration::updateValue(
-                self::WCS_OS_FRAUD,
+                self::QCS_OS_FRAUD,
                 (int)($orderState->id)
             );
         }
@@ -1001,7 +1001,7 @@ class QentaCheckoutSeamless extends PaymentModule
     protected function buildParamName($group, $name)
     {
         return sprintf(
-            'WCS_%s_%s',
+            'QCS_%s_%s',
             Tools::strtoupper($group),
             Tools::strtoupper($name)
         );
@@ -1055,7 +1055,7 @@ class QentaCheckoutSeamless extends PaymentModule
             Configuration::deleteByName($parameter['param_name']);
         }
 
-        Configuration::deleteByName(self::WCS_OS_AWAITING);
+        Configuration::deleteByName(self::QCS_OS_AWAITING);
 
         $this->uninstallTabs();
 
@@ -1153,7 +1153,7 @@ class QentaCheckoutSeamless extends PaymentModule
             }
 
 
-            $backendEnabled = Configuration::get('WCS_BASICDATA_BACKENDPW');
+            $backendEnabled = Configuration::get('QCS_BASICDATA_BACKENDPW');
             $this->context->smarty->assign(
                 array(
                     'country' => $country,
@@ -1448,7 +1448,7 @@ class QentaCheckoutSeamless extends PaymentModule
     private function postValidation()
     {
         if (Tools::isSubmit('btnSubmit')) {
-            $configmode = Tools::getValue('WCS_BASICDATA_CONFIGMODE');
+            $configmode = Tools::getValue('QCS_BASICDATA_CONFIGMODE');
 
             foreach ($this->getAllConfigurationParameters() as $parameter) {
                 $val = Tools::getValue($parameter['param_name']);
@@ -1845,7 +1845,7 @@ class QentaCheckoutSeamless extends PaymentModule
             );
 
             $this->context->controller->registerJavascript(
-                'module-wcs-simple-lib',
+                'module-qcs-simple-lib',
                 'modules/'.$this->name.'/views/js/scripts.js',
                 array(
                     'priority' => 202,
@@ -1854,7 +1854,7 @@ class QentaCheckoutSeamless extends PaymentModule
             );
 
             $this->context->controller->registerJavascript(
-                'module-wcs-payment',
+                'module-qcs-payment',
                 'modules/'.$this->name.'/views/js/payment.js',
                 array(
                     'priority' => 201,
@@ -1874,28 +1874,28 @@ class QentaCheckoutSeamless extends PaymentModule
             return false;
         }
 
-        unset($this->context->cookie->wcsRedirectUrl);
+        unset($this->context->cookie->qcsRedirectUrl);
 
         $timestamp = microtime();
         $customerId = $this->getConfigValue('basicdata', 'customer_id');
         $consumerDeviceId = md5($customerId . "_" . $timestamp);
 
-        if (!isset($this->context->cookie->wcsConsumerDeviceId)) {
-            $this->context->cookie->wcsConsumerDeviceId = $consumerDeviceId;
+        if (!isset($this->context->cookie->qcsConsumerDeviceId)) {
+            $this->context->cookie->qcsConsumerDeviceId = $consumerDeviceId;
         }
 
-        if ((Configuration::get('WCS_PT_INVOICE_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INVOICE')) ||
-            (Configuration::get('WCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('WCS_PT_INSTALLMENT'))) {
+        if ((Configuration::get('QCS_PT_INVOICE_PROVIDER') == 'ratepay' && (bool)Configuration::get('QCS_PT_INVOICE')) ||
+            (Configuration::get('QCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('QCS_PT_INSTALLMENT'))) {
             echo "<script language='JavaScript'>
-                var di = {t:'" . $this->context->cookie->wcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
+                var di = {t:'" . $this->context->cookie->qcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
               </script>
-              <script type='text/javascript' src='//d.ratepay.com/" . $this->context->cookie->wcsConsumerDeviceId . "/di.js'></script>
+              <script type='text/javascript' src='//d.ratepay.com/" . $this->context->cookie->qcsConsumerDeviceId . "/di.js'></script>
               <noscript>
-              <link rel='stylesheet' type='text/css' href='//d.ratepay.com/di.css?t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL&l=Checkout'>
+              <link rel='stylesheet' type='text/css' href='//d.ratepay.com/di.css?t=" . $this->context->cookie->qcsConsumerDeviceId . "&v=WDWL&l=Checkout'>
             </noscript>
             <object type='application/x-shockwave-flash' data='//d.ratepay.com/WDWL/c.swf' width='0' height='0'>
                 <param name='movie' value='//d.ratepay.com/WDWL/c.swf' />
-                <param name='flashvars' value='t=" . $this->context->cookie->wcsConsumerDeviceId . "&v=WDWL'/>
+                <param name='flashvars' value='t=" . $this->context->cookie->qcsConsumerDeviceId . "&v=WDWL'/>
                 <param name='AllowScriptAccess' value='always'/>
             </object>";
         }
@@ -1917,7 +1917,7 @@ class QentaCheckoutSeamless extends PaymentModule
 
                 $jsUrl =  $response->getJavascriptUrl();
 
-                $this->context->cookie->wcsStorageId = $response->getStorageId();
+                $this->context->cookie->qcsStorageId = $response->getStorageId();
                 $this->context->cookie->write();
             } else {
                 $dsErrors = $response->getErrors();
@@ -1989,7 +1989,7 @@ class QentaCheckoutSeamless extends PaymentModule
 
         $id_tx = (int)Tools::getValue('id_tx');
 
-        unset($this->context->cookie->wcsRedirectUrl);
+        unset($this->context->cookie->qcsRedirectUrl);
 
         $txData = $this->getTransaction()->get($id_tx);
         if (!is_array($txData)) {
@@ -2116,10 +2116,10 @@ class QentaCheckoutSeamless extends PaymentModule
         $context = Context::getContext();
 
         if (in_array($context->controller->php_self, $controllerArray)
-            && $context->cookie->wcsMessage
+            && $context->cookie->qcsMessage
         ) {
-            if (strpos($context->cookie->wcsMessage, "<br />")) {
-                $msgs = explode("<br />", $context->cookie->wcsMessage);
+            if (strpos($context->cookie->qcsMessage, "<br />")) {
+                $msgs = explode("<br />", $context->cookie->qcsMessage);
                 foreach ($msgs as $msg) {
                     if (Tools::strlen($msg) < 5) {
                         continue;
@@ -2127,9 +2127,9 @@ class QentaCheckoutSeamless extends PaymentModule
                     $context->controller->errors[] = Tools::displayError(html_entity_decode($msg));
                 }
             } else {
-                $context->controller->errors[] = Tools::displayError(html_entity_decode($context->cookie->wcsMessage));
+                $context->controller->errors[] = Tools::displayError(html_entity_decode($context->cookie->qcsMessage));
             }
-            unset($context->cookie->wcsMessage);
+            unset($context->cookie->qcsMessage);
         }
     }
 
@@ -2143,7 +2143,7 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function initiatePayment($paymentTypeName, $additionalData)
     {
-        if (!$this->context->cookie->wcsRedirectUrl) {
+        if (!$this->context->cookie->qcsRedirectUrl) {
             $paymentType = $this->getPaymentType($paymentTypeName);
             if ($paymentType === null) {
                 throw new Exception($this->l('This payment method is not available.'));
@@ -2182,7 +2182,7 @@ class QentaCheckoutSeamless extends PaymentModule
                     $initResponse = $paymentType->initiate($id_cart, null, $additionalData);
                 }
 
-                unset($this->context->cookie->wcsConsumerDeviceId);
+                unset($this->context->cookie->qcsConsumerDeviceId);
 
                 if ($initResponse->getStatus() == \WirecardCEE_QMore_Response_Initiation::STATE_FAILURE) {
                     $message = $this->l('An error occurred during the payment process');
@@ -2213,13 +2213,13 @@ class QentaCheckoutSeamless extends PaymentModule
                             'id_order' => (int)$id_order
                         );
                     }
-                    $this->context->cookie->wcsMessage = $message;
+                    $this->context->cookie->qcsMessage = $message;
                     Tools::redirect(
                         $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
                     );
                 }
 
-                $this->context->cookie->wcsRedirectUrl = $initResponse->getRedirectUrl();
+                $this->context->cookie->qcsRedirectUrl = $initResponse->getRedirectUrl();
                 $this->context->cookie->write();
             } catch (Exception $e) {
                 $params = array();
@@ -2230,7 +2230,7 @@ class QentaCheckoutSeamless extends PaymentModule
                         'id_order' => (int)$id_order
                     );
                 }
-                $this->context->cookie->wcsMessage = $this->l('An error occurred during the payment process');
+                $this->context->cookie->qcsMessage = $this->l('An error occurred during the payment process');
                 $this->log(__METHOD__ . ':' . $e->getMessage());
                 $this->log(__METHOD__ . ':' . $e->getTraceAsString());
 
@@ -2241,7 +2241,7 @@ class QentaCheckoutSeamless extends PaymentModule
         }
 
         if ($this->getPaymentType($paymentTypeName)->getPaymentMethod() == WirecardCEE_Stdlib_PaymentTypeAbstract::SOFORTUEBERWEISUNG) {
-            Tools::redirect($this->context->cookie->wcsRedirectUrl);
+            Tools::redirect($this->context->cookie->qcsRedirectUrl);
         } else {
             Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
         }
@@ -2283,7 +2283,7 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function getAwaitingState()
     {
-        return Configuration::get(self::WCS_OS_AWAITING);
+        return Configuration::get(self::QCS_OS_AWAITING);
     }
 
     /**
@@ -2320,13 +2320,13 @@ class QentaCheckoutSeamless extends PaymentModule
                 )
             );
 
-            if (!Tools::strlen($return->psWcsTxId)) {
-                throw new \Exception('qenta transaction id is missing');
+            if (!Tools::strlen($return->psQcsTxId)) {
+                throw new \Exception('QENTA transaction id is missing');
             }
 
-            $transactionData = $this->getTransaction()->get($return->psWcsTxId);
+            $transactionData = $this->getTransaction()->get($return->psQcsTxId);
             if ($transactionData === false) {
-                throw new \Exception('Transaction data not found: ' . $return->psWcsTxId);
+                throw new \Exception('Transaction data not found: ' . $return->psQcsTxId);
             }
 
             $paymentType = $this->getPaymentType($transactionData['paymentname']);
@@ -2339,9 +2339,9 @@ class QentaCheckoutSeamless extends PaymentModule
             $this->log(__METHOD__ . ':' . $e->getMessage());
             $this->log(__METHOD__ . ':' . $e->getTraceAsString());
 
-            if ($return !== null && Tools::strlen($return->psWcsTxId)) {
+            if ($return !== null && Tools::strlen($return->psQcsTxId)) {
                 $this->getTransaction()->updateTransaction(
-                    $return->psWcsTxId,
+                    $return->psQcsTxId,
                     array('status' => 'error', 'message' => $e->getMessage())
                 );
             }
@@ -2373,14 +2373,14 @@ class QentaCheckoutSeamless extends PaymentModule
             throw new \Exception('Transaction data not found: ' . Tools::getValue('id_tx'));
         }
 
-        unset($this->context->cookie->wcsRedirectUrl);
+        unset($this->context->cookie->qcsRedirectUrl);
 
         $cart = new Cart($transactionData['id_cart']);
 
         if ($transactionData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_FAILURE ||
             $transactionData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_CANCEL
         ) {
-            $this->context->cookie->wcsMessage = html_entity_decode($transactionData['message']);
+            $this->context->cookie->qcsMessage = html_entity_decode($transactionData['message']);
 
             $page = 'order';
             if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
@@ -2453,7 +2453,7 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function getFraudState()
     {
-        return Configuration::get(self::WCS_OS_FRAUD);
+        return Configuration::get(self::QCS_OS_FRAUD);
     }
 
     /**
@@ -2474,7 +2474,7 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function getStorageId()
     {
-        return $this->context->cookie->wcsStorageId;
+        return $this->context->cookie->qcsStorageId;
     }
 
     /**

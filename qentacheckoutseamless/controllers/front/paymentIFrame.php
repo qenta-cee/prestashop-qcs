@@ -23,11 +23,11 @@ class QentaCheckoutSeamlessPaymentIFrameModuleFrontController extends ModuleFron
 
         $this->context->smarty->assign(
             array(
-                'redirectUrl' => $this->context->cookie->wcsRedirectUrl,
+                'redirectUrl' => $this->context->cookie->qcsRedirectUrl,
                 'windowName' => $this->module->getWindowName()
             )
         );
-        unset($this->context->cookie->wcsRedirectUrl);
+        unset($this->context->cookie->qcsRedirectUrl);
 
         $this->setTemplate('module:qentacheckoutseamless/views/templates/front/payment_iframe.tpl');
     }

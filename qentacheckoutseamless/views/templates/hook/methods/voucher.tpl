@@ -10,6 +10,6 @@
 
 <div class="required form-group">
     <label class="required"> {l s='My Voucher Id' mod='qentacheckoutseamless'}</label>
-    <input type="tel" name="voucherId" autocomplete="off" class="form-control voucherid is_required wcs-validate"
-           data-wcs-fieldname="voucherId"/>
+    <input type="tel" name="voucherId" autocomplete="off" class="form-control voucherid is_required qcs-validate"
+           data-qcs-fieldname="voucherId"/>
 </div>

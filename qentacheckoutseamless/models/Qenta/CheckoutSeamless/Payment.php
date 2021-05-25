@@ -60,7 +60,7 @@ class QentaCheckoutSeamlessPayment
      */
     public function getConfigValue($field)
     {
-        return Configuration::get(sprintf('WCS_PT_%s', Tools::strtoupper($field)));
+        return Configuration::get(sprintf('QCS_PT_%s', Tools::strtoupper($field)));
     }
 
     /**
@@ -181,8 +181,8 @@ class QentaCheckoutSeamlessPayment
             ->createConsumerMerchantCrmId($customer->email)
             ->setOrderIdent($id_cart);
 
-        if (isset($this->module->getContext()->cookie->wcsConsumerDeviceId)) {
-            $init->consumerDeviceId = $this->module->getContext()->cookie->wcsConsumerDeviceId;
+        if (isset($this->module->getContext()->cookie->qcsConsumerDeviceId)) {
+            $init->consumerDeviceId = $this->module->getContext()->cookie->qcsConsumerDeviceId;
         }
 
         // using legacy basket parameters
@@ -206,7 +206,7 @@ class QentaCheckoutSeamlessPayment
             $this->setLegacyBasket($cart, $init);
         }
 
-        $init->psWcsTxId = $id_tx;
+        $init->psQcsTxId = $id_tx;
 
         $requestData = $init->getRequestData();
         $orderReference = isset($requestData['orderReference'])?$requestData['orderReference']:null;
@@ -810,7 +810,7 @@ class QentaCheckoutSeamlessPayment
      */
     public function getPayolutionMid()
     {
-        return Configuration::get('WCS_OPTIONS_PAYOLUTION_MID');
+        return Configuration::get('QCS_OPTIONS_PAYOLUTION_MID');
     }
 
     /**
@@ -820,7 +820,7 @@ class QentaCheckoutSeamlessPayment
      */
     public function getPayolutionLink()
     {
-        $mid = Configuration::get('WCS_OPTIONS_PAYOLUTION_MID');
+        $mid = Configuration::get('QCS_OPTIONS_PAYOLUTION_MID');
 
         if (!Tools::strlen($mid)) {
             return $this->module->getPaymentTranslations()['consent'];

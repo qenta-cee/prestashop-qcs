@@ -35,7 +35,7 @@ $(function () {
         return tarea.value;
     };
 
-    wcsValidateField = function (field)
+    qcsValidateField = function (field)
     {
         var result = true;
 
@@ -49,7 +49,7 @@ $(function () {
         return result;
     };
 
-    wcsValidateMinAge = function (dob, minage) {
+    qcsValidateMinAge = function (dob, minage) {
         if (!minage)
             return true;
 
@@ -64,8 +64,8 @@ $(function () {
         return birthdate < limit;
     };
 
-    $(document).on('focusout', 'input.wcs-validate, textarea.wcs-validate, select.wcs-validate', function() {
-        wcsValidateField(this);
+    $(document).on('focusout', 'input.qcs-validate, textarea.qcs-validate, select.qcs-validate', function() {
+        qcsValidateField(this);
     });
 
 });

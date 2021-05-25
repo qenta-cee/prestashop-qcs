@@ -12,7 +12,7 @@
             <p class="payment_module" id="pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}">
                 {if $current.template}
                     <a id="pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_dataopen"
-                       class="pt_qentacheckoutseamless pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}"
+                       class="pt_qentacheckoutseamless pt_qcs_{$current.name|escape:'htmlall':'UTF-8'}"
                        href="#"
                        title="{l s='Pay with ' mod='qentacheckoutseamless'}{$current.label|escape:'htmlall':'UTF-8'}">
                         <span class="pt_logo_container"><span class="pt_qentacheckoutseamless_logo">
@@ -24,7 +24,7 @@
                             </span>
                     </a>
                 {else}
-                    <a class="pt_qentacheckoutseamless pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}"
+                    <a class="pt_qentacheckoutseamless pt_qcs_{$current.name|escape:'htmlall':'UTF-8'}"
                        href="{$link->getModuleLink('qentacheckoutseamless', 'paymentExecution', ['paymentType' => $current.name, 'paymentName' => $current.label], true)|escape:'htmlall':'UTF-8'}"
                        title="{l s='Pay with ' mod='qentacheckoutseamless'}{$current.label|escape:'htmlall':'UTF-8'}">
                         <span class="pt_logo_container"><span class="pt_qentacheckoutseamless_logo">
@@ -42,9 +42,9 @@
 
     </div>
     {if $current.template}
-        <div class="row" id="pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_data" style="display: none;">
+        <div class="row" id="pt_qcs_{$current.name|escape:'htmlall':'UTF-8'}_data" style="display: none;">
             <div class="col-xs-12">
-                <div class="wcs_payment_container">
+                <div class="qcs_payment_container">
                     {include $current.template}
 
                     <div class="form-group">
@@ -71,7 +71,7 @@
                 $('#pt_qentacheckoutseamless_{$current.name}_dataopen').on('click', function () {
 
                     $(this).toggleClass("open");
-                    $('#pt_wcs_{$current.name|escape:'htmlall':'UTF-8'}_data').toggle();
+                    $('#pt_qcs_{$current.name|escape:'htmlall':'UTF-8'}_data').toggle();
                     return false;
                 });
             });
@@ -91,12 +91,12 @@
                     };
                     var hasError = false;
 
-                    $('#pt_wcs_{$current.name}_data [data-wcs-fieldname]').each(function (index, value) {
+                    $('#pt_qcs_{$current.name}_data [data-qcs-fieldname]').each(function (index, value) {
 
-                        if (!wcsValidateField(this))
+                        if (!qcsValidateField(this))
                             hasError = true;
 
-                        paymentData[$(this).data('wcs-fieldname')] = $(this).val()
+                        paymentData[$(this).data('qcs-fieldname')] = $(this).val()
                     });
 
                     if (hasError)
@@ -118,7 +118,7 @@
                     $('#pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox').css('display', 'none');
                     $('#pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msglist').empty();
 
-                    if (typeof wcs{$current.name|escape:'htmlall':'UTF-8'}Validate != "undefined" && !wcs{$current.name|escape:'htmlall':'UTF-8'}Validate($('#pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox')))
+                    if (typeof qcs{$current.name|escape:'htmlall':'UTF-8'}Validate != "undefined" && !qcs{$current.name|escape:'htmlall':'UTF-8'}Validate($('#pt_qentacheckoutseamless_{$current.name|escape:'htmlall':'UTF-8'}_msgbox')))
                         return false;
 
                     var href = {$link->getModuleLink('qentacheckoutseamless', 'paymentExecution', ['paymentType' => $current.name, 'paymentName' => $current.label], true)|json_encode};
@@ -126,12 +126,12 @@
                     var additionalData = { };
                     var hasError = false;
 
-                    $('#pt_wcs_{$current.name}_data [data-wcs-fieldname]').each(function (index, value) {
+                    $('#pt_qcs_{$current.name}_data [data-qcs-fieldname]').each(function (index, value) {
 
-                        if (!wcsValidateField(this))
+                        if (!qcsValidateField(this))
                             hasError = true;
 
-                        additionalData[$(this).data('wcs-fieldname')] = $(this).val()
+                        additionalData[$(this).data('qcs-fieldname')] = $(this).val()
                     });
 
                     if (hasError)

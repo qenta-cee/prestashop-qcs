@@ -24,20 +24,20 @@
     <p><a href="https://guides.qenta.com/doku.php/plugins_general" target="_blank">{l s='General information regarding Qenta Shop Plugins' mod='qentacheckoutseamless'}</a></p>
     <div style="clear:both;"></div>
     <div class="btn-group">
-        <a class="btn btn-default" id="doWcsConfigTest" href="#">
+        <a class="btn btn-default" id="doQcsConfigTest" href="#">
             <i class="icon-check"></i>
             {l s='Test configuration' mod='qentacheckoutseamless'}
         </a>
-        <a class="btn btn-default" id="doWcsContactSupport" href="{$link->getAdminLink('AdminQentaCheckoutSeamlessSupport')|escape:'html':'UTF-8'}">
+        <a class="btn btn-default" id="doQcsContactSupport" href="{$link->getAdminLink('AdminQentaCheckoutSeamlessSupport')|escape:'html':'UTF-8'}">
             <i class="icon-question"></i>
             {l s='Contact support' mod='qentacheckoutseamless'}
         </a>
         {if $backendEnabled}
-        <a class="btn btn-default" id="doWcsBackendTransactions" href="{$link->getAdminLink('AdminQentaCheckoutSeamlessBackend')|escape:'html':'UTF-8'}">
+        <a class="btn btn-default" id="doQcsBackendTransactions" href="{$link->getAdminLink('AdminQentaCheckoutSeamlessBackend')|escape:'html':'UTF-8'}">
             <i class=e"icon-mony"></i>
             {l s='Transactions' mod='qentacheckoutseamless'}
         </a>
-        <a class="btn btn-default" id="doWcsBackendFundTransfer"
+        <a class="btn btn-default" id="doQcsBackendFundTransfer"
            href="{$link->getAdminLink('AdminQentaCheckoutSeamlessFundTransfer')|escape:'html':'UTF-8'}">
             <i class="icon-exchange"></i>
             {l s='Fund transfer' mod='qentacheckoutseamless'}
@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#doWcsConfigTest').on('click', function() {
+        $('#doQcsConfigTest').on('click', function() {
             $.ajax({
                 type: 'POST',
                 {** this url doesn't work when escaped *}
@@ -78,9 +78,9 @@
     });
     {if $backendEnabled}
     $(document).ready(function(){
-        var inp = $("#WCS_BASICDATA_BACKENDPW");
-        var customerIdInp = $("#WCS_BASICDATA_CUSTOMER_ID");
-        var modeSelect = $("#WCS_BASICDATA_CONFIGMODE");
+        var inp = $("#QCS_BASICDATA_BACKENDPW");
+        var customerIdInp = $("#QCS_BASICDATA_CUSTOMER_ID");
+        var modeSelect = $("#QCS_BASICDATA_CONFIGMODE");
 
         enableDisableBackendOperations(inp,true);
         correctCustomerId(customerIdInp);
@@ -96,12 +96,12 @@
         });
 
         $("#configuration_form").submit(function(e){
-            $('#WCS_BASICDATA_CUSTOMER_ID, #WCS_BASICDATA_SHOP_ID, #WCS_BASICDATA_SECRET').prop('disabled',false);
+            $('#QCS_BASICDATA_CUSTOMER_ID, #QCS_BASICDATA_SHOP_ID, #QCS_BASICDATA_SECRET').prop('disabled',false);
         });
 
         function modeSelectED(e){
             var state = e.val()=='production';
-            $('#WCS_BASICDATA_CUSTOMER_ID, #WCS_BASICDATA_SHOP_ID, #WCS_BASICDATA_SECRET').prop('disabled',!state);
+            $('#QCS_BASICDATA_CUSTOMER_ID, #QCS_BASICDATA_SHOP_ID, #QCS_BASICDATA_SECRET').prop('disabled',!state);
         }
 
         function correctCustomerId(inp){
@@ -111,12 +111,12 @@
         function enableDisableBackendOperations(inp,init=false){
             if(inp.val().length==0){
                 if(init)
-                    $("#doWcsBackendTransactions,#doWcsBackendFundTransfer").remove();
+                    $("#doQcsBackendTransactions,#doQcsBackendFundTransfer").remove();
                 else
-                    $("#doWcsBackendTransactions,#doWcsBackendFundTransfer").addClass("disabled");
+                    $("#doQcsBackendTransactions,#doQcsBackendFundTransfer").addClass("disabled");
             }
             else
-                $("#doWcsBackendTransactions,#doWcsBackendFundTransfer").removeClass("disabled");
+                $("#doQcsBackendTransactions,#doQcsBackendFundTransfer").removeClass("disabled");
         }
     });
     {/if}

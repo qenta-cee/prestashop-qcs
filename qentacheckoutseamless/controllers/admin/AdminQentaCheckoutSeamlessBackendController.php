@@ -148,7 +148,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
                 'orderNumber',
                 'language',
                 'paymentState',
-                'psWcsTxId',
+                'psQcsTxId',
                 'gatewayReferenceNumber',
                 'paymentType'
             );
@@ -228,7 +228,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
             return parent::postProcess();
         }
 
-        if (Tools::isSubmit('submitWcsBackendOp')) {
+        if (Tools::isSubmit('submitQcsBackendOp')) {
             $paymentnumber = null;
             if (Tools::isSubmit('paymentnumber') && Tools::getValue('paymentnumber') > 0) {
                 if (!Validate::isInt(Tools::getValue('paymentnumber'))) {
@@ -271,7 +271,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
             WHERE ordernumber = "' . pSQL($transaction->ordernumber) . '"'
             );
 
-            switch (Tools::getValue('submitWcsBackendOp')) {
+            switch (Tools::getValue('submitQcsBackendOp')) {
                 case 'DEPOSIT':
                     $op = $this->backendClient->getClient()->deposit(
                         $transaction->ordernumber,
@@ -320,7 +320,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
 
             if ($op !== null) {
                 $this->module->log(
-                    __METHOD__ . ':backend-op:' . Tools::getValue('submitWcsBackendOp') . '
+                    __METHOD__ . ':backend-op:' . Tools::getValue('submitQcsBackendOp') . '
                 ordernumber:' . $transaction->ordernumber . ' amount:' . $amount
                 );
 

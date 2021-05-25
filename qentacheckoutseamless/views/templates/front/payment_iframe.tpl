@@ -21,7 +21,7 @@
               <a href="{url}order" class="button-exclusive btn btn-default">
                 <i class="icon-chevron-left"></i>{l s='Other payment methods' mod='qentacheckoutseamless'}
               </a>
-              <a id="wcsIframeBox" class="button-exclusive btn btn-default" href="{$redirectUrl|escape:'htmlall':'UTF-8'}" data-toggle="modal" data-target="#paymentWcsModal" title="{l s='Qenta Checkout Seamless payment' mod='qentacheckoutseamless'}">Open iFrame Modal</a>
+              <a id="qcsIframeBox" class="button-exclusive btn btn-default" href="{$redirectUrl|escape:'htmlall':'UTF-8'}" data-toggle="modal" data-target="#paymentQcsModal" title="{l s='Qenta Checkout Seamless payment' mod='qentacheckoutseamless'}">Open iFrame Modal</a>
             </p>
           {/if}
         </div>
@@ -29,7 +29,7 @@
     </div>
   </section>
 
-  <div class="modal fade" id="paymentWcsModal" tabindex="-1" role="dialog">
+  <div class="modal fade" id="paymentQcsModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">

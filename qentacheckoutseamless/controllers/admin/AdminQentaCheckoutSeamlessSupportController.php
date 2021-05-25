@@ -139,8 +139,8 @@ class AdminQentaCheckoutSeamlessSupportController extends ModuleAdminController
         $message = strip_tags(Tools::getValue('message'));
 
         $config = $this->module->getConfigFieldsValues();
-        unset($config['WCS_BASICDATA_SECRET']);
-        unset($config['WCS_BASICDATA_BACKENDPW']);
+        unset($config['QCS_BASICDATA_SECRET']);
+        unset($config['QCS_BASICDATA_BACKENDPW']);
 
         $tmpl_vars = array(
             'message' => $message,

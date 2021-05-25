@@ -42,9 +42,9 @@ function qentacardsubmit(event, elem) {
   alertBox.html("");
   alertBox.parent().hide();
 
-  if (data.currentName === 'invoice' && typeof wcsinvoiceValidate != "undefined" && !wcsinvoiceValidate(alertBox))
+  if (data.currentName === 'invoice' && typeof qcsinvoiceValidate != "undefined" && !qcsinvoiceValidate(alertBox))
     return false;
-  if (data.currentName === 'installment' && typeof wcsinstallmentValidate != "undefined" && !wcsinstallmentValidate(alertBox))
+  if (data.currentName === 'installment' && typeof qcsinstallmentValidate != "undefined" && !qcsinstallmentValidate(alertBox))
     return false;
 
   if (data.isSeamless==1) {
@@ -54,12 +54,12 @@ function qentacardsubmit(event, elem) {
     };
 
     var validated = true;
-    $('[data-wcs-fieldname]', form).each(function (index, value) {
+    $('[data-qcs-fieldname]', form).each(function (index, value) {
 
-      if (!wcsValidateField(this))
+      if (!qcsValidateField(this))
         validated = false;
 
-      paymentData[$(this).data('wcs-fieldname')] = $(this).val()
+      paymentData[$(this).data('qcs-fieldname')] = $(this).val()
     });
 
     if (validated) {
@@ -79,12 +79,12 @@ function qentacardsubmit(event, elem) {
 
     var additionalData = { };
 
-    $('[data-wcs-fieldname]', form).each(function (index, value) {
+    $('[data-qcs-fieldname]', form).each(function (index, value) {
 
-      if (!wcsValidateField(this))
+      if (!qcsValidateField(this))
         hasError = true;
 
-      additionalData[$(this).data('wcs-fieldname')] = $(this).val()
+      additionalData[$(this).data('qcs-fieldname')] = $(this).val()
     });
 
     if (hasError)
@@ -98,7 +98,7 @@ function qentacardsubmit(event, elem) {
 }
 
 function showPaymentModal(url){
-  var modal = $("#paymentWcsModal");
+  var modal = $("#paymentQcsModal");
   modal.on('show.bs.modal', function(e) {
       $('.modal-body iframe', modal).attr('src',url);
   });

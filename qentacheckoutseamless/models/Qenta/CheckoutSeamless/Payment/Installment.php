@@ -184,7 +184,7 @@ class QentaCheckoutSeamlessPaymentInstallment extends QentaCheckoutSeamlessPayme
      */
     public function hasConsent()
     {
-        return $this->getProvider() == 'payolution' && Configuration::get('WCS_OPTIONS_PAYOLUTION_TERMS') == true;
+        return $this->getProvider() == 'payolution' && Configuration::get('QCS_OPTIONS_PAYOLUTION_TERMS') == true;
     }
 
     /**

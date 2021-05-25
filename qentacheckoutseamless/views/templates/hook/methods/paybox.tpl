@@ -10,6 +10,6 @@
 
 <div class="required form-group">
     <label class="required"> {l s='paybox number' mod='qentacheckoutseamless'}</label>
-    <input type="tel" name="payerPayboxNumber" autocomplete="off" class="form-control payerpayboxnumber is_required wcs-validate"
-           data-wcs-fieldname="payerPayboxNumber"/>
+    <input type="tel" name="payerPayboxNumber" autocomplete="off" class="form-control payerpayboxnumber is_required qcs-validate"
+           data-qcs-fieldname="payerPayboxNumber"/>
 </div>

@@ -14,10 +14,10 @@
 <body>
 <h3>{l s='You will be redirected in a moment.' mod='qentacheckoutseamless'}</h3>
 <p>{l s='If the redirect does not work please click' mod='qentacheckoutseamless'}
-	<a href="{$orderConfirmation|escape:'htmlall':'UTF-8'}" id="wcsRedirectAnchor" target="_parent" > {l s='here' mod='qentacheckoutseamless'}.</a>
+	<a href="{$orderConfirmation|escape:'htmlall':'UTF-8'}" id="qcsRedirectAnchor" target="_parent" > {l s='here' mod='qentacheckoutseamless'}.</a>
 </p>
 <script type="text/javascript">
-  document.getElementById("wcsRedirectAnchor").click();
+  document.getElementById("qcsRedirectAnchor").click();
 </script>
 </body>
 </html>

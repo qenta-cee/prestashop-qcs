@@ -10,9 +10,9 @@ $(function() {
    $('#type').on('change', function() {
        var selected = $(this).val();
        var custStmtField = $('#customerStatement');
-       $('.wcs-specific.' + selected).each(function(idx, field) {
-           $(field).removeClass('wcs-display-none');
-           if ($(field).hasClass('wcs-required')) {
+       $('.qcs-specific.' + selected).each(function(idx, field) {
+           $(field).removeClass('qcs-display-none');
+           if ($(field).hasClass('qcs-required')) {
                $(field).find('label').addClass('required');
                $(field).find(':input').attr('required', 'required');
                if (selected == 'sepa-ct' || selected == 'existingorder')
@@ -25,8 +25,8 @@ $(function() {
            }
        });
 
-       $('.wcs-specific:not(.' + selected + ')').each(function(idx, field) {
-           $(field).addClass('wcs-display-none');
+       $('.qcs-specific:not(.' + selected + ')').each(function(idx, field) {
+           $(field).addClass('qcs-display-none');
            $(field).find('label').removeClass('required');
            $(field).find(':input').attr('required', null);
            if (selected != 'sepa-ct' && selected != 'existingorder')

@@ -15,6 +15,7 @@ function wirecardcee_autoload($class)
     $namespace = null;
     $modelNamespace = 'QentaCheckoutSeamless';
     $paymentNamespace = 'QentaCheckoutSeamlessPayment';
+    $targetNamespace = 'Qenta_CheckoutSeamless_Payment';
 
     foreach ($namespaces as $ns) {
 
@@ -38,32 +39,11 @@ function wirecardcee_autoload($class)
         ) {
             $classWithUnderscore .= 'Payment_' . Tools::substr($class, Tools::strlen($paymentNamespace));
         } else {
-            // print_r('class: ' . $class . '</br>');
-            // print_r('paymentNamespace: ' . $paymentNamespace. '</br>');
+
             $classWithUnderscore .= Tools::substr($class, Tools::strlen($modelNamespace));
-            // print_r('classWithUnderscore: ' . $classWithUnderscore. '</br>');
 
-
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentSofortbanking') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Sofortbanking';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentSepa') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Sepa';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentTatrapay') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Tatrapay';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentTrustpay') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Trustpay';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentTrustly') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Trustly';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentVoucher') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Voucher';
-            }
-            if($classWithUnderscore === 'Qenta_CheckoutSeamless_PaymentSkrillwallet') {
-                $classWithUnderscore = 'Qenta_CheckoutSeamless_Payment_Skrillwallet';
+            if(Tools::strlen($class) > Tools::strlen($targetNamespace) && strpos($class, 'Payment') !== false) {
+                $classWithUnderscore = str_replace($targetNamespace, $targetNamespace . '_', $classWithUnderscore);
             }
         }
         $class = $classWithUnderscore;

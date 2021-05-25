@@ -64,14 +64,14 @@
                 <div class="form-group">
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3">
-                        <button class="btn btn-default" id="wcs-open-transaction-details">
+                        <button class="btn btn-default" id="qcs-open-transaction-details">
                             <i class="icon-search"></i>
                             {l s='Details' mod='qentacheckoutseamless'}
                         </button>
                     </div>
                 </div>
 
-                <div id="wcs-transaction-details" style="display: none;">
+                <div id="qcs-transaction-details" style="display: none;">
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">{l s='Message:' mod='qentacheckoutseamless'}</label>
@@ -91,18 +91,18 @@
                     <div class="col-lg-3">
                         <form id="formPaymentOp" method="post"
                               action="{$current_index|escape:'htmlall':'UTF-8'}&amp;viewqenta_checkout_seamless_tx&amp;id_tx={$transaction->id|escape:'htmlall':'UTF-8'}&amp;token={$smarty.get.token|escape:'htmlall':'UTF-8'}">
-                            <input type="hidden" name="amount" class="wcs-amount"/>
+                            <input type="hidden" name="amount" class="qcs-amount"/>
                             {foreach from=$operations item=op}
                                 {if $op == "DEPOSIT" or $op == "REFUND"}
                                     <input type="text" name="amount-transaction" value=""
                                            autocomplete="off"
-                                           id="wcs-amount-transaction"
+                                           id="qcs-amount-transaction"
                                            class="form-control fixed-width-sm pull-left"/>
                                 {/if}
-                                <button class="btn btn-primary wcs-payment-ops" type="submit"
-                                        name="submitWcsBackendOp"
+                                <button class="btn btn-primary qcs-payment-ops" type="submit"
+                                        name="submitQcsBackendOp"
                                         data-payment=""
-                                        data-amount-fieldid="wcs-amount-transaction"
+                                        data-amount-fieldid="qcs-amount-transaction"
                                         value="{$op|escape:'htmlall':'UTF-8'}">
                                     {l s=$op mod='qentacheckoutseamless'}
                                 </button>
@@ -124,8 +124,8 @@
 
                 <form id="formPaymentOp" method="post"
                       action="{$current_index|escape:'htmlall':'UTF-8'}&amp;viewqenta_checkout_seamless_tx&amp;id_tx={$transaction->id|escape:'htmlall':'UTF-8'}&amp;token={$smarty.get.token|escape:'htmlall':'UTF-8'}">
-                    <input type="hidden" name="paymentnumber" id="wcs-paymentnumber"/>
-                    <input type="hidden" name="amount" class="wcs-amount"/>
+                    <input type="hidden" name="paymentnumber" id="qcs-paymentnumber"/>
+                    <input type="hidden" name="amount" class="qcs-amount"/>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -163,14 +163,14 @@
                                                        name="amount-{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
                                                        value=""
                                                        autocomplete="off"
-                                                       id="wcs-amount-{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
+                                                       id="qcs-amount-{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
                                                        class="form-control fixed-width-sm pull-left"
                                                         value="{$payment->getApproveAmount()|intval}"/>
                                             {/if}
-                                            <button class="btn btn-primary wcs-payment-ops" type="submit"
-                                                    name="submitWcsBackendOp"
+                                            <button class="btn btn-primary qcs-payment-ops" type="submit"
+                                                    name="submitQcsBackendOp"
                                                     data-payment="{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
-                                                    data-amount-fieldid="wcs-amount-{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
+                                                    data-amount-fieldid="qcs-amount-{$payment->getPaymentNumber()|escape:'htmlall':'UTF-8'}"
                                                     value="{$op|escape:'htmlall':'UTF-8'}">
                                                 {l s=$op mod='qentacheckoutseamless'}
                                             </button>
@@ -205,7 +205,7 @@
 
                 <form id="formCreditOp" method="post"
                       action="{$current_index|escape:'htmlall':'UTF-8'}&amp;viewqenta_checkout_seamless_tx&amp;id_tx={$transaction->id|escape:'htmlall':'UTF-8'}&amp;token={$smarty.get.token|escape:'htmlall':'UTF-8'}">
-                    <input type="hidden" name="creditnumber" id="wcs-creditnumber"/>
+                    <input type="hidden" name="creditnumber" id="qcs-creditnumber"/>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -238,8 +238,8 @@
 
                                         {foreach from=$credit->getOperationsAllowed() item=op}
                                             {if !$op}{continue}{/if}
-                                            <button class="btn btn-primary wcs-payment-ops" type="submit"
-                                                    name="submitWcsBackendOp"
+                                            <button class="btn btn-primary qcs-payment-ops" type="submit"
+                                                    name="submitQcsBackendOp"
                                                     data-credit="{$credit->getCreditNumber()|escape:'htmlall':'UTF-8'}"
                                                     data-amount-fieldid=""
                                                     value="{$op|escape:'htmlall':'UTF-8'}">
@@ -272,23 +272,23 @@
 
         $(document).ready(function () {
 
-            $('.wcs-payment-ops').on('click', function () {
+            $('.qcs-payment-ops').on('click', function () {
                 var paymentnumber = $(this).data('payment');
                 if (paymentnumber) {
-                    $('#wcs-paymentnumber').val(paymentnumber);
+                    $('#qcs-paymentnumber').val(paymentnumber);
                 }
 
                 var creditnumber = $(this).data('credit');
                 if (creditnumber) {
-                    $('#wcs-creditnumber').val(creditnumber);
+                    $('#qcs-creditnumber').val(creditnumber);
                 }
 
                 var amountFieldId = '#' + $(this).data('amount-fieldid');
-                $('.wcs-amount').val($(amountFieldId).val());
+                $('.qcs-amount').val($(amountFieldId).val());
             });
 
-            $('#wcs-open-transaction-details').on('click', function () {
-                $('#wcs-transaction-details').toggle('display');
+            $('#qcs-open-transaction-details').on('click', function () {
+                $('#qcs-transaction-details').toggle('display');
             });
         });
 

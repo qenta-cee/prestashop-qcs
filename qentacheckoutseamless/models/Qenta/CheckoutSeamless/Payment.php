@@ -162,7 +162,7 @@ class QentaCheckoutSeamlessPayment
         $init->setPluginVersion($module->getPluginVersion());
         $init->setConfirmUrl($module->getConfirmUrl());
 
-        $init->setOrderReference(sprintf('%010d', $id_tx));
+        $init->setOrderReference(md5(sprintf('%010d', $id_tx).microtime()));
 
         $init->setAmount($amount)
             ->setCurrency($current_currency->iso_code)

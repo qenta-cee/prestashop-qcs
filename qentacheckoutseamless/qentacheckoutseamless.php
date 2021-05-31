@@ -224,6 +224,7 @@ class QentaCheckoutSeamless extends PaymentModule
                     array(
                         'name' => 'send_basketinformation',
                         'label' => $this->l('Forward basket data'),
+                        'default' => 1,
                         'type' => 'onoff',
                         'doc' => $this->l('Forwarding basket data to the respective financial service provider.')
                     ),
@@ -839,6 +840,7 @@ class QentaCheckoutSeamless extends PaymentModule
             $orderState->delivery = false;
             $orderState->logable = false;
             $orderState->invoice = false;
+            $orderState->module_name = 'qentacheckoutseamless';
             if ($orderState->add()) {
                 copy(
                     dirname(__FILE__) . '/views/img/awaiting_payment.gif',

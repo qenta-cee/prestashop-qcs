@@ -72,6 +72,8 @@ class QentaCheckoutSeamlessOrderManagement
             __METHOD__ . ':using:' . $transactionIdField . ' as transactionId:' . $return->$transactionIdField
         );
 
+        $this->module->log(__METHOD__ . ':using:' . $return->getPaymentState());
+
         switch ($return->getPaymentState()) {
             case WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS:
                 /** @var WirecardCEE_QMore_Return_Success $return */
@@ -120,6 +122,7 @@ class QentaCheckoutSeamlessOrderManagement
 
             case WirecardCEE_QMore_ReturnFactory::STATE_PENDING:
                 /** @var WirecardCEE_QMore_Return_Pending $return */
+                $this->module->log(__METHOD__ . ':using:' . $this->module->getAwaitingState());
                 if (Tools::strlen($return->getOrderNumber())) {
                     $txData['ordernumber'] = $return->getOrderNumber();
                 }

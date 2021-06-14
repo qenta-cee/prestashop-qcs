@@ -796,7 +796,7 @@ class QentaCheckoutSeamless extends PaymentModule
     public function install()
     {
         if (!parent::install()
-            || !$this->registerHook('paymentReturn')
+            || !$this->registerHook('displayPaymentReturn')
             || !$this->registerHook('backOfficeHeader')
             || !$this->registerHook('displayHeader')
             || !$this->registerHook('actionFrontControllerSetMedia')
@@ -2011,14 +2011,19 @@ class QentaCheckoutSeamless extends PaymentModule
         }
 
         if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_PENDING) {
+            $this->log("usao u if : ");
             $this->smarty->assign(
                 array(
                     'status' => 'ok'
                 )
             );
 
+            $this->log("__FILE__ : " . __FILE__);
+
             return $this->display(__FILE__, 'pending.tpl');
         }
+
+        // show eroros here
 
         $params = array();
         // order has been created before payment
@@ -2037,6 +2042,8 @@ class QentaCheckoutSeamless extends PaymentModule
                 $this->context->link->getPageLink('order-opc', true, $cart->id_lang, $params)
             );
         }
+
+        // $this->html .= $this->displayError('Something happend');
 
         Tools::redirect(
             $this->context->link->getPageLink('order', true, $cart->id_lang, $params)

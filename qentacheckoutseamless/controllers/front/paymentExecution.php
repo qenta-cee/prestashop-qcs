@@ -17,13 +17,12 @@ class QentaCheckoutSeamlessPaymentExecutionModuleFrontController extends ModuleF
      */
     public function initContent()
     {
+
         $this->ssl                 = true;
         $this->display_column_left = false;
         parent::initContent();
 
         $cart = $this->context->cart;
-
-
 
         $this->context->smarty->assign(array(
             'nbProducts'           => $cart->nbProducts(),

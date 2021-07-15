@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Shop System Plugins
  * - Terms of use can be found under
  * https://guides.qenta.com/shop_plugins:info
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
-*/
+ */
 
 class QentaCheckoutSeamlessDataStorage
 {
-    /** @var  WirecardCEECheckoutSeamless */
+    /** @var  QentaCheckoutSeamless */
     protected $module;
 
     protected $link;
@@ -74,8 +75,6 @@ class QentaCheckoutSeamlessDataStorage
                 $this->module->getConfigValue('creditcardoptions', 'displayissuenumber')
             );
         }
-
-        $this->module->log(__METHOD__ . ':' . print_r($dataStorageInit->getRequestData(), true));
 
         return $dataStorageInit->initiate();
     }

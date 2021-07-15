@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Shop System Plugins
  * - Terms of use can be found under
  * https://guides.qenta.com/shop_plugins:info
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
-*/
+ */
 
 class QentaCheckoutSeamlessPayment
 {
@@ -162,7 +163,7 @@ class QentaCheckoutSeamlessPayment
         $init->setPluginVersion($module->getPluginVersion());
         $init->setConfirmUrl($module->getConfirmUrl());
 
-        $init->setOrderReference(md5(sprintf('%010d', $id_tx).microtime()));
+        $init->setOrderReference(md5(sprintf('%010d', $id_tx) . microtime()));
 
         $init->setAmount($amount)
             ->setCurrency($current_currency->iso_code)
@@ -209,7 +210,7 @@ class QentaCheckoutSeamlessPayment
         $init->psQcsTxId = $id_tx;
 
         $requestData = $init->getRequestData();
-        $orderReference = isset($requestData['orderReference'])?$requestData['orderReference']:null;
+        $orderReference = isset($requestData['orderReference']) ? $requestData['orderReference'] : null;
 
         $this->transaction->updateTransaction($id_tx, array(
             'request' => Tools::jsonEncode($requestData),
@@ -217,12 +218,11 @@ class QentaCheckoutSeamlessPayment
             'orderreference' => $orderReference
         ));
 
-        $module->log(__METHOD__ . ':' . print_r($init->getRequestData(), true));
-
         try {
             $initResponse = $init->initiate();
 
             if ($initResponse->getStatus() == \WirecardCEE_QMore_Response_Initiation::STATE_FAILURE) {
+                $this->module->log('drugi dio if');
                 $message = 'An error occurred during the payment process';
                 if ($initResponse->getNumberOfErrors() > 0) {
                     $msg = implode(
@@ -237,6 +237,8 @@ class QentaCheckoutSeamlessPayment
                         $message = $msg;
                     }
                 }
+
+                $this->module->log('update transaction in payment');
 
                 $this->transaction->updateTransaction(
                     $id_tx,
@@ -402,25 +404,25 @@ class QentaCheckoutSeamlessPayment
      */
     public function setLegacyBasket(Cart $cart, \WirecardCEE_QMore_FrontendClient $client)
     {
-        $productCounter=1;
+        $productCounter = 1;
         foreach ($cart->getProducts() as $product) {
-            $name = 'basketItem'.$productCounter++;
+            $name = 'basketItem' . $productCounter++;
 
-            $client->__set($name.'UnitPrice', number_format($product['price'], 2, '.', ''));
-            $client->__set($name.'Tax', number_format($product['price_wt'] - $product['price'], 2, '.', ''));
-            $client->__set($name.'Quantity', $product['cart_quantity']);
-            $client->__set($name.'ArticleNumber', $product['reference']);
+            $client->__set($name . 'UnitPrice', number_format($product['price'], 2, '.', ''));
+            $client->__set($name . 'Tax', number_format($product['price_wt'] - $product['price'], 2, '.', ''));
+            $client->__set($name . 'Quantity', $product['cart_quantity']);
+            $client->__set($name . 'ArticleNumber', $product['reference']);
         }
 
         if ($cart->getTotalShippingCost(null, true) > 0) {
-            $name = 'basketItem'.$productCounter;
-            $client->__set($name.'UnitPrice', $cart->getTotalShippingCost(null, false));
+            $name = 'basketItem' . $productCounter;
+            $client->__set($name . 'UnitPrice', $cart->getTotalShippingCost(null, false));
             $client->__set(
-                $name.'Tax',
-                $cart->getTotalShippingCost(null, true)-$cart->getTotalShippingCost(null, false)
+                $name . 'Tax',
+                $cart->getTotalShippingCost(null, true) - $cart->getTotalShippingCost(null, false)
             );
-            $client->__set($name.'Quantity', 1);
-            $client->__set($name.'ArticleNumber', 'shipping');
+            $client->__set($name . 'Quantity', 1);
+            $client->__set($name . 'ArticleNumber', 'shipping');
         }
 
         return $this;

@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Shop System Plugins
  * - Terms of use can be found under
  * https://guides.qenta.com/shop_plugins:info
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
-*/
+ */
 
 class QentaCheckoutSeamlessOrderManagement
 {
-    /** @var  WirecardCEECheckoutSeamless */
+    /** @var  QentaCheckoutSeamless */
     protected $module;
 
     /**
@@ -46,10 +47,9 @@ class QentaCheckoutSeamlessOrderManagement
 
         $fraudDetected = false;
         // order creation after payment
-        if (!$transactionData['id_order'] && (
-                $return->getPaymentState() == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS ||
-                $return->getPaymentState() == WirecardCEE_QMore_ReturnFactory::STATE_PENDING
-            )
+        if (
+            !$transactionData['id_order'] && ($return->getPaymentState() == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS ||
+                $return->getPaymentState() == WirecardCEE_QMore_ReturnFactory::STATE_PENDING)
         ) {
             $cart = new Cart((int)($transactionData['id_cart']));
 
@@ -68,11 +68,11 @@ class QentaCheckoutSeamlessOrderManagement
             $order = new Order($transactionData['id_order']);
         }
 
-        $this->module->log(
-            __METHOD__ . ':using:' . $transactionIdField . ' as transactionId:' . $return->$transactionIdField
-        );
+        // $this->module->log(
+        //     __METHOD__ . ':using:' . $transactionIdField . ' as transactionId:' . $return->$transactionIdField
+        // );
 
-        $this->module->log(__METHOD__ . ':using:' . $return->getPaymentState());
+        // $this->module->log(__METHOD__ . ':using:' . $return->getPaymentState());
 
         switch ($return->getPaymentState()) {
             case WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS:
@@ -110,8 +110,6 @@ class QentaCheckoutSeamlessOrderManagement
                     if (Tools::strlen($msg)) {
                         $txData['message'] = $msg;
                     }
-
-                    $this->module->log(__METHOD__ . ':msg:' . $msg);
                 }
 
                 if ($order !== null) {
@@ -234,7 +232,8 @@ class QentaCheckoutSeamlessOrderManagement
         $order = new Order($id_order);
         // if a pending payment leads to an error, but the payment has been accepted manually via admin
         // dont set the order to an error state
-        if ($order->current_state == _PS_OS_PAYMENT_ &&
+        if (
+            $order->current_state == _PS_OS_PAYMENT_ &&
             ($state == _PS_OS_ERROR_ || $state == $this->module->getAwaitingState())
         ) {
             return;

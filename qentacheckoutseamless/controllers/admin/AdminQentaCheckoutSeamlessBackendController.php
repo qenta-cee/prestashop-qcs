@@ -10,7 +10,7 @@
 class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
 {
 
-    /** @var WirecardCheckoutSeamlessBackend */
+    /** @var QentaCheckoutSeamlessBackend */
     protected $backendClient = null;
 
     /**
@@ -114,7 +114,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
             $this->errors[] = Tools::displayError('The transaction cannot be found within your database.');
         }
 
-        /** @var WirecardCheckoutSeamlessTransaction $transaction */
+        /** @var QentaCheckoutSeamlessTransaction $transaction */
         $transaction = $this->object;
 
         $order = $orderLink = null;
@@ -313,7 +313,7 @@ class AdminQentaCheckoutSeamlessBackendController extends ModuleAdminController
             if (Tools::strlen($state) < 4) {
                 $state = "NO ORDER";
             }
-            $msg->message = "Wirecard CEE Order state: " . $state;
+            $msg->message = "QENTA Order state: " . $state;
             $msg->id_order = $id_order;
             $msg->private = 1;
             $msg->add();

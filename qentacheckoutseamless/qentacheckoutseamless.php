@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Shop System Plugins
  * - Terms of use can be found under
  * https://guides.qenta.com/shop_plugins:info
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
-*/
+ */
 
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
@@ -63,10 +64,12 @@ class QentaCheckoutSeamless extends PaymentModule
      * @var array
      */
     private $postErrors = array();
-    /** @var  WirecardCheckoutSeamlessOrderManagement */
+    /** @var  QentaCheckoutSeamlessOrderManagement */
     private $orderManagement;
-    /** @var  WirecardCheckoutSeamlessTransaction */
+    /** @var  QentaCheckoutSeamlessTransaction */
     private $transaction;
+
+    private $headerErrors = array();
 
     /**
      * WirecardCEECheckoutSeamless constructor.
@@ -80,8 +83,8 @@ class QentaCheckoutSeamless extends PaymentModule
         ini_set(
             'include_path',
             ini_get('include_path')
-            . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor'
-            . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'models'
+                . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor'
+                . PATH_SEPARATOR . realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'models'
         );
 
         require_once 'wirecardcee_autoload.php';
@@ -795,8 +798,9 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function install()
     {
-        if (!parent::install()
-            || !$this->registerHook('displayPaymentReturn')
+        if (
+            !parent::install()
+            || !$this->registerHook('paymentReturn')
             || !$this->registerHook('backOfficeHeader')
             || !$this->registerHook('displayHeader')
             || !$this->registerHook('actionFrontControllerSetMedia')
@@ -916,13 +920,13 @@ class QentaCheckoutSeamless extends PaymentModule
     {
         $sql = 'CREATE TABLE IF NOT EXISTS  `' . _DB_PREFIX_ . 'qenta_checkout_seamless_tx` (';
         foreach ($this->getColumnDefs() as $column => $definitions) {
-            $sql .= "\n"."\t" . $column . ' ';
+            $sql .= "\n" . "\t" . $column . ' ';
             foreach ($definitions as $definition) {
                 $sql .= $definition . ' ';
             }
             $sql .= ',';
         }
-        $sql .= "\n".'PRIMARY KEY (`id_tx`)';
+        $sql .= "\n" . 'PRIMARY KEY (`id_tx`)';
         $sql .= "\n" . ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;';
 
         return Db::getInstance()->execute($sql);
@@ -947,16 +951,16 @@ class QentaCheckoutSeamless extends PaymentModule
 
             foreach ($column_definitions as $column => $definitions) {
                 if (!in_array($column, $columns)) {
-                    $sql .= "\n".'ADD COLUMN `'.$column.'` ';
+                    $sql .= "\n" . 'ADD COLUMN `' . $column . '` ';
                     foreach ($definitions as $definition) {
-                        $sql .= $definition.' ';
+                        $sql .= $definition . ' ';
                     }
                     $sql = rtrim($sql, " ");
                     $sql .= ',';
                 }
             }
 
-            $sql = rtrim($sql, ",").";";
+            $sql = rtrim($sql, ",") . ";";
         }
         return $sql == null ? true : Db::getInstance()->execute($sql);
     }
@@ -1699,32 +1703,136 @@ class QentaCheckoutSeamless extends PaymentModule
 
     public function hookPaymentReturn($params)
     {
+        $this->log('hookPaymentReturn ');
         if (!$this->active) {
-            return;
+            return '';
         }
 
-        if (!isset($params['order']) || ($params['order']->module != $this->name)) {
-            return false;
-        }
-        if (isset($params['order']) && Validate::isLoadedObject($params['order']) && isset($params['order']->valid)) {
-            $this->smarty->assign(array(
-                'id_order' => $params['order']->id,
-                'valid' => $params['order']->valid,
-                'status' => 'ok'
-                ));
+        $id_tx = (int)Tools::getValue('id_tx');
+
+        unset($this->context->cookie->qcsRedirectUrl);
+
+        $txData = $this->getTransaction()->get($id_tx);
+
+        if (!is_array($txData)) {
+            return $this->display(__FILE__, 'payment_return.tpl');
         }
 
-        if (isset($params['order']->reference) && !empty($params['order']->reference)) {
-            $this->smarty->assign('reference', $params['order']->reference);
-        }
-        $this->smarty->assign(array(
-            'shop_name' => $this->context->shop->name,
-            'reference' => $params['order']->reference,
-            'contact_url' => $this->context->link->getPageLink('contact', true),
-            'status' => 'ok'
-            ));
+        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS) {
+            $this->smarty->assign(
+                array(
+                    'status' => 'ok'
+                )
+            );
 
-        return $this->fetch('module:qentacheckoutseamless/views/templates/hook/payment_return.tpl');
+            return $this->display(__FILE__, 'payment_return.tpl');
+        }
+
+        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_PENDING) {
+            $this->smarty->assign(
+                array(
+                    'status' => 'ok'
+                )
+            );
+
+            return $this->display(__FILE__, 'pending.tpl');
+        }
+
+        $params = array();
+        // order has been created before payment
+        // we need to reorder
+        if ($txData['id_order']) {
+            $params = array(
+                'submitReorder' => true,
+                'id_order' => (int)$txData['id_order']
+            );
+        }
+
+        $cart = new Cart($txData['id_cart']);
+
+        if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
+
+            Tools::redirect(
+                $this->context->link->getPageLink('order-opc', true, $cart->id_lang, $params)
+            );
+        }
+
+        // handle errors
+        $this->context->cookie->qcsMessage = $this->l('An error occurred during the payment process');
+
+        Tools::redirect(
+            $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
+        );
+
+        return '';
+    }
+
+    /**
+     * order information page after checkout return
+     *
+     * @param $params
+     *
+     * @return string|void
+     */
+    public function hookDisplayPaymentReturn($params)
+    {
+        if (!$this->active) {
+            return '';
+        }
+
+        $id_tx = (int)Tools::getValue('id_tx');
+
+        unset($this->context->cookie->qcsRedirectUrl);
+
+        $txData = $this->getTransaction()->get($id_tx);
+
+        if (!is_array($txData)) {
+            return $this->display(__FILE__, 'payment_return.tpl');
+        }
+
+        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS) {
+            $this->smarty->assign(
+                array(
+                    'status' => 'ok'
+                )
+            );
+
+            return $this->display(__FILE__, 'payment_return.tpl');
+        }
+
+        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_PENDING) {
+            $this->smarty->assign(
+                array(
+                    'status' => 'ok'
+                )
+            );
+
+            return $this->display(__FILE__, 'pending.tpl');
+        }
+
+        $params = array();
+        // order has been created before payment
+        // we need to reorder
+        if ($txData['id_order']) {
+            $params = array(
+                'submitReorder' => true,
+                'id_order' => (int)$txData['id_order'],
+            );
+        }
+
+        $cart = new Cart($txData['id_cart']);
+
+        if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
+            Tools::redirect(
+                $this->context->link->getPageLink('order-opc', true, $cart->id_lang, $params)
+            );
+        }
+
+        Tools::redirect(
+            $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
+        );
+
+        return '';
     }
 
     /**
@@ -1797,7 +1905,7 @@ class QentaCheckoutSeamless extends PaymentModule
     /**
      * get transaction management object
      *
-     * @return WirecardCheckoutSeamlessTransaction
+     * @return QentaCheckoutSeamlessTransaction
      */
     private function getTransaction()
     {
@@ -1848,7 +1956,7 @@ class QentaCheckoutSeamless extends PaymentModule
 
             $this->context->controller->registerJavascript(
                 'module-qcs-simple-lib',
-                'modules/'.$this->name.'/views/js/scripts.js',
+                'modules/' . $this->name . '/views/js/scripts.js',
                 array(
                     'priority' => 202,
                     'attribute' => 'async',
@@ -1857,7 +1965,7 @@ class QentaCheckoutSeamless extends PaymentModule
 
             $this->context->controller->registerJavascript(
                 'module-qcs-payment',
-                'modules/'.$this->name.'/views/js/payment.js',
+                'modules/' . $this->name . '/views/js/payment.js',
                 array(
                     'priority' => 201,
                     'attribute' => 'async',
@@ -1876,6 +1984,19 @@ class QentaCheckoutSeamless extends PaymentModule
             return false;
         }
 
+        $cart = new Cart($this->context->cookie->id_cart);
+
+        $this->log('headerErrors 4' . print_r($this->headerErrors, true));
+        if (count($this->headerErrors)) {
+            foreach ($this->headerErrors as $err) {
+                $this->context->cookie->qcsMessage = $err;
+            }
+
+            Tools::redirect(
+                $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
+            );
+        }
+
         unset($this->context->cookie->qcsRedirectUrl);
 
         $timestamp = microtime();
@@ -1887,7 +2008,8 @@ class QentaCheckoutSeamless extends PaymentModule
         }
 
         if ((Configuration::get('QCS_PT_INVOICE_PROVIDER') == 'ratepay' && (bool)Configuration::get('QCS_PT_INVOICE')) ||
-            (Configuration::get('QCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('QCS_PT_INSTALLMENT'))) {
+            (Configuration::get('QCS_PT_INSTALLMENT_PROVIDER') == 'ratepay' && (bool)Configuration::get('QCS_PT_INSTALLMENT'))
+        ) {
             echo "<script language='JavaScript'>
                 var di = {t:'" . $this->context->cookie->qcsConsumerDeviceId . "',v:'WDWL',l:'Checkout'};
               </script>
@@ -1907,7 +2029,7 @@ class QentaCheckoutSeamless extends PaymentModule
         $result = array();
 
         $dsModel = new QentaCheckoutSeamlessDataStorage($this);
-        $cart = new Cart($this->context->cookie->id_cart);
+
         $jsUrl = "";
 
         try {
@@ -1935,6 +2057,8 @@ class QentaCheckoutSeamless extends PaymentModule
         } catch (Exception $e) {
             $this->log(__METHOD__ . ':' . $e->getMessage());
 
+            $this->context->cookie->qcsMessage = $e->getMessage();
+
             return false;
         }
 
@@ -1944,7 +2068,7 @@ class QentaCheckoutSeamless extends PaymentModule
             $payment->setLogo($paymentType['img'])
                 ->setCallToActionText($this->l('Pay using') . ' ' . $this->l($paymentType['label']));
 
-            $paymentType['template'] = 'module:qentacheckoutseamless/views/templates/hook/methods/'.$paymentType['template'];
+            $paymentType['template'] = 'module:qentacheckoutseamless/views/templates/hook/methods/' . $paymentType['template'];
             $this->context->smarty->assign(
                 array(
                     'current' => $paymentType,
@@ -1967,89 +2091,13 @@ class QentaCheckoutSeamless extends PaymentModule
             if ($paymentType['template'] !== null) {
                 $urlIncluded = true;
                 $payment->setBinary(true);
-                $payment->setForm($this->context->smarty->fetch('module:qentacheckoutseamless/views/templates/hook/payment_eu.tpl'));//methods/'.$paymentType['template']));
+                $payment->setForm($this->context->smarty->fetch('module:qentacheckoutseamless/views/templates/hook/payment_eu.tpl')); //methods/'.$paymentType['template']));
             }
 
             $result[] = $payment;
         }
 
         return count($result) ? $result : false;
-    }
-
-    /**
-     * order information page after checkout return
-     *
-     * @param $params
-     *
-     * @return string|void
-     */
-    public function hookDisplayPaymentReturn($params)
-    {
-        if (!$this->active) {
-            return '';
-        }
-
-        $id_tx = (int)Tools::getValue('id_tx');
-
-        unset($this->context->cookie->qcsRedirectUrl);
-
-        $txData = $this->getTransaction()->get($id_tx);
-        if (!is_array($txData)) {
-            $this->log(__METHOD__ . ":tx data for id: $id_tx not found");
-
-            return $this->display(__FILE__, 'payment_return.tpl');
-        }
-
-        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_SUCCESS) {
-            $this->smarty->assign(
-                array(
-                    'status' => 'ok'
-                )
-            );
-
-            return $this->display(__FILE__, 'payment_return.tpl');
-        }
-
-        if ($txData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_PENDING) {
-            $this->log("usao u if : ");
-            $this->smarty->assign(
-                array(
-                    'status' => 'ok'
-                )
-            );
-
-            $this->log("__FILE__ : " . __FILE__);
-
-            return $this->display(__FILE__, 'pending.tpl');
-        }
-
-        // show eroros here
-
-        $params = array();
-        // order has been created before payment
-        // we need to reorder
-        if ($txData['id_order']) {
-            $params = array(
-                'submitReorder' => true,
-                'id_order' => (int)$txData['id_order']
-            );
-        }
-
-        $cart = new Cart($txData['id_cart']);
-
-        if (Configuration::get('PS_ORDER_PROCESS_TYPE')) {
-            Tools::redirect(
-                $this->context->link->getPageLink('order-opc', true, $cart->id_lang, $params)
-            );
-        }
-
-        // $this->html .= $this->displayError('Something happend');
-
-        Tools::redirect(
-            $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
-        );
-
-        return '';
     }
 
     /**
@@ -2124,7 +2172,8 @@ class QentaCheckoutSeamless extends PaymentModule
 
         $context = Context::getContext();
 
-        if (in_array($context->controller->php_self, $controllerArray)
+        if (
+            in_array($context->controller->php_self, $controllerArray)
             && $context->cookie->qcsMessage
         ) {
             if (strpos($context->cookie->qcsMessage, "<br />")) {
@@ -2165,7 +2214,8 @@ class QentaCheckoutSeamless extends PaymentModule
             $id_cart = $this->context->cookie->id_cart;
             $cart = new Cart($id_cart);
 
-            if (isset($additionalData['birthdate'])
+            if (
+                isset($additionalData['birthdate'])
                 && preg_match(
                     '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/',
                     $additionalData['birthdate']
@@ -2188,12 +2238,14 @@ class QentaCheckoutSeamless extends PaymentModule
 
                     $initResponse = $paymentType->initiate($id_cart, $id_order, $additionalData);
                 } else {
+
                     $initResponse = $paymentType->initiate($id_cart, null, $additionalData);
                 }
 
                 unset($this->context->cookie->qcsConsumerDeviceId);
 
                 if ($initResponse->getStatus() == \WirecardCEE_QMore_Response_Initiation::STATE_FAILURE) {
+
                     $message = $this->l('An error occurred during the payment process');
                     if ($initResponse->getNumberOfErrors() > 0) {
                         $msg = implode(
@@ -2209,9 +2261,8 @@ class QentaCheckoutSeamless extends PaymentModule
 
                         if (Tools::strlen($msg)) {
                             $message = $msg;
+                            $this->context->cookie->qcsMessage = $message;
                         }
-
-                        $this->log(__METHOD__ . ':' . $msg);
                     }
 
                     $params = array();
@@ -2239,10 +2290,8 @@ class QentaCheckoutSeamless extends PaymentModule
                         'id_order' => (int)$id_order
                     );
                 }
-                $this->context->cookie->qcsMessage = $this->l('An error occurred during the payment process');
-                $this->log(__METHOD__ . ':' . $e->getMessage());
-                $this->log(__METHOD__ . ':' . $e->getTraceAsString());
 
+                $this->context->cookie->qcsMessage = $this->l('An error occurred during the payment process');
                 Tools::redirect(
                     $this->context->link->getPageLink('order', true, $cart->id_lang, $params)
                 );
@@ -2252,6 +2301,9 @@ class QentaCheckoutSeamless extends PaymentModule
         if ($this->getPaymentType($paymentTypeName)->getPaymentMethod() == WirecardCEE_Stdlib_PaymentTypeAbstract::SOFORTUEBERWEISUNG) {
             Tools::redirect($this->context->cookie->qcsRedirectUrl);
         } else {
+
+            // only here if I add message, it will be displayed
+            // $this->context->cookie->qcsMessage = $err;
             Tools::redirect($this->context->link->getModuleLink($this->name, 'paymentIFrame'));
         }
     }
@@ -2303,6 +2355,7 @@ class QentaCheckoutSeamless extends PaymentModule
      */
     public function confirmResponse()
     {
+        // fetch error here
         if (!$this->active) {
             return (WirecardCEE_QMore_ReturnFactory::generateConfirmResponseString($this->l("Module is not active!")));
         }
@@ -2311,12 +2364,20 @@ class QentaCheckoutSeamless extends PaymentModule
 
         $this->log(__METHOD__ . ':raw:' . $response);
 
+
         $return = null;
         try {
             $return = WirecardCEE_QMore_ReturnFactory::getInstance(
                 $response,
                 $this->getConfigValue('basicdata', 'secret')
             );
+
+            if ($return->getNumberOfErrors() > 0) {
+                $errors = $return->getErrors();
+                $msg = $errors[0]->getConsumerMessage();
+                $this->headerErrors[] = $msg;
+                $this->context->cookie->qcsMessage = $msg;
+            }
 
             if (!$return->validate()) {
                 throw new \Exception('Validation error: invalid response');
@@ -2386,7 +2447,8 @@ class QentaCheckoutSeamless extends PaymentModule
 
         $cart = new Cart($transactionData['id_cart']);
 
-        if ($transactionData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_FAILURE ||
+        if (
+            $transactionData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_FAILURE ||
             $transactionData['paymentstate'] == WirecardCEE_QMore_ReturnFactory::STATE_CANCEL
         ) {
             $this->context->cookie->qcsMessage = html_entity_decode($transactionData['message']);
@@ -2432,12 +2494,12 @@ class QentaCheckoutSeamless extends PaymentModule
         $this->smarty->assign(
             array(
                 'orderConfirmation' =>
-                    $this->context->link->getPageLink(
-                        'order-confirmation',
-                        true,
-                        null,
-                        $params
-                    ),
+                $this->context->link->getPageLink(
+                    'order-confirmation',
+                    true,
+                    null,
+                    $params
+                ),
                 'this_path' => _THEME_CSS_DIR_
             )
         );

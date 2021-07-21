@@ -1,0 +1,36 @@
+/**
+ * Shop System Plugins
+ * - Terms of use can be found under
+ * https://guides.qenta.com/shop_plugins:info
+ * - License can be found under:
+ * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
+*/
+
+.qentacheckoutseamless-wrapper {
+    clear: both;
+    margin: 0 auto;
+    max-width: 1024px;
+    min-width: 930px;
+    overflow: hidden;
+    inline-size: min-content;
+    width: 100%;
+}
+
+.qentacheckoutseamless-logo {
+    display: block;
+    width: 10rem;
+    margin: 1rem 0;
+}
+
+.qentacheckoutseamless-intro {
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+.fixed-width-xxxl {
+    width: 500px !important;
+}
+
+.qcs-display-none {
+    display: none;
+}

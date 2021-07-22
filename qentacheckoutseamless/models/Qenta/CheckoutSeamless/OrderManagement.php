@@ -3,14 +3,14 @@
 /**
  * Shop System Plugins
  * - Terms of use can be found under
- * https://guides.qenta.com/shop_plugins:info
+ * https://guides.qenta.com/shop_plugins/info/
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
  */
 
 class QentaCheckoutSeamlessOrderManagement
 {
-    /** @var  QentaCheckoutSeamless */
+    /** @var QentaCheckoutSeamless */
     protected $module;
 
     /**
@@ -204,7 +204,7 @@ class QentaCheckoutSeamlessOrderManagement
 
     /**
      * @param $orderId
-     * @param WirecardCheckoutSeamlessPayment $paymentType
+     * @param QentaCheckoutSeamlessPayment $paymentType
      * @param string $transactionId
      */
     public function updatePaymentInformation($orderId, $paymentType, $transactionId = '')

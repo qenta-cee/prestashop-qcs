@@ -90,7 +90,7 @@ class QentaCheckoutSeamless extends PaymentModule
         $this->config = $this->config();
         $this->name = 'qentacheckoutseamless';
         $this->tab = 'payments_gateways';
-        $this->version = '3.0.0';
+        $this->version = '3.0.1';
         $this->author = 'Qenta';
         $this->controllers = array(
             'confirm',

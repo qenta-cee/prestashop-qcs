@@ -61,15 +61,13 @@ function install_shop() {
   runuser -g www-data -u www-data -- php install-dev/index_cli.php --ssl=${PRESTASHOP_ENABLE_SSL} --domain="${PRESTASHOP_NGROK_HOST}" --db_server=${PRESTASHOP_MYSQL_HOST} --db_password=${PRESTASHOP_MYSQL_ROOT_PASSWORD} --db_name=${PRESTASHOP_MYSQL_DATABASE} --name=${PRESTASHOP_NAME} --country=${PRESTASHOP_COUNTRY} --language=${PRESTASHOP_LANGUAGE} --firstname=Max --lastname=Qentaman --password=${PRESTASHOP_PASSWORD} --email=${PRESTASHOP_EMAIL}
   mv install-dev __install-dev
 
+  install_plugin qentacheckoutseamless
 
-  # echo "Building PrestaShop assets in the background"
-  # {
+  {
     npm install
     ./tools/assets/build.sh
     echo "Done building PrestaShop assets"
-  # } &> /dev/null &
-    install_plugin qentacheckoutseamless
-
+  } &> /dev/null &
 }
 
 start_services
@@ -85,6 +83,10 @@ echo "Admin Password: ${PRESTASHOP_PASSWORD}"
 echo
 echo "Consumer User: pub@prestashop.com"
 echo "Consumer Password: 123456789"
+echo
+echo "Disable Debug Mode for payments testing!"
 echo "########################################"
+echo 
+echo "Assets being built in background .."
 
 tail -f /dev/stdout

@@ -16,6 +16,8 @@ Our [Online Guides](https://guides.qenta.com/qmore/start/) provide further infor
 ## Installation
 Please [Online Guides](https://guides.qenta.com/shop_plugins/qpay/prestashop/installation/ "Installation details") also provide technical documentation, installation and configuration instructions for the plugin.
 
+Make sure to always use the latest release of [QENTA Checkout Seamless for Prestashop](https://github.com/qenta-cee/prestashop-qcs/releases) to benefit from updates and improvements.
+
 
 ## QENTA Checkout Seamless
 QENTA Checkout Seamless is designed to meet the ambitious demands of merchants offering a wide range of payment methods while at the same time fulfilling PCI DSS compliance. The interface is integrated seamlessly into the online shop and allows a customized configuration of the payment process (cross-selling and up-selling) based on your business. 

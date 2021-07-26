@@ -2,7 +2,7 @@
 /**
  * Shop System Plugins
  * - Terms of use can be found under
- * https://guides.qenta.com/shop_plugins:info
+ * https://guides.qenta.com/shop_plugins/info/
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
 */
@@ -12,7 +12,7 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
     /** @var string */
     protected $display = 'add';
 
-    /** @var WirecardCheckoutSeamlessBackend */
+    /** @var QentaCheckoutSeamlessBackend */
     protected $backendClient = null;
 
     public function __construct()
@@ -64,7 +64,7 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
     public function renderForm()
     {
         $fieldNoteFmt = sprintf(
-            '<a href="https://guides.qenta.com/doku.php%%s" target="_blank" class="docref">%s</a>',
+            '<a href="https://guides.qenta.com/%%s" target="_blank" class="docref">%s</a>',
             $this->l('See documentation')
         );
 
@@ -80,7 +80,7 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
                 array(
                     'type' => 'select',
                     'label' => $this->l('Currency:'),
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#currency'),
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#currency'),
                     'name' => 'currency',
                     'required' => true,
                     'options' => array(
@@ -96,7 +96,7 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
                     'name' => 'amount',
                     'required' => true,
                     'class' => 'fixed-width-md',
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#amount')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#amount')
                 ),
                 array(
                     'type' => 'text',
@@ -104,7 +104,7 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
                     'name' => 'orderDescription',
                     'required' => true,
                     'class' => 'fixed-width-xxl',
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#orderdescription')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#orderdescription')
                 ),
                 array(
                     'type' => 'text',
@@ -112,14 +112,14 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
                     'name' => 'sourceOrderNumber',
                     'class' => 'fixed-width-md',
                     'required' => true,
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#sourceordernumber')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#sourceordernumber')
                 ),
                 array(
                     'type' => 'text',
                     'label' => $this->l('Customer statement:'),
                     'name' => 'customerStatement',
                     'class' => 'fixed-width-xl',
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#customerstatement')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#customerstatement')
                 ),
                 array(
                     'type' => 'text',
@@ -132,14 +132,14 @@ class AdminQentaCheckoutSeamlessFundTransferController extends ModuleAdminContro
                     'label' => $this->l('Order number:'),
                     'name' => 'orderNumber',
                     'class' => 'fixed-width-md',
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#ordernumber')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#ordernumber')
                 ),
                 array(
                     'type' => 'text',
                     'label' => $this->l('Order reference:'),
                     'name' => 'orderReference',
                     'class' => 'fixed-width-xl',
-                    'desc' => sprintf($fieldNoteFmt, '/request_parameters#orderreference')
+                    'desc' => sprintf($fieldNoteFmt, 'request_parameters/#orderreference')
                 )
             ),
             'submit' => array(

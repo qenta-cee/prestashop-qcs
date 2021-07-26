@@ -1,7 +1,7 @@
 {*
  * Shop System Plugins
  * - Terms of use can be found under
- * https://guides.qenta.com/shop_plugins:info
+ * https://guides.qenta.com/shop_plugins/info/
  * - License can be found under:
  * https://github.com/qenta-cee/prestashop-qcs/blob/master/LICENSE
  *}
@@ -21,7 +21,7 @@
             {l s='Registration for new clients' mod='qentacheckoutseamless'}
         </a></p>
     {/if}
-    <p><a href="https://guides.qenta.com/doku.php/plugins_general" target="_blank">{l s='General information regarding Qenta Shop Plugins' mod='qentacheckoutseamless'}</a></p>
+    <p><a href="https://guides.qenta.com/shop_plugins/info/" target="_blank">{l s='General information regarding Qenta Shop Plugins' mod='qentacheckoutseamless'}</a></p>
     <div style="clear:both;"></div>
     <div class="btn-group">
         <a class="btn btn-default" id="doQcsConfigTest" href="#">

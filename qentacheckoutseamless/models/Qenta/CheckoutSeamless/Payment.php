@@ -162,8 +162,13 @@ class QentaCheckoutSeamlessPayment
         $init = new \WirecardCEE_QMore_FrontendClient($module->getConfigArray());
         $init->setPluginVersion($module->getPluginVersion());
         $init->setConfirmUrl($module->getConfirmUrl());
-
-        $init->setOrderReference(md5(sprintf('%010d', $id_tx) . microtime()));
+        // Based on requirment for Docker testings
+        $configmode = $module->getConfigValue('basicdata', 'configmode');
+        if($configmode === 'test3d' || $configmode === 'test') {
+            $init->setOrderReference(md5(sprintf('%010d', $id_tx) . microtime()));
+        } else {
+            $init->setOrderReference(sprintf('%010d', $id_tx));
+        }
 
         $init->setAmount($amount)
             ->setCurrency($current_currency->iso_code)
